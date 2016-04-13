@@ -1,0 +1,97 @@
+<style type="text/css">
+	.input-wrap {
+		position: relative;
+	}	
+	.fa {
+		position: absolute;
+		margin-left: 5px;
+		margin-top: 7px;
+
+		opacity: 0;
+		visibility: hidden;
+		transition: all 0.3s;
+	}
+	.fa.visible {
+		opacity: 1;
+		visibility: visible;
+	}
+</style>
+
+<p class="form-group">
+	<label for="address">Please enter your PVOutput system ID and read only API key:</label>
+	
+	<span class="input-wrap">
+		<input type="text" id="sid" placeholder="System ID" value="" />
+	</span>
+	<span class="input-wrap">
+		<input type="text" id="key" placeholder="Read-only API key" value="" />
+	</span>
+
+	<br/>
+
+	<label for="address">Give your inverter a name:</label>
+	<span class="input-wrap">
+		<input type="text" id="name" placeholder="Name" value="" />
+	</span>
+
+	<br/><br/>
+
+	<button class="button" id="validate">Connect</button>
+	<i class="solar-status solar-loading fa fa-circle-o-notch fa-spin"></i>
+	<i class="solar-status solar-ok fa fa-check" style="color: #96ff00;"></i>
+	<i class="solar-status solar-err fa fa-times" style="color: #ff6300;"></i>
+	
+</p>
+<p class="solar-err-msg" style="color: #ff6300;">
+</p>
+
+<script type="text/javascript">
+
+$(function(){
+	$('#validate').click(function(){
+		
+		var sid = $('#sid').val();
+		var key = $('#key').val();
+		var name = $('#name').val();
+
+		$('.solar-status').removeClass('visible');
+		$('.solar-loading').addClass('visible');
+		
+		Homey.emit('validate', {
+			sid: sid,
+			key: key
+		}, function( err, result ){
+
+			$('.solar-status').removeClass('visible');
+			if(!err) {
+				$('.solar-ok').addClass('visible');
+				$('.solar-err-msg').html('');
+				
+				var device_data = {
+					id		: sid,
+					key		: key,
+					name 	: name
+				};
+				
+				Homey.addDevice({
+					name	: name,
+					data 	: device_data
+				}, function( err, result ){
+					if( err ) return Homey.alert(err.message || err.toString());
+					Homey.emit('add_device', device_data, function( err, result ){
+						if( err ) return Homey.alert(err.message || err.toString());
+						Homey.done();						
+					})
+				})
+			} else {
+				$('.solar-err').addClass('visible');
+				$('.solar-err-msg').html( err.message || err.toString() );
+			}
+		})
+		
+	});
+})
+
+</script>
+
+</script>

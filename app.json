@@ -1,0 +1,39 @@
+{
+  "id": "it.diederik.solar",
+  "name": {
+    "en": "Solar Panels"
+  },
+  "version": "1.0.0",
+  "compatibility": "0.x || 1.x",
+  "author": {
+    "name": "Diederik Bakker",
+    "email": "diederik@outlook.com"
+  },
+  "drivers": [
+    {
+      "id": "pvoutput",
+      "name": {
+        "en": "PVOutput",
+        "nl": "PVOutput"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "drivers/pvoutput/assets/images/large.jpg",
+        "small": "drivers/pvoutput/assets/images/small.jpg"
+      },
+      "class": "other",
+      "capabilities": []
+    }
+  ],
+  "permissions": [
+    "homey:manager:insights",
+    "homey:manager:speech-output"
+  ],
+  "dependencies": {
+    "request": "*"
+  }
+}
