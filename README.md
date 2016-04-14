@@ -7,8 +7,8 @@ Let Homey monitor your solar panels. This app allows you to view production stat
 * Enphase
 
 #### Release notes
-1.1.0 - Added experimental support for Enphase inverters
-1.0.0 - First release
+* 1.1.0 - Added experimental support for Enphase inverters
+* 1.0.0 - First release
 
 #### To do
 * Screensavers showing daily production
