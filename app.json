@@ -3,12 +3,20 @@
   "name": {
     "en": "Solar Panels"
   },
+  "description": {
+    "en": "PV production tracker for Homey"
+  },
   "version": "1.0.0",
   "compatibility": "0.x || 1.x",
   "author": {
     "name": "Diederik Bakker",
-    "email": "diederik@outlook.com"
+    "email": "d@iederik.nl"
   },
+  "images": {
+    "large": "./assets/images/large.jpg",
+    "small": "./assets/images/small.jpg"
+  },
+  "category": "tools",
   "drivers": [
     {
       "id": "pvoutput",
@@ -22,16 +30,15 @@
         }
       ],
       "images": {
-        "large": "drivers/pvoutput/assets/images/large.jpg",
-        "small": "drivers/pvoutput/assets/images/small.jpg"
+        "large": "assets/images/large.jpg",
+        "small": "assets/images/small.jpg"
       },
-      "class": "other",
-      "capabilities": []
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
     }
   ],
   "permissions": [
-    "homey:manager:insights",
-    "homey:manager:speech-output"
+    "homey:manager:insights"
   ],
   "dependencies": {
     "request": "*"

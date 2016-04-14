@@ -4,9 +4,7 @@ var devices = {};
 
 module.exports.init = function(devices_data, callback) {
     Homey.log(devices_data);
-
     devices_data.forEach(initDevice);
-
     callback(null, true); 
 };
 
@@ -46,15 +44,32 @@ module.exports.deleted = function(device_data, callback) {
     Homey.manager('cron').unregisterTask('solar_' + device_data.id, function(err, success) {});
 
     delete devices[device_data.id];
-}
+};
+
+module.exports.capabilities = {
+    measure_power: {
+        get: function(device_data, callback) {
+            var device = devices[device_data.id];
+
+            callback(null, device.last_power);
+        }
+    },
+    meter_power: {
+        get: function(device_data, callback) {
+            var device = devices[device_data.id];
+            
+            callback(null, device.last_energy);
+        }
+    }
+};
 
 function initDevice(data) {
 
     devices[data.id] = {
             name       : data.name,
-            sid        : data.sid,
-            key        : data.key,
             last_output: '0:00',
+            last_power : 0,
+            last_energy: 0,
             data       : data
     }
     
@@ -89,7 +104,6 @@ function initDevice(data) {
 }
 
 function checkProduction(data) {
-
     var device_data = devices[data.id]
 
     var url = 'http://pvoutput.org/service/r2/getstatus.jsp?key=' + data.key + '&sid=' + data.id;
@@ -106,7 +120,9 @@ function checkProduction(data) {
                 device_data.last_output = lastOutputTime;
 
                 var currentEnergy = Number(parsedResponse[2]);
+                device_data.last_energy = currentEnergy / 1000;
                 var currentPower = Number(parsedResponse[3]);
+                device_data.last_power = currentPower;
                 var date = new Date();
 
                 Homey.manager('insights').createEntry('energy_' + data.id, currentEnergy, date, function(err, success) {});
