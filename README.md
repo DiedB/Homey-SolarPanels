@@ -3,9 +3,11 @@
 Let Homey monitor your solar panels. This app allows you to view production statistics using Insights, and lets you create triggers based on the current power output. For example, enable your car charger when your panels are producing!
 
 #### Supported data sources
-At this moment, Homey only supports PVOutput as data source. More inverters might be added later!
+* PVOutput
+* Enphase
 
 #### Release notes
+1.1.0 - Added experimental support for Enphase inverters
 1.0.0 - First release
 
 #### To do
@@ -19,6 +21,9 @@ At this moment, Homey only supports PVOutput as data source. More inverters migh
 Get your System ID and read only API key from PVOutput. Add the inverter as a device in the Homey devices panel, and give the inverter a name (this will be used as the name for the device).
 
 ![](http://i.imgur.com/REJxrUg.png)
+
+##### Enphase
+Create an account at https://developer.enphase.com/. Authorize your API account to access your system (instructions after logging in). Please let me know if everything works for you, Enphase support has only been tested on a demo system.
 
 ---
 #### Current production data

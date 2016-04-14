@@ -12,11 +12,8 @@ module.exports.pair = function(socket) {
     // Validate PVOutput data
     socket.on('validate', function( data, callback ){
         Homey.log('Validating', data);
-    
-        var sid     = data.sid;
-        var key     = data.key;
 
-        var url     = 'http://pvoutput.org/service/r2/getstatus.jsp?key=' + key + '&sid=' + sid;
+        var url     = 'http://pvoutput.org/service/r2/getstatus.jsp?key=' + data.key + '&sid=' + data.sid;
 
         request(url, function (error, response, body) {
             if (!error && response.statusCode == 200) {
