@@ -30,15 +30,12 @@
         }
       ],
       "images": {
-        "large": "assets/images/large.jpg",
-        "small": "assets/images/small.jpg"
+        "large": "./drivers/pvoutput/assets/images/large.jpg",
+        "small": "./drivers/pvoutput/assets/images/small.jpg"
       },
       "class": "sensor",
       "capabilities": ["measure_power", "meter_power"]
     }
-  ],
-  "permissions": [
-    "homey:manager:insights"
   ],
   "dependencies": {
     "request": "*"
