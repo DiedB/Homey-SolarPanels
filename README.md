@@ -1,5 +1,7 @@
 ### PV Production Tracker for Homey  
 
+**Warning:** This update will remove your current graph data. The data in Insights is now pushed using device capabilities. Homey doesn't support custom capabilities yet, and the existing capabilities do not really suit inverters. Therefore, energy will be shown as 'power usage' and is shown in kWh. When custom capabilities are supported, I will create suitable Insights titles and revert production to Wh (which creates nicer graphs).
+
 Let Homey monitor your solar panels. This app allows you to view production statistics using Insights, and lets you create triggers based on the current power output. For example, enable your car charger when your panels are producing!
 
 #### Supported data sources
