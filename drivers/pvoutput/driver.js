@@ -35,13 +35,16 @@ module.exports.pair = function(socket) {
 module.exports.deleted = function(device_data, callback) {
     Homey.log('Deleting ' + device_data.id);
 
-    Homey.manager('insights').deleteLog('energy_' + device_data.id, function(err, success) {});
-    Homey.manager('insights').deleteLog('power_' + device_data.id, function(err, success) {});
-
     Homey.manager('cron').unregisterTask('solar_' + device_data.id, function(err, success) {});
 
     delete devices[device_data.id];
 };
+
+module.exports.renamed = function( device_data, new_name ) {
+    devices[device_data.id].name = new_name;
+
+    Homey.log(device_data.id + ' has been renamed to ' + new_name);
+}
 
 module.exports.capabilities = {
     measure_power: {
@@ -70,27 +73,10 @@ function initDevice(data) {
             data       : data
     }
     
-    // Create logs
-    Homey.manager('insights').createLog('energy_' + data.id, {
-        label: { en: data.name + ' - Energy (daily)' },
-        type: 'number',
-        units: { en: 'Wh' },
-        decimals: 2
-    }, function callback(err , success){});
-
-    Homey.manager('insights').createLog('power_' + data.id, {
-        label: { en: data.name + ' - Power' },
-        type: 'number',
-        units: { en: 'W' },
-        decimals: 2
-    }, function callback(err , success){});
-
-    Homey.log('Instantiated logs for ' + data.name + '!')
-
     // Create cron job for production check
     var taskName = 'solar_' + data.id;
     Homey.manager('cron').unregisterTask(taskName, function(err, success) {
-        Homey.manager('cron').registerTask(taskName, '* * * * *', data, function(err, task) {})
+        Homey.manager('cron').registerTask(taskName, '*/5 * * * *', data, function(err, task) {})
     });
 
     Homey.manager('cron').on(taskName, function(data_cron) {
@@ -108,6 +94,8 @@ function checkProduction(data) {
     request(url, function(error, response, body) {
 
         if (!error && response.statusCode == 200) {
+            module.exports.setAvailable(device_data);
+
             var parsedResponse = body.split(',');
             var lastOutputTime = parsedResponse[1];
 
@@ -116,19 +104,19 @@ function checkProduction(data) {
 
                 device_data.last_output = lastOutputTime;
 
-                var currentEnergy = Number(parsedResponse[2]);
-                device_data.last_energy = currentEnergy / 1000;
+                var currentEnergy = Number(parsedResponse[2]) / 1000;
+                device_data.last_energy = currentEnergy;
+                module.exports.realtime(data, "meter_power", currentEnergy);
+
                 var currentPower = Number(parsedResponse[3]);
                 device_data.last_power = currentPower;
-                var date = new Date();
-
-                Homey.manager('insights').createEntry('energy_' + data.id, currentEnergy, date, function(err, success) {});
-                Homey.manager('insights').createEntry('power_' + data.id, currentPower, date, function(err, success) {});
+                module.exports.realtime(data, "measure_power", currentPower);
             } else {
                 Homey.log('No new data for ' + data.name);
             }
         } else {
-            Homey.log(error);
+            Homey.log('Status code: ' + response.statusCode);
+            module.exports.setUnavailable(device_data.data, 'Received a ' + response.statusCode + ' error');
         }
 
     })

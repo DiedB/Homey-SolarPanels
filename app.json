@@ -6,7 +6,7 @@
   "description": {
     "en": "PV production tracker for Homey"
   },
-  "version": "1.1.0",
+  "version": "1.2.0",
   "compatibility": "0.x || 1.x",
   "author": {
     "name": "Diederik Bakker",
@@ -50,6 +50,24 @@
       "images": {
         "large": "./drivers/enphase/assets/images/large.jpg",
         "small": "./drivers/enphase/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
+      "id": "solaredge",
+      "name": {
+        "en": "SolarEdge",
+        "nl": "SolarEdge"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/solaredge/assets/images/large.jpg",
+        "small": "./drivers/solaredge/assets/images/small.jpg"
       },
       "class": "sensor",
       "capabilities": ["measure_power", "meter_power"]

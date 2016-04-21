@@ -4,9 +4,11 @@ Let Homey monitor your solar panels. This app allows you to view production stat
 
 #### Supported data sources
 * PVOutput
+* SolarEdge
 * Enphase
 
 #### Release notes
+* 1.2.0 - Added support for SolarEdge inverters and fixed bugs
 * 1.1.0 - Added experimental support for Enphase inverters
 * 1.0.0 - First release
 
@@ -21,6 +23,9 @@ Let Homey monitor your solar panels. This app allows you to view production stat
 Get your System ID and read only API key from PVOutput. Add the inverter as a device in the Homey devices panel, and give the inverter a name (this will be used as the name for the device).
 
 ![](http://i.imgur.com/REJxrUg.png)
+
+##### SolarEdge
+Get your System ID and API key from SolarEdge. Add the inverter as a device in the Homey devices panel, and give the inverter a name (this will be used as the name for the device).
 
 ##### Enphase
 Create an account at https://developer.enphase.com/. Authorize your API account to access your system (instructions after logging in). Please let me know if everything works for you, Enphase support has only been tested on a demo system.
