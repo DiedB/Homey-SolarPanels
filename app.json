@@ -91,6 +91,60 @@
       "capabilities": ["measure_power", "meter_power"]
     },
     {
+      "id": "solarman",
+      "name": {
+        "en": "SolarMAN",
+        "nl": "SolarMAN"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/solarman/assets/images/large.jpg",
+        "small": "./drivers/solarman/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
+      "id": "ginlong",
+      "name": {
+        "en": "Ginlong/Solis",
+        "nl": "Ginlong/Solis"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/ginlong/assets/images/large.jpg",
+        "small": "./drivers/ginlong/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
+      "id": "trannergy",
+      "name": {
+        "en": "Trannergy",
+        "nl": "Trannergy"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/trannergy/assets/images/large.jpg",
+        "small": "./drivers/trannergy/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
       "id": "goodwe",
       "name": {
         "en": "GoodWe",

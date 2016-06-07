@@ -2,7 +2,7 @@ var http = require('http.min');
 var parseXML = require('xml2js').parseString;
 var md5 = require('md5');
 
-var base_url = 'http://www.omnikportal.com:10000/serverapi/';
+var base_url = 'http://www.ginlongmonitoring.com:10000/serverapi/';
 
 var devices = {};
 
@@ -13,7 +13,7 @@ module.exports.init = function(devices_data, callback) {
 };
 
 module.exports.pair = function(socket) {
-    // Validate Omnik Portal data
+    // Validate Ginlong Portal data
     socket.on('validate', function(data, callback){
         Homey.log('Validating', data);
 

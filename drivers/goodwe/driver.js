@@ -101,15 +101,12 @@ function checkProduction(data) {
             var parsedResponse = JSON.parse(result.data);
             var lastOutput = md5(result.data);
 
-            Homey.log(result.data);
-            Homey.log(lastOutput);
-
             if (lastOutput != device_data.last_output) {
                 Homey.log('Parsing response!');
 
                 device_data.last_output = lastOutput;
 
-                var currentEnergy = Number(parsedResponse.eday.replace(/[^\d.]/g, ''));
+                var currentEnergy = Number(parsedResponse.eday.replace(/[^\d.]/g, '') * 1000);
                 device_data.last_energy = currentEnergy;
                 module.exports.realtime(data, "meter_power", currentEnergy);
 

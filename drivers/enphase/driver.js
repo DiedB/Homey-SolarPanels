@@ -103,7 +103,7 @@ function checkProduction(data) {
 
                 device_data.last_output = lastOutputTime;
 
-                var currentEnergy = Number(parsedResponse.energy_today) / 1000;
+                var currentEnergy = Number(parsedResponse.energy_today);
                 device_data.last_energy = currentEnergy;
                 module.exports.realtime(data, "meter_power", currentEnergy);
 
