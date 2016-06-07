@@ -1,4 +1,4 @@
-var request = require('request');
+var http = require('http.min');
 
 var devices = {};
 
@@ -15,13 +15,13 @@ module.exports.pair = function(socket) {
 
         var url     = 'https://api.enphaseenergy.com/api/v2/systems/' + data.sid + '/summary?key=' + data.key + '&user_id=' + data.uid;
 
-        request(url, function (error, response, body) {
-            if (!error && (response.statusCode == 200 || response.statusCode == 304)) {
+        http.get(url).then(function (result) {
+            if (result.response.statusCode == 200 || result.response.statusCode == 304) {
                 Homey.log('Pairing successful!');
                 callback(null, true);
             } else {
                 Homey.log('Error during pairing');
-                callback(body, null);
+                callback(result.data, null);
             }
         })
     })
@@ -89,14 +89,13 @@ function initDevice(data) {
 function checkProduction(data) {
     var device_data = devices[data.id]
 
-    var url     = 'https://api.enphaseenergy.com/api/v2/systems/' + data.id + '/summary?key=' + data.key + '&user_id=' + data.uid;
+    var url = 'https://api.enphaseenergy.com/api/v2/systems/' + data.id + '/summary?key=' + data.key + '&user_id=' + data.uid;
 
-    request(url, function(error, response, body) {
-
-        if (!error && (response.statusCode == 200 || response.statusCode == 304)) {
+    http.get(url).then(function (result) {
+        if (result.response.statusCode == 200 || result.response.statusCode == 304) {
             module.exports.setAvailable(device_data);
 
-            var parsedResponse = JSON.parse(body);
+            var parsedResponse = JSON.parse(result.data);
             var lastOutputTime = Number(parsedResponse.last_report_at);
 
             if (lastOutputTime != device_data.last_output) {
@@ -116,9 +115,9 @@ function checkProduction(data) {
                 Homey.log('No new data for ' + data.name);
             }
         } else {
-            Homey.log('Status code: ' + response.statusCode);
-            module.exports.setUnavailable(device_data.data, 'Received a ' + response.statusCode + ' error');
-
+            Homey.log('Status code: ' + result.response.statusCode);
+            module.exports.setUnavailable(device_data.data, 'Received a ' + result.response.statusCode + ' error');
         }
+
     })
 }

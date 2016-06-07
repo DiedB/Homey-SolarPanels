@@ -1,4 +1,4 @@
-var request = require('request');
+var http = require('http.min');
 
 var devices = {};
 
@@ -15,13 +15,13 @@ module.exports.pair = function(socket) {
 
         var url     = 'http://pvoutput.org/service/r2/getstatus.jsp?key=' + data.key + '&sid=' + data.sid;
 
-        request(url, function (error, response, body) {
-            if (!error && response.statusCode == 200) {
+        http.get(url).then(function (result) {
+            if (result.response.statusCode == 200 || result.response.statusCode == 304) {
                 Homey.log('Pairing successful!');
                 callback(null, true);
             } else {
                 Homey.log('Error during pairing');
-                callback(body, null);
+                callback(result.data, null);
             }
         })
     })
@@ -91,12 +91,11 @@ function checkProduction(data) {
 
     var url = 'http://pvoutput.org/service/r2/getstatus.jsp?key=' + data.key + '&sid=' + data.id;
 
-    request(url, function(error, response, body) {
-
-        if (!error && response.statusCode == 200) {
+    http.get(url).then(function (result) {
+        if (result.response.statusCode == 200) {
             module.exports.setAvailable(device_data);
 
-            var parsedResponse = body.split(',');
+            var parsedResponse = result.data.split(',');
             var lastOutputTime = parsedResponse[1];
 
             if (lastOutputTime != device_data.last_output) {
@@ -115,8 +114,8 @@ function checkProduction(data) {
                 Homey.log('No new data for ' + data.name);
             }
         } else {
-            Homey.log('Status code: ' + response.statusCode);
-            module.exports.setUnavailable(device_data.data, 'Received a ' + response.statusCode + ' error');
+            Homey.log('Status code: ' + result.response.statusCode);
+            module.exports.setUnavailable(device_data.data, 'Received a ' + result.response.statusCode + ' error');
         }
 
     })

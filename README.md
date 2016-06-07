@@ -1,15 +1,16 @@
 ### PV Production Tracker for Homey  
 
-**Warning:** This update will remove your current graph data. The data in Insights is now pushed using device capabilities. Homey doesn't support custom capabilities yet, and the existing capabilities do not really suit inverters. Therefore, energy will be shown as 'power usage' and is shown in kWh. When custom capabilities are supported, I will create suitable Insights titles and revert production to Wh (which creates nicer graphs).
-
 Let Homey monitor your solar panels. This app allows you to view production statistics using Insights, and lets you create triggers based on the current power output. For example, enable your car charger when your panels are producing!
 
 #### Supported data sources
 * PVOutput
 * SolarEdge
 * Enphase
+* GoodWe
+* Omnik
 
 #### Release notes
+* 1.3.0 - Added support for Omnik and GoodWe inverters. Switched to http.min which should also resolve crashes
 * 1.2.0 - Added support for SolarEdge inverters and fixed bugs
 * 1.1.0 - Added experimental support for Enphase inverters
 * 1.0.0 - First release
@@ -31,6 +32,12 @@ Get your System ID and API key from SolarEdge. Add the inverter as a device in t
 
 ##### Enphase
 Create an account at https://developer.enphase.com/. Authorize your API account to access your system (instructions after logging in). Please let me know if everything works for you, Enphase support has only been tested on a demo system.
+
+##### Omnik
+Use your login data for the Omnik Portal, as well as the plant ID found in the URL after logging into the Omnik Portal.
+
+##### GoodWe
+Use your Station ID. I don't know how to get this ID (I don't have a GoodWe inverter myself, got an ID by e-mail), if an owner can make a small guide I'd appreciate it.
 
 ---
 #### Current production data

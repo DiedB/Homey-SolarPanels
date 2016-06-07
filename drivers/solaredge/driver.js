@@ -1,4 +1,4 @@
-var request = require('request');
+var http = require('http.min');
 
 var devices = {};
 
@@ -15,16 +15,16 @@ module.exports.pair = function(socket) {
 
         var url     = 'https://monitoringapi.solaredge.com/site/' + data.sid + '/overview?api_key=' + data.key + '&format=json';
 
-        request(url, function (error, response, body) {
-            if (!error && (response.statusCode == 200 || response.statusCode == 304)) {
+        http.get(url).then(function (result) {
+            if (result.response.statusCode == 200 || result.response.statusCode == 304) {
                 Homey.log('Pairing successful!');
                 callback(null, true);
-            } else if (response.statusCode == 403) {
+            } else if (result.response.statusCode == 403) {
                 Homey.log('Error during pairing');
                 callback('403: Wrong system ID or API key!', null);
             } else {
                 Homey.log('Error during pairing');
-                callback(body, null);
+                callback(result.data, null);
             }
         })
     })
@@ -94,12 +94,11 @@ function checkProduction(data) {
 
     var url     = 'https://monitoringapi.solaredge.com/site/' + data.id + '/overview?api_key=' + data.key + '&format=json';
 
-    request(url, function(error, response, body) {
-
-        if (!error && (response.statusCode == 200 || response.statusCode == 304)) {
+    http.get(url).then(function (result) {
+        if (result.response.statusCode == 200 || result.response.statusCode == 304) {
             module.exports.setAvailable(device_data);
 
-            var parsedResponse = JSON.parse(body);
+            var parsedResponse = JSON.parse(result.data);
             var lastOutputTime = parsedResponse.overview.lastUpdateTime;
 
             if (lastOutputTime != device_data.last_output) {
@@ -115,12 +114,12 @@ function checkProduction(data) {
                 device_data.last_power = currentPower;
                 module.exports.realtime(data, "measure_power", currentPower);
 
-           } else {
+            } else {
                 Homey.log('No new data for ' + data.name);
             }
         } else {
-            Homey.log('Status code: ' + response.statusCode);
-            module.exports.setUnavailable(device_data.data, 'Received a ' + response.statusCode + ' error');
+            Homey.log('Status code: ' + result.response.statusCode);
+            module.exports.setUnavailable(device_data.data, 'Received a ' + result.response.statusCode + ' error');
         }
     })
 }
