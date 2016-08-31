@@ -1,5 +1,7 @@
 var http = require('http.min');
 
+var url = '/solar_api/v1/GetInverterRealtimeData.cgi?Scope=Device&DeviceID=1&DataCollection=CommonInverterData';
+
 var devices = {};
 
 module.exports.init = function(devices_data, callback) {
@@ -9,19 +11,19 @@ module.exports.init = function(devices_data, callback) {
 };
 
 module.exports.pair = function(socket) {
-    // Validate PVOutput data
-    socket.on('validate', function( data, callback ){
+    // Validate GoodWe Portal data
+    socket.on('validate', function(data, callback){
         Homey.log('Validating', data);
 
-        var url     = 'http://pvoutput.org/service/r2/getstatus.jsp?key=' + data.key + '&sid=' + data.sid;
+        var login_url = 'http://' + data.ip + url;
 
-        http.get(url).then(function (result) {
-            if (result.response.statusCode == 200 || result.response.statusCode == 304) {
+        http.get(login_url).then(function (result) {
+            if (result.response.statusCode == 200) {
                 Homey.log('Pairing successful!');
                 callback(null, true);
             } else {
-                Homey.log('Error during pairing');
-                callback(result.data, null);
+                Homey.log('Error while pairing');
+                callback("Couldn't reach host", null);
             }
         })
     })
@@ -67,9 +69,9 @@ function initDevice(data) {
 
     devices[data.id] = {
             name       : data.name,
-            last_output: '0:00',
             last_power : 0,
             last_energy: 0,
+            last_output: '0',
             data       : data
     }
     
@@ -89,27 +91,28 @@ function initDevice(data) {
 function checkProduction(data) {
     var device_data = devices[data.id]
 
-    var url = 'http://pvoutput.org/service/r2/getstatus.jsp?key=' + data.key + '&sid=' + data.id;
+    var data_url = 'http://' + data.id + url;
 
-    http.get(url).then(function (result) {
+    http.get(data_url).then(function (result) {
         if (result.response.statusCode == 200) {
             module.exports.setAvailable(device_data);
 
-            var parsedResponse = result.data.split(',');
-            var lastOutputTime = parsedResponse[1];
+            var parsedResponse = JSON.parse(result.data);
+            var lastOutput = parsedResponse.Head.Timestamp;
 
-            if (lastOutputTime != device_data.last_output) {
+            if (lastOutput != device_data.last_output) {
                 Homey.log('Parsing response!');
 
-                device_data.last_output = lastOutputTime;
+                device_data.last_output = lastOutput;
 
-                var currentEnergy = Number(parsedResponse[2]) / 1000;
+                var currentEnergy = Number(parsedResponse.Body.Data.DAY_ENERGY.Value / 1000);
                 device_data.last_energy = currentEnergy;
                 module.exports.realtime(data, "meter_power", currentEnergy);
 
-                var currentPower = Number(parsedResponse[3]);
+                var currentPower = Number(parsedResponse.Body.Data.PAC.Value);
                 device_data.last_power = currentPower;
                 module.exports.realtime(data, "measure_power", currentPower);
+
             } else {
                 Homey.log('No new data for ' + data.name);
             }

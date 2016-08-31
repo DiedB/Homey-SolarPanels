@@ -13,6 +13,7 @@ Let Homey monitor your solar panels. This app allows you to view production stat
 * Ginlong/Solis
 
 #### Release notes
+* 1.3.1 - Added support for Fronius inverters, changed units for correct represenation on 0.9.3
 * 1.3.0 - Added support for Omnik, Trannergy, Ginlong, SolarMAN and GoodWe inverters. Switched to http.min and resolved crashes on connection problems
 * 1.2.0 - Added support for SolarEdge inverters and fixed bugs
 * 1.1.0 - Added experimental support for Enphase inverters
@@ -21,7 +22,6 @@ Let Homey monitor your solar panels. This app allows you to view production stat
 #### To do
 * Screensavers showing daily production
 * Speech input/output
-* Improve inverter support
 
 ---
 #### Adding an inverter
@@ -40,7 +40,10 @@ Create an account at https://developer.enphase.com/. Authorize your API account 
 Use your login data for the monitoring portal, as well as the plant ID found in the URL after logging in.
 
 ##### GoodWe
-Use your Station ID. I don't know how to get this ID (I don't have a GoodWe inverter myself, got an ID by e-mail), if an owner can make a small guide I'd appreciate it.
+You can get the station ID by logging in to your GoodWe portal and then right-clicking on the inverter station. Then, copy the link address. The link will contain something like: `powerStationDetail('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')` where the xx's represent a hex ID that totals to your station ID.
+
+#### Fronius
+Connect your Fronius Datamanager to your network and enter its hostname. You're all set!
 
 ---
 #### Current production data

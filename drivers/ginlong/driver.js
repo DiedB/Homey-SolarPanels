@@ -114,7 +114,7 @@ function checkProduction(data) {
 
                     device_data.last_output = lastOutputTime;
 
-                    var currentEnergy = Number(result.data.detail[0].WiFi[0].inverter[0].etoday[0] * 1000);
+                    var currentEnergy = Number(result.data.detail[0].WiFi[0].inverter[0].etoday[0]);
                     device_data.last_energy = currentEnergy;
                     module.exports.realtime(data, "meter_power", currentEnergy);
 
