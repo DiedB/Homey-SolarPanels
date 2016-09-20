@@ -13,6 +13,7 @@ Let Homey monitor your solar panels. This app allows you to view production stat
 * Ginlong/Solis
 
 #### Release notes
+* 1.3.2 - Fixed GoodWe units
 * 1.3.1 - Added support for Fronius inverters, changed units for correct represenation on 0.9.3
 * 1.3.0 - Added support for Omnik, Trannergy, Ginlong, SolarMAN and GoodWe inverters. Switched to http.min and resolved crashes on connection problems
 * 1.2.0 - Added support for SolarEdge inverters and fixed bugs
