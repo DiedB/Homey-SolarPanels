@@ -11,7 +11,6 @@ Let Homey monitor your solar panels. This app allows you to view production stat
 * Trannergy
 * SolarMAN
 * Ginlong/Solis
-* SAJ
 
 #### Release notes
 * 1.4.0 - Fixed app to work with Homey 0.10, code cleanup, updated modules, added support for SAJ inverters
