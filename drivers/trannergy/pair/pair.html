@@ -1,7 +1,7 @@
 <style type="text/css">
 	.input-wrap {
 		position: relative;
-	}	
+	}
 	.fa {
 		position: absolute;
 		margin-left: 5px;
@@ -19,7 +19,7 @@
 
 <p class="form-group">
 	<label for="address">Please enter your Trannergy username and password:</label>
-	
+
 	<span class="input-wrap">
 		<input type="text" id="username" placeholder="Username" value="" />
 	</span>
@@ -46,7 +46,7 @@
 	<i class="solar-status solar-loading fa fa-circle-o-notch fa-spin"></i>
 	<i class="solar-status solar-ok fa fa-check" style="color: #96ff00;"></i>
 	<i class="solar-status solar-err fa fa-times" style="color: #ff6300;"></i>
-	
+
 </p>
 <p class="solar-err-msg" style="color: #ff6300;">
 </p>
@@ -55,7 +55,7 @@
 
 $(function(){
 	$('#validate').click(function(){
-		
+
 		var username = $('#username').val();
 		var password = $('#password').val();
 		var sid = $('#sid').val();
@@ -63,8 +63,9 @@ $(function(){
 
 		$('.solar-status').removeClass('visible');
 		$('.solar-loading').addClass('visible');
-		
+
 		Homey.emit('validate', {
+			id: sid,
 			username: username,
 			password: password
 		}, function( err, result ){
@@ -73,14 +74,14 @@ $(function(){
 			if(!err) {
 				$('.solar-ok').addClass('visible');
 				$('.solar-err-msg').html('');
-				
+
 				var device_data = {
 					id		: sid,
 					username: username,
 					password: password,
 					name 	: name
 				};
-				
+
 				Homey.addDevice({
 					name	: name,
 					data 	: device_data
@@ -88,7 +89,7 @@ $(function(){
 					if( err ) return Homey.alert(err.message || err.toString());
 					Homey.emit('add_device', device_data, function( err, result ){
 						if( err ) return Homey.alert(err.message || err.toString());
-						Homey.done();						
+						Homey.done();
 					})
 				})
 			} else {
@@ -96,7 +97,7 @@ $(function(){
 				$('.solar-err-msg').html( err.message || err.toString() );
 			}
 		})
-		
+
 	});
 })
 

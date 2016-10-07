@@ -1,126 +1,136 @@
-var http = require('http.min');
+"use strict";
+
+var http = require("http.min");
 var md5 = require('md5');
 
-var url = 'http://www.goodwe-power.com/Mobile/GetMyPowerStationById?stationID=';
-
+var base_url = 'http://www.goodwe-power.com/Mobile/GetMyPowerStationById?stationID=';
 var devices = {};
 
-module.exports.init = function(devices_data, callback) {
-    Homey.log(devices_data);
-    devices_data.forEach(initDevice);
-    callback(null, true); 
+module.exports.init = function (devices_data, callback) {
+    devices_data.forEach(function (device_data) {
+        initDevice(device_data, false);
+    });
+
+    callback(null, true);
 };
 
-module.exports.pair = function(socket) {
-    // Validate GoodWe Portal data
-    socket.on('validate', function(data, callback){
-        Homey.log('Validating', data);
+module.exports.pair = function (socket) {
+    socket.on("validate", function (data, callback) {
+        var url = base_url + data.sid;
 
-        var login_url = url + data.sid;
-
-        http.get(login_url).then(function (result) {
+        http.get(url).then(function (result) {
             if (result.response.statusCode == 200) {
-                Homey.log('Pairing successful!');
                 callback(null, true);
             } else {
-                Homey.log('Error while pairing');
-                callback("500: Incorrect station ID", null);
+                callback(__("station_error"), null);
             }
-        })
-    })
-    
-    socket.on('add_device', function( device_data, callback ){
-        initDevice(device_data);
-        callback(null, true);
+        });
     });
 };
 
-module.exports.deleted = function(device_data, callback) {
-    Homey.log('Deleting ' + device_data.id);
+module.exports.added = function (device_data, callback) {
+    Homey.log("[" + device_data.name + "] Added");
 
-    Homey.manager('cron').unregisterTask('solar_' + device_data.id, function(err, success) {});
-
-    delete devices[device_data.id];
+    initDevice(device_data, true);
+    callback(null, true);
 };
 
-module.exports.renamed = function( device_data, new_name ) {
-    devices[device_data.id].name = new_name;
+module.exports.deleted = function (device_data, callback) {
+    Homey.log("[" + device_data.name + "] Deleted");
 
-    Homey.log(device_data.id + ' has been renamed to ' + new_name);
-}
+    Homey.manager("cron").unregisterTask(devices[device_data.id].cron_name, function (err, success) {});
+
+    delete devices[device_data.id];
+    callback(null, true);
+};
+
+module.exports.renamed = function (device_data, new_name) {
+    Homey.log("[" + device_data.name + "] Renamed to: " + new_name);
+
+    devices[device_data.id].name = new_name;
+};
 
 module.exports.capabilities = {
     measure_power: {
-        get: function(device_data, callback) {
+        get: function (device_data, callback) {
             var device = devices[device_data.id];
 
-            callback(null, device.last_power);
+            if (device === undefined) {
+                callback(null, 0);
+            } else {
+                callback(null, device.power);
+            }
         }
     },
     meter_power: {
-        get: function(device_data, callback) {
+        get: function (device_data, callback) {
             var device = devices[device_data.id];
-            
-            callback(null, device.last_energy);
+
+            if (device === undefined) {
+                callback(null, 0);
+            } else {
+                callback(null, device.energy);
+            }
         }
     }
 };
 
-function initDevice(data) {
+function initDevice(device_data, cron) {
+    Homey.log("[" + device_data.name + "] Initializing device");
 
-    devices[data.id] = {
-            name       : data.name,
-            last_power : 0,
-            last_energy: 0,
-            last_output: '0',
-            data       : data
+    var device = devices[device_data.id] = {
+        name: device_data.name,
+        cron_name: "solar_" + device_data.id,
+        last_update: "0",
+        power: 0,
+        energy: 0
+    };
+
+    if (cron) {
+        Homey.manager("cron").registerTask(device.cron_name, "*/5 * * * *", device_data, function (err, task) {
+            if (err === null) {
+                Homey.manager("cron").on(device.cron_name, function (device_data) {
+                    checkProduction(device_data);
+                });
+            } else {
+                Homey.log("[" + device.name + "] Error while creating cron job: " + err);
+            }
+        });
     }
-    
-    // Create cron job for production check
-    var taskName = 'solar_' + data.id;
-    Homey.manager('cron').unregisterTask(taskName, function(err, success) {
-        Homey.manager('cron').registerTask(taskName, '*/5 * * * *', data, function(err, task) {})
-    });
-
-    Homey.manager('cron').on(taskName, function(data_cron) {
-        Homey.log('Checking production for ' + data_cron.name);
-        checkProduction(data_cron);
-    })
-
 }
 
-function checkProduction(data) {
-    var device_data = devices[data.id]
+function checkProduction(device_data) {
+    var device = devices[device_data.id];
 
-    var data_url = url + data.id;
+    var url = base_url + device_data.id;
 
-    http.get(data_url).then(function (result) {
+    http.get(url).then(function (result) {
         if (result.response.statusCode == 200) {
             module.exports.setAvailable(device_data);
 
-            var parsedResponse = JSON.parse(result.data);
-            var lastOutput = md5(result.data);
+            var response = JSON.parse(result.data);
+            var last_output = md5(result.data);
 
-            if (lastOutput != device_data.last_output) {
-                Homey.log('Parsing response!');
+            if (last_output != device.last_output) {
+                device.last_output = last_output;
 
-                device_data.last_output = lastOutput;
+                var energy = Number(response.eday.replace(/[^\d.]/g, ''));
+                device.energy = energy;
+                module.exports.realtime(device_data, "meter_power", energy);
 
-                var currentEnergy = Number(parsedResponse.eday.replace(/[^\d.]/g, ''));
-                device_data.last_energy = currentEnergy;
-                module.exports.realtime(data, "meter_power", currentEnergy);
+                var power = Number(response.curpower.replace(/[^\d.]/g, '')) * 1000;
+                device.power = power;
+                module.exports.realtime(device_data, "measure_power", power);
 
-                var currentPower = Number(parsedResponse.curpower.replace(/[^\d.]/g, ''));
-                device_data.last_power = currentPower;
-                module.exports.realtime(data, "measure_power", currentPower);
-
+                Homey.log("[" + device_data.name + "] Energy: " + energy + "kWh");
+                Homey.log("[" + device_data.name + "] Power: " + power + "W");
             } else {
-                Homey.log('No new data for ' + data.name);
+                Homey.log("[" + device_data.name + "] No new data");
             }
         } else {
-            Homey.log('Status code: ' + result.response.statusCode);
-            module.exports.setUnavailable(device_data.data, 'Received a ' + result.response.statusCode + ' error');
-        }
+            Homey.log("[" + device_data.name + "] Unavailable: " + result.response.statusCode + " error");
 
-    })
+            module.exports.setUnavailable(device_data, result.response.statusCode + " error");
+        }
+    });
 }

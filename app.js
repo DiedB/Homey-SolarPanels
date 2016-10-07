@@ -1,7 +1,5 @@
 "use strict";
 
 module.exports.init = function(){
-
-	Homey.log("Solar tracker running...");
-
+	Homey.log("Starting Solar Panels");
 }

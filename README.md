@@ -11,8 +11,10 @@ Let Homey monitor your solar panels. This app allows you to view production stat
 * Trannergy
 * SolarMAN
 * Ginlong/Solis
+* SAJ
 
 #### Release notes
+* 1.4.0 - Fixed app to work with Homey 0.10, code cleanup, updated modules, added support for SAJ inverters
 * 1.3.2 - Fixed GoodWe units
 * 1.3.1 - Added support for Fronius inverters, changed units for correct represenation on 0.9.3
 * 1.3.0 - Added support for Omnik, Trannergy, Ginlong, SolarMAN and GoodWe inverters. Switched to http.min and resolved crashes on connection problems
@@ -22,7 +24,6 @@ Let Homey monitor your solar panels. This app allows you to view production stat
 
 #### To do
 * Screensavers showing daily production
-* Speech input/output
 
 ---
 #### Adding an inverter
@@ -46,6 +47,9 @@ You can get the station ID by logging in to your GoodWe portal and then right-cl
 #### Fronius
 Connect your Fronius Datamanager to your network and enter its hostname. You're all set!
 
+#### SAJ
+Connect the SAJ Inverter to your network and enter its hostname/IP address. You're all set!
+
 ---
 #### Current production data
 
@@ -54,14 +58,14 @@ Homey shows your inverter as a sensor. This app currently supports two metrics: 
 ![](http://i.imgur.com/Ozscz9k.png)
 
 ---
-#### Flow 
+#### Flow
 
 Your inverter acts as a sensor for Homey. This allows you to use logic on your production data. Here is an example:
 
 ![](http://i.imgur.com/HyLuawu.png)
 
 ---
-#### Insights 
+#### Insights
 
 ![](http://i.imgur.com/7VZiddt.png)
 

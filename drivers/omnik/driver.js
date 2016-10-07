@@ -1,157 +1,170 @@
-var http = require('http.min');
-var parseXML = require('xml2js').parseString;
-var md5 = require('md5');
+"use strict";
 
-var base_url = 'http://www.omnikportal.com:10000/serverapi/';
+var http = require("http.min");
+var parseXML = require("xml2js").parseString;
+var md5 = require("md5");
 
+var base_url = "http://www.omnikportal.com:10000/serverapi/";
 var devices = {};
 
-module.exports.init = function(devices_data, callback) {
-    Homey.log(devices_data);
-    devices_data.forEach(initDevice);
-    callback(null, true); 
+module.exports.init = function (devices_data, callback) {
+    devices_data.forEach(function (device_data) {
+        initDevice(device_data, false);
+    });
+
+    callback(null, true);
 };
 
-module.exports.pair = function(socket) {
-    // Validate Omnik Portal data
-    socket.on('validate', function(data, callback){
-        Homey.log('Validating', data);
-
-        var hashed_password = md5(data.password)
-
-        var login_url = base_url + '?method=Login&username=' + data.username + '&password=' + hashed_password + '&key=apitest';
+module.exports.pair = function (socket) {
+    socket.on("validate", function (data, callback){
+        var hashed_password = md5(data.password);
+        var login_url = base_url + "?method=Login&username=" + data.username + "&password=" + hashed_password + "&key=apitest";
 
         http.get(login_url).then(function (result) {
             parseXML(result.data, function (err, result) {
                 if (!result.error) {
-                    Homey.log('Pairing successful!');
-                    callback(null, true);
+                    var data_url = base_url + "?method=Data&username=" + data.username + "&stationid=" + data.id + "&token=" + result.login.token[0] + "&key=apitest";
+
+                    http.get(data_url).then(function (result) {
+                        parseXML(result.data, function (err, result) {
+                            if (!result.error) {
+                                callback(null, true);
+                            } else {
+                                callback(__("plant_error"), null);
+                            }
+                        });
+                    });
                 } else {
-                    Homey.log('Error while pairing');
-                    callback(result.error.errorMessage[0], null);
+                    callback(__("login_error"), null);
                 }
             });
-        })
-    })
-    
-    socket.on('add_device', function( device_data, callback ){
-        initDevice(device_data);
-        callback(null, true);
+        });
     });
 };
 
-module.exports.deleted = function(device_data, callback) {
-    Homey.log('Deleting ' + device_data.id);
+module.exports.added = function (device_data, callback) {
+    Homey.log("[" + device_data.name + "] Added");
 
-    Homey.manager('cron').unregisterTask('solar_' + device_data.id, function(err, success) {});
-
-    delete devices[device_data.id];
+    initDevice(device_data, true);
+    callback(null, true);
 };
 
-module.exports.renamed = function( device_data, new_name ) {
-    devices[device_data.id].name = new_name;
+module.exports.deleted = function (device_data, callback) {
+    Homey.log("[" + device_data.name + "] Deleted");
 
-    Homey.log(device_data.id + ' has been renamed to ' + new_name);
-}
+    Homey.manager("cron").unregisterTask(devices[device_data.id].cron_name, function (err, success) {});
+
+    delete devices[device_data.id];
+    callback(null, true);
+};
+
+module.exports.renamed = function (device_data, new_name) {
+    Homey.log("[" + device_data.name + "] Renamed to: " + new_name);
+
+    devices[device_data.id].name = new_name;
+};
 
 module.exports.capabilities = {
     measure_power: {
-        get: function(device_data, callback) {
+        get: function (device_data, callback) {
             var device = devices[device_data.id];
 
-            callback(null, device.last_power);
+            if (device === undefined) {
+                callback(null, 0);
+            } else {
+                callback(null, device.power);
+            }
         }
     },
     meter_power: {
-        get: function(device_data, callback) {
+        get: function (device_data, callback) {
             var device = devices[device_data.id];
-            
-            callback(null, device.last_energy);
+
+            if (device === undefined) {
+                callback(null, 0);
+            } else {
+                callback(null, device.energy);
+            }
         }
     }
 };
 
-function initDevice(data) {
+function initDevice(device_data, cron) {
+    Homey.log("[" + device_data.name + "] Initializing device");
 
-    devices[data.id] = {
-            name       : data.name,
-            last_output: 0,
-            last_power : 0,
-            last_energy: 0,
-            last_token : '0',
-            data       : data
+    var device = devices[device_data.id] = {
+        name: device_data.name,
+        cron_name: "solar_" + device_data.id,
+        last_update: 0,
+        last_token: "",
+        power: 0,
+        energy: 0
+    };
+
+    getToken(device_data);
+
+    if (cron) {
+        Homey.manager("cron").registerTask(device.cron_name, "*/5 * * * *", device_data, function (err, task) {
+            if (err === null) {
+                Homey.manager("cron").on(device.cron_name, function (device_data) {
+                    checkProduction(device_data);
+                });
+            } else {
+                Homey.log("[" + device.name + "] Error while creating cron job: " + err);
+            }
+        });
     }
-
-    getToken(data);
-    
-    // Create cron job for production check
-    var taskName = 'solar_' + data.id;
-    Homey.manager('cron').unregisterTask(taskName, function(err, success) {
-        Homey.manager('cron').registerTask(taskName, '*/5 * * * *', data, function(err, task) {})
-    });
-
-    Homey.manager('cron').on(taskName, function(data_cron) {
-        Homey.log('Checking production for ' + data_cron.name);
-        checkProduction(data_cron);
-    })
-
 }
 
-function checkProduction(data) {
-    var device_data = devices[data.id]
+function checkProduction(device_data) {
+    var device = devices[device_data.id];
+    var url = base_url + "?method=Data&username=" + device_data.username + "&stationid=" + device_data.id + "&token=" + device.last_token + "&key=apitest";
 
-    var data_url = base_url + '?method=Data&username=' + data.username + '&stationid=' + data.id + '&token=' + device_data.last_token + '&key=apitest';
-
-    http.get(data_url).then(function (result) {
+    http.get(url).then(function (result) {
         parseXML(result.data, function (err, result) {
             if (!result.error) {
                 module.exports.setAvailable(device_data);
 
-                var lastOutputTime = result.data.detail[0].lastupdated[0];
+                var last_update = Number(result.data.detail[0].lastupdated[0]);
+                if (last_update != device.last_update) {
+                    device.last_update = last_update;
 
-                if (lastOutputTime != device_data.last_output) {
-                    Homey.log('Parsing response!');
+                    var energy = Number(result.data.detail[0].WiFi[0].inverter[0].etoday[0]);
+                    device.energy = energy;
+                    module.exports.realtime(device_data, "meter_power", energy);
 
-                    device_data.last_output = lastOutputTime;
+                    var power = Number(result.data.detail[0].WiFi[0].inverter[0].power[0]) * 1000;
+                    device.power = power;
+                    module.exports.realtime(device_data, "measure_power", power);
 
-                    var currentEnergy = Number(result.data.detail[0].WiFi[0].inverter[0].etoday[0]);
-                    device_data.last_energy = currentEnergy;
-                    module.exports.realtime(data, "meter_power", currentEnergy);
-
-                    var currentPower = Number(result.data.detail[0].WiFi[0].inverter[0].power[0] * 1000);
-                    device_data.last_power = currentPower;
-                    module.exports.realtime(data, "measure_power", currentPower);
-
+                    Homey.log("[" + device_data.name + "] Energy: " + energy + "kWh");
+                    Homey.log("[" + device_data.name + "] Power: " + power + "W");
                 } else {
-                    Homey.log('No new data for ' + data.name);
+                    Homey.log("[" + device_data.name + "] No new data");
                 }
             } else {
-                if (getToken(data)) {
-                    checkProduction(data);
-                }
+                getToken(device_data);
             }
         });
     });
 }
 
-function getToken(data) {
-    var device_data = devices[data.id]
+function getToken(device_data) {
+    var device = devices[device_data.id];
+    var hashed_password = md5(device_data.password);
+    var url = base_url + "?method=Login&username=" + device_data.username + "&password=" + hashed_password + "&key=apitest";
 
-    var hashed_password = md5(data.password)
-
-    var login_url = base_url + '?method=Login&username=' + data.username + '&password=' + hashed_password + '&key=apitest';
-
-    http.get(login_url).then(function (result) {
+    http.get(url).then(function (result) {
         parseXML(result.data, function (err, result) {
             if (!result.error) {
-                Homey.log('Retrieved new token successfully!');
-                device_data.last_token = result.login.token[0];
+                Homey.log("[" + device_data.name + "] Retrieved new token");
+                device.last_token = result.login.token[0];
                 return true;
             } else {
-                Homey.log('Error while retrieving new token');
-                module.exports.setUnavailable(device_data.data, 'Received an error while logging in');
+                Homey.log("[" + device_data.name + "] Could not retrieve new token");
+                module.exports.setUnavailable(device_data.data, "Authentication error");
                 return false;
             }
         });
-    })
+    });
 }

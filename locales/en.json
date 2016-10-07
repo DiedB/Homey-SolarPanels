@@ -1,0 +1,10 @@
+{
+    "login_error": "Login details incorrect",
+    "plant_error": "Plant ID incorrect",
+    "station_error": "Station ID incorrect",
+    "ip_error": "IP address incorrect",
+    "name": "Give your inverter a name:",
+    "saj": {
+      "address": "Please enter the IP address or hostname of your SAJ inverter:"
+    }
+}

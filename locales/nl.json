@@ -1,0 +1,10 @@
+{
+    "login_error": "Inloggegevens onjuist",
+    "plant_error": "Plant ID onjuist",
+    "station_error": "Station ID onjuist",
+    "ip_error": "IP-adres onjuist",
+    "name": "Geef de omvormer een naam:",
+    "saj": {
+      "address": "Voer het IP-adres of de hostname van de omvormer in:"
+    }
+}

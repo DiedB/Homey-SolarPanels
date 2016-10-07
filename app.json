@@ -6,7 +6,7 @@
   "description": {
     "en": "PV production tracker for Homey"
   },
-  "version": "1.3.2",
+  "version": "1.4.0",
   "compatibility": "0.x || 1.x",
   "author": {
     "name": "Diederik Bakker",
@@ -176,6 +176,24 @@
       "images": {
         "large": "./drivers/fronius/assets/images/large.jpg",
         "small": "./drivers/fronius/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
+      "id": "saj",
+      "name": {
+        "en": "SAJ",
+        "nl": "SAJ"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/saj/assets/images/large.jpg",
+        "small": "./drivers/saj/assets/images/small.jpg"
       },
       "class": "sensor",
       "capabilities": ["measure_power", "meter_power"]

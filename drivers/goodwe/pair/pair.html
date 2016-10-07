@@ -1,7 +1,7 @@
 <style type="text/css">
 	.input-wrap {
 		position: relative;
-	}	
+	}
 	.fa {
 		position: absolute;
 		margin-left: 5px;
@@ -19,7 +19,7 @@
 
 <p class="form-group">
 	<label for="address">Please enter your GoodWe station ID:</label>
-	
+
 	<span class="input-wrap">
 		<input type="text" id="sid" placeholder="Station ID" value=""/>
 	</span>
@@ -37,22 +37,20 @@
 	<i class="solar-status solar-loading fa fa-circle-o-notch fa-spin"></i>
 	<i class="solar-status solar-ok fa fa-check" style="color: #96ff00;"></i>
 	<i class="solar-status solar-err fa fa-times" style="color: #ff6300;"></i>
-	
+
 </p>
 <p class="solar-err-msg" style="color: #ff6300;">
 </p>
 
 <script type="text/javascript">
-
 $(function(){
 	$('#validate').click(function(){
-		
 		var sid = $('#sid').val();
 		var name = $('#name').val();
 
 		$('.solar-status').removeClass('visible');
 		$('.solar-loading').addClass('visible');
-		
+
 		Homey.emit('validate', {
 			sid: sid
 		}, function( err, result ){
@@ -61,29 +59,24 @@ $(function(){
 			if(!err) {
 				$('.solar-ok').addClass('visible');
 				$('.solar-err-msg').html('');
-				
+
 				var device_data = {
 					id		: sid,
 					name 	: name
 				};
-				
+
 				Homey.addDevice({
 					name	: name,
 					data 	: device_data
 				}, function( err, result ){
 					if( err ) return Homey.alert(err.message || err.toString());
-					Homey.emit('add_device', device_data, function( err, result ){
-						if( err ) return Homey.alert(err.message || err.toString());
-						Homey.done();						
-					})
+					Homey.done();
 				})
 			} else {
 				$('.solar-err').addClass('visible');
 				$('.solar-err-msg').html( err.message || err.toString() );
 			}
-		})
-		
+		});
 	});
 })
-
 </script>
