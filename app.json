@@ -179,24 +179,6 @@
       },
       "class": "sensor",
       "capabilities": ["measure_power", "meter_power"]
-    },
-    {
-      "id": "saj",
-      "name": {
-        "en": "SAJ",
-        "nl": "SAJ"
-      },
-      "pair": [
-        {
-          "id": "pair"
-        }
-      ],
-      "images": {
-        "large": "./drivers/saj/assets/images/large.jpg",
-        "small": "./drivers/saj/assets/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": ["measure_power", "meter_power"]
     }
   ]
 }
