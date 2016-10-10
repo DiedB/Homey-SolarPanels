@@ -87,15 +87,15 @@ function initDevice(device_data, cron) {
 
     if (cron) {
         Homey.manager("cron").registerTask(device.cron_name, "*/5 * * * *", device_data, function (err, task) {
-            if (err === null) {
-                Homey.manager("cron").on(device.cron_name, function (device_data) {
-                    checkProduction(device_data);
-                });
-            } else {
+            if (err !== null) {
                 Homey.log("[" + device.name + "] Error while creating cron job: " + err);
             }
         });
     }
+
+    Homey.manager("cron").on(device.cron_name, function (device_data) {
+        checkProduction(device_data);
+    });
 }
 
 function checkProduction(device_data) {
