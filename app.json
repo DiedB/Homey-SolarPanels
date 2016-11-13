@@ -16,7 +16,7 @@
     "large": "./assets/images/large.jpg",
     "small": "./assets/images/small.jpg"
   },
-  "category": "tools",
+  "category": "energy",
   "drivers": [
     {
       "id": "pvoutput",
@@ -176,6 +176,24 @@
       "images": {
         "large": "./drivers/fronius/assets/images/large.jpg",
         "small": "./drivers/fronius/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
+      "id": "saj",
+      "name": {
+        "en": "SAJ",
+        "nl": "SAJ"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/saj/assets/images/large.jpg",
+        "small": "./drivers/saj/assets/images/small.jpg"
       },
       "class": "sensor",
       "capabilities": ["measure_power", "meter_power"]
