@@ -7,7 +7,7 @@ var devices = {};
 
 module.exports.init = function (devices_data, callback) {
     devices_data.forEach(function (device_data) {
-        initDevice(device_data);
+        initDevice(device_data, false);
     });
 
     callback(null, true);
@@ -30,7 +30,7 @@ module.exports.pair = function (socket) {
 module.exports.added = function (device_data, callback) {
     Homey.log("[" + device_data.name + "] Added");
 
-    initDevice(device_data);
+    initDevice(device_data, true);
     callback(null, true);
 };
 
@@ -74,7 +74,7 @@ module.exports.capabilities = {
     }
 };
 
-function initDevice(device_data) {
+function initDevice(device_data, cron) {
     Homey.log("[" + device_data.name + "] Initializing device");
 
     var device = devices[device_data.id] = {
@@ -85,14 +85,16 @@ function initDevice(device_data) {
         energy: 0
     };
 
-    Homey.manager("cron").registerTask(device.cron_name, "*/5 * * * *", device_data, function (err, task) {
-        if (err === null) {
-            Homey.manager("cron").on(device.cron_name, function (device_data) {
-                checkProduction(device_data);
-            });
-        } else {
-            Homey.log("[" + device.name + "] Error while creating cron job: " + err);
-        }
+    if (cron) {
+        Homey.manager("cron").registerTask(device.cron_name, "*/5 * * * *", device_data, function (err, task) {
+            if (err !== null) {
+                Homey.log("[" + device.name + "] Error while creating cron job: " + err);
+            }
+        });
+    }
+
+    Homey.manager("cron").on(device.cron_name, function (device_data) {
+        checkProduction(device_data);
     });
 }
 
