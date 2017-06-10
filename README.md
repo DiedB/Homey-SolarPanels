@@ -13,6 +13,7 @@ Let Homey monitor your solar panels. This app allows you to view production stat
 * SAJ
 
 ## Release notes
+* 1.4.3 - Fixed Omnik/SolarMAN/Trannergy API change, updated modules
 * 1.4.2 - Fixed SolarEdge cron issue
 * 1.4.1 - Added support for SAJ inverters, updated README
 * 1.4.0 - Fixed app to work with Homey 0.10, code cleanup, updated modules

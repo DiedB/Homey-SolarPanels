@@ -4,7 +4,7 @@ var http = require("http.min");
 var parseXML = require("xml2js").parseString;
 var md5 = require("md5");
 
-var base_url = "http://log.trannergy.com:10000/serverapi/";
+var base_url = "http://log.trannergy.com:18000/TrannergyApi/serverapi/";
 var devices = {};
 
 module.exports.init = function (devices_data, callback) {
@@ -18,12 +18,12 @@ module.exports.init = function (devices_data, callback) {
 module.exports.pair = function (socket) {
     socket.on("validate", function (data, callback){
         var hashed_password = md5(data.password);
-        var login_url = base_url + "?method=Login&username=" + data.username + "&password=" + hashed_password + "&key=apitest";
+        var login_url = base_url + "Login?username=" + data.username + "&password=" + hashed_password + "&key=apitest";
 
         http.get(login_url).then(function (result) {
             parseXML(result.data, function (err, result) {
                 if (!result.error) {
-                    var data_url = base_url + "?method=Data&username=" + data.username + "&stationid=" + data.id + "&token=" + result.login.token[0] + "&key=apitest";
+                    var data_url = base_url + "Data?username=" + data.username + "&stationid=" + data.id + "&token=" + result.login.token[0] + "&key=apitest";
 
                     http.get(data_url).then(function (result) {
                         parseXML(result.data, function (err, result) {
@@ -116,7 +116,7 @@ function initDevice(device_data) {
 
 function checkProduction(device_data) {
     var device = devices[device_data.id];
-    var url = base_url + "?method=Data&username=" + device_data.username + "&stationid=" + device_data.id + "&token=" + device.last_token + "&key=apitest";
+    var url = base_url + "Data?username=" + device_data.username + "&stationid=" + device_data.id + "&token=" + device.last_token + "&key=apitest";
 
     http.get(url).then(function (result) {
         parseXML(result.data, function (err, result) {
@@ -150,7 +150,7 @@ function checkProduction(device_data) {
 function getToken(device_data) {
     var device = devices[device_data.id];
     var hashed_password = md5(device_data.password);
-    var url = base_url + "?method=Login&username=" + device_data.username + "&password=" + hashed_password + "&key=apitest";
+    var url = base_url + "Login?username=" + device_data.username + "&password=" + hashed_password + "&key=apitest";
 
     http.get(url).then(function (result) {
         parseXML(result.data, function (err, result) {
