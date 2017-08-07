@@ -1,5 +1,11 @@
-"use strict";
+'use strict';
 
-module.exports.init = function(){
-	Homey.log("Starting Solar Panels");
+const Homey = require('homey');
+
+class SolarPanels extends Homey.App {
+	onInit() {
+		this.log('Running');
+	}
 }
+
+module.exports = SolarPanels; 

@@ -1,103 +1,78 @@
 <style type="text/css">
-	.input-wrap {
-		position: relative;
-	}
-	.fa {
-		position: absolute;
-		margin-left: 5px;
-		margin-top: 7px;
+	.form-wrapper {
+		width: 100%;
+		height: 100%;
 
-		opacity: 0;
-		visibility: hidden;
-		transition: all 0.3s;
+		display: flex;
+		justify-content: center;
 	}
-	.fa.visible {
-		opacity: 1;
-		visibility: visible;
+
+	.form-group, .input-field {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.input-field {
+		margin-top: 10px;
+	}
+
+	.submit-button {
+		margin-top: 10px;
 	}
 </style>
 
-<p class="form-group">
-	<label for="address">Please enter your Omnik Portal username and password:</label>
+<div class="form-wrapper">
+	<div class="form-group">
+		<label>Please enter your Omnik Portal username and password:</label>
 
-	<span class="input-wrap">
-		<input type="text" id="username" placeholder="Username" value="" />
-	</span>
-	<span class="input-wrap">
-		<input type="text" id="password" placeholder="Password" value="" />
-	</span>
+		<div class="input-field">
+			<input type="text" id="username" placeholder="Username" value="" />
+		</div>
+		<div class="input-field">
+			<input type="text" id="password" placeholder="Password" value="" />
+		</div>
 
-	<label for="address">Enter your site/plant ID (found on Omnik Portal):</label>
+		<label>Enter your site/plant ID (found on Omnik Portal):</label>
 
-	<span class="input-wrap">
-		<input type="text" id="sid" placeholder="Site ID" value="" />
-	</span>
+		<div class="input-field">
+			<input type="text" id="sid" placeholder="Site ID" value="" />
+		</div>
 
-	<br/>
-
-	<label for="address">Give your inverter a name:</label>
-	<span class="input-wrap">
-		<input type="text" id="name" placeholder="Name" value="" />
-	</span>
-
-	<br/><br/>
-
-	<button class="button" id="validate">Connect</button>
-	<i class="solar-status solar-loading fa fa-circle-o-notch fa-spin"></i>
-	<i class="solar-status solar-ok fa fa-check" style="color: #96ff00;"></i>
-	<i class="solar-status solar-err fa fa-times" style="color: #ff6300;"></i>
-
-</p>
-<p class="solar-err-msg" style="color: #ff6300;">
-</p>
+		<button class="submit-button" id="validate">Connect</button>
+	</div>
+</div>
 
 <script type="text/javascript">
+	$(() => {
+		$('#validate').click(() => {
+			$('#validate').prop('disabled', true);
 
-$(function(){
-	$('#validate').click(function(){
+			var username = $('#username').val();
+			var password = $('#password').val();
+			var sid = $('#sid').val();
 
-		var username = $('#username').val();
-		var password = $('#password').val();
-		var sid = $('#sid').val();
-		var name = $('#name').val();
-
-		$('.solar-status').removeClass('visible');
-		$('.solar-loading').addClass('visible');
-
-		Homey.emit('validate', {
-			id: sid,
-			username: username,
-			password: password
-		}, function( err, result ){
-
-			$('.solar-status').removeClass('visible');
-			if(!err) {
-				$('.solar-ok').addClass('visible');
-				$('.solar-err-msg').html('');
-
-				var device_data = {
-					id		: sid,
-					username: username,
-					password: password,
-					name 	: name
-				};
-
-				Homey.addDevice({
-					name	: name,
-					data 	: device_data
-				}, function( err, result ){
-					if( err ) return Homey.alert(err.message || err.toString());
-					Homey.done();
-				})
-			} else {
-				$('.solar-err').addClass('visible');
-				$('.solar-err-msg').html( err.message || err.toString() );
+			var data = {
+				sid: sid,
+				username: username,
+				password: password
 			}
-		})
 
-	});
-})
-
-</script>
-
+			Homey.emit('validate', data, (valid) => {
+				if (!valid) {
+					Homey.alert('Invalid'); //TODO Translate
+					$('#validate').prop('disabled', false);
+				} else {
+					Homey.addDevice({
+						name: 'Omnik',
+						data: data
+					}, (error, result) => {
+						if (error) return console.error(err);
+    					Homey.done();
+					})
+				}
+			})
+		});
+	})
 </script>

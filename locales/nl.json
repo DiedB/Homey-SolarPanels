@@ -1,5 +1,6 @@
 {
     "login_error": "Inloggegevens onjuist",
+    "network_error": "Netwerkprobleem, probeer het later opnieuw",
     "plant_error": "Plant ID onjuist",
     "station_error": "Station ID onjuist",
     "ip_error": "IP-adres onjuist",
