@@ -11,7 +11,7 @@ class Inverter extends Homey.Device {
         if (this.getStoreValue('cronTask') === null) {
             this.createCronTask();
         } else {
-            this.initializeCronTask(this.getStoreValue('cronTask'));
+            this.initializeCronTask();
         }
     }
 
@@ -20,7 +20,7 @@ class Inverter extends Homey.Device {
     }
 
     onDeleted() {
-        deleteCronTask(this.getStoreValue('cronTask'));
+        this.deleteCronTask();
         this.log(`Deleted device`);
     }
     
@@ -29,16 +29,17 @@ class Inverter extends Homey.Device {
         return '*/5 * * * *';
     }
 
-    initializeCronTask(task) {
-        Homey.ManagerCron.getTask(task)
+    initializeCronTask() {
+        const taskName = this.getStoreValue('cronTask');
+        Homey.ManagerCron.getTask(taskName)
             .then(result => {
                 result.on('run', data => {
-                    this.log(`Running task ${task}`);
-                    this.checkProduction(data);
+                    this.log(`Running task ${taskName}`);
+                    this.checkProduction();
                 });
-                this.log(`Initialized cron job ${task}`);
+                this.log(`Initialized cron job ${taskName}`);
             }).catch(error => {
-                this.error(`Failed retrieving cron job ${task}`);
+                this.error(`Failed retrieving cron job ${taskName}`);
                 this.createCronTask();
             });
     }
@@ -57,17 +58,13 @@ class Inverter extends Homey.Device {
             });
     }
 
-    deleteCronTask(task) {
-        Homey.ManagerCron.getTask(taskName)
-            .then(task => {
-                Homey.ManagerCron.unregisterTask(task)
-                    .then(result => {
-                        this.log('Cron job deleted successfully');
-                    }).catch(error => {
-                        this.error(`Cron job deletion failed (${error}`);
-                    });
+    deleteCronTask() {
+        const taskName = this.getStoreValue('cronTask');
+        Homey.ManagerCron.unregisterTask(taskName)
+            .then(result => {
+                this.log('Cron job deleted successfully');
             }).catch(error => {
-                this.error(`Couldn't find cron job to delete`);
+                this.error(`Cron job deletion failed (${error}`);
             });
     }
 

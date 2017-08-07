@@ -7,6 +7,106 @@ const fetch = require('node-fetch');
 const parseXml = require('xml2js').parseString;
 const md5 = require('md5');
 
+class SOTGBase {
+    static getToken(url, username, password) {
+        return new Promise((resolve, reject) => {
+            const hashedPassword = md5(password);
+            const tokenUrl = `${url}Login?username=${username}&password=${hashedPassword}&key=apitest`;
+
+            fetch(tokenUrl)
+                .then(result => {
+                    if (result.ok) {
+                        return result.text();
+                    } else {
+                        throw result.status;
+                    }
+                })
+                .then(body => {
+                    parseXml(body, (error, result) => {
+                        if (!error && !result.error) {
+                            resolve(result.login.token[0]);
+                        } else {
+                            throw result.error.errorMessage[0];
+                        }
+                    });
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
+    }
+
+    static getInverters(url, sid, username, password, token) {
+        return new Promise((resolve, reject) => {
+            const dataUrl = `${url}Data?username=${username}&stationid=${sid}&token=${token}&key=apitest`;
+
+            fetch(dataUrl)
+                .then(result => {
+                    if (result.ok) {
+                        return result.text();
+                    } else {
+                        throw result.status;
+                    }
+                })
+                .then(body => {
+                    parseXml(body, (error, result) => {
+                        if (!error & !result.error) {
+                            const devicesList = result.data.detail[0].WiFi.reduce((devices, currentInverter) => {
+                                devices.push({
+                                    name: currentInverter.inverter[0].SN[0],
+                                    data: {
+                                        id: currentInverter.id[0],
+                                        sid: sid,
+                                        username: username,
+                                        password: password
+                                    }
+                                });
+                                return devices;
+                            }, []);
+                            resolve(devicesList);
+                        } else {
+                            throw result.error.errorMessage[0];
+                        }
+                    });
+                })
+                .catch(error => {
+                    // TODO Handle
+                });
+        });
+    }
+}
+
+class SOTGBaseDriver extends Homey.Driver {
+    getBaseUrl() {
+        throw new Error('Expected override');
+    }
+
+    onPair(socket) {
+        let systemData = {};
+        let currentToken = null;
+
+        socket.on('validate', (data, callback) => {
+            SOTGBase.getToken(this.getBaseUrl(), data.username, data.password)
+                .then(token => {
+                    systemData = data;
+                    currentToken = token;
+                    callback(true);
+                })
+                .catch(error => {
+                    this.log(error);
+                    callback(error);
+                });
+        });
+
+        socket.on('list_devices', (data, callback) => {
+            SOTGBase.getInverters(this.getBaseUrl(), systemData.sid, systemData.username, systemData.password, currentToken)
+                .then(devices => {
+                    callback(null, devices);
+                });
+        });
+    }
+}
+
 class SOTGBaseDevice extends Inverter {
     getBaseUrl() {
         throw new Error('Expected override');
@@ -17,6 +117,8 @@ class SOTGBaseDevice extends Inverter {
     }
 
     checkProduction() {
+        this.log('Checking production');
+
         const data = this.getData();
         const currentToken = this.getStoreValue('currentToken');
         const dataUrl = `${this.getBaseUrl()}Data?username=${data.username}&stationid=${data.sid}&token=${currentToken}&key=apitest`;
@@ -25,9 +127,8 @@ class SOTGBaseDevice extends Inverter {
             .then(result => {
                 if (result.ok) {
                     if (!this.getAvailable()) {
-                        this.setAvailable().then(result => {
-                            this.log('Available');
-                        }).catch(error => {
+                        this.log('Available');
+                        this.setAvailable().catch(error => {
                             this.error('Setting availability failed');
                         })
                     }
@@ -40,42 +141,39 @@ class SOTGBaseDevice extends Inverter {
             .then(body => {
                 parseXml(body, (error, result) => {
                     if (!error && !result.error) {
-                        if (!this.getAvailable()) {
-                            this.setAvailable().then(result => {
-                                this.log('Available');
-                            }).catch(error => {
-                                this.error('Setting availability failed');
-                            })
-                        }
+                        const liveData = result.data.detail[0].WiFi.find((inverter) => {
+                            return inverter.id[0] === data.id;
+                        });
 
-                        const lastUpdate = Number(result.data.detail[0].lastupdated[0]);
+                        const lastUpdate = Number(liveData.inverter[0].lastupdated[0]);
                         if (lastUpdate !== this.getStoreValue('lastUpdate')) {
                             this.setStoreValue('lastUpdate', lastUpdate).catch(error => {
                                 this.error('Failed setting last update value');
                             });
 
-                            var energy = Number(result.data.detail[0].WiFi[0].inverter[0].etoday[0]);
-                            device.energy = energy;
-                            module.exports.realtime(device_data, "meter_power", energy);
+                            const currentEnergy = Number(liveData.inverter[0].etoday[0]);
+                            this.setCapabilityValue('meter_power', currentEnergy);
 
-                            var power = Number(result.data.detail[0].WiFi[0].inverter[0].power[0]) * 1000;
-                            device.power = power;
-                            module.exports.realtime(device_data, "measure_power", power);
+                            const currentPower = Number(liveData.inverter[0].power[0]) * 1000;
+                            this.setCapabilityValue('measure_power', currentPower);
 
-                            Homey.log("[" + device_data.name + "] Energy: " + energy + "kWh");
-                            Homey.log("[" + device_data.name + "] Power: " + power + "W");
+                            this.log(`Current energy is ${currentEnergy}kWh`);
+                            this.log(`Current power is ${currentPower}W`);
                         } else {
-                            Homey.log("[" + device_data.name + "] No new data");
+                            this.log(`No new data`);
                         }
                     } else {
-                        this.getToken()
-                            .then(result => {
+                        this.log('Token expired, getting new token');
+                        SOTGBase.getToken(this.getBaseUrl(), data.username, data.password)
+                            .then(token => {
+                                this.setStoreValue('currentToken', token).catch(error => {
+                                    this.error('Failed setting new token');
+                                });
                                 this.checkProduction();
                             })
                             .catch(error => {
-                                this.setUnavailable('Authorization failed').then(result => {
-                                    this.log('Unavailable');
-                                }).catch(error => {
+                                this.error('Authorization failed');
+                                this.setUnavailable('Authorization failed').catch(error => {
                                     this.error('Setting availability failed');
                                 })
                             });
@@ -83,40 +181,9 @@ class SOTGBaseDevice extends Inverter {
                 });
             });
     }
-
-    getToken() {
-        const data = this.getData();
-        const hashedPassword = md5(data.password);
-        const tokenUrl = `${this.getBaseUrl()}Login?username=${data.username}&password=${hashedPassword}&key=apitest`;
-
-        fetch(tokenUrl)
-            .then(result => {
-                if (result.ok) {
-                    return result.text();
-                } else {
-                    throw result.status;
-                }
-            })
-            .then(body => {
-                parseXml(body, (error, result) => {
-                    if (!error && !result.error) {
-                        this.log('Retrieved new token');
-                        this.setStoreValue('currentToken', result.login.token[0]).catch(error => {
-                            this.error('Failed saving token');
-                        });
-                        return Promise.resolve(true);
-                    } else {
-                        this.log('Could not retrieve new token');
-                        throw result.error;
-                    }
-                });
-            })
-            .catch(error => {
-                this.log(`Unavailable (${error})`);
-                this.setUnavailable(`Error retrieving token (${error})`);
-                return Promise.reject(new Error(error));
-            })
-    }
 }
 
-module.exports = SOTGBaseDevice;
+module.exports = {
+    Driver: SOTGBaseDriver,
+    Device: SOTGBaseDevice
+};

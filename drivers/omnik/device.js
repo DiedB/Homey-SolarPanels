@@ -1,9 +1,9 @@
 'use strict';
 
 const Homey = require('homey');
-const SOTGBaseDevice = require('../sotg');
+const SOTGBase = require('../sotg');
 
-class Omnik extends SOTGBaseDevice {
+class Omnik extends SOTGBase.Device {
     getBaseUrl() {
         return 'http://www.omnikportal.com:8080/OmnikApi/serverapi/';
     }

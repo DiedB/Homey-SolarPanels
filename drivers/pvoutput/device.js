@@ -6,9 +6,10 @@ const fetch = require('node-fetch');
 const baseUrl = 'http://pvoutput.org/service/r2/getstatus.jsp';
 
 class PVOutput extends Inverter {
-    checkProduction(data) {
+    checkProduction() {
         this.log('Checking production');
 
+        const data = this.getData();
         var dataUrl = `${baseUrl}?key=${data.key}&sid=${data.sid}`;
 
         fetch(dataUrl)

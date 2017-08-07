@@ -1,8 +1,8 @@
 {
-  "name": "it.diederik.solar",
+  "name": "SolarPanels",
   "repository": {
     "type": "git",
-    "url": "https://www.github.com/DiedB/it.diederik.solar.git"
+    "url": "https://www.github.com/DiedB/SolarPanels.git"
   },
   "dependencies": {
     "md5": "^2.2.1",

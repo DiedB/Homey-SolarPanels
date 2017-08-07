@@ -25,18 +25,14 @@
 
 <div class="form-wrapper">
 	<div class="form-group">
-		<label>Please enter your Omnik Portal username and password:</label>
-
 		<div class="input-field">
+			<label>Please enter your Omnik Portal username and password:</label>
 			<input type="text" id="username" placeholder="Username" value="" />
-		</div>
-		<div class="input-field">
 			<input type="text" id="password" placeholder="Password" value="" />
 		</div>
 
-		<label>Enter your site/plant ID (found on Omnik Portal):</label>
-
 		<div class="input-field">
+			<label>Enter your site/plant ID (found on Omnik Portal):</label>
 			<input type="text" id="sid" placeholder="Site ID" value="" />
 		</div>
 
@@ -59,18 +55,12 @@
 				password: password
 			}
 
-			Homey.emit('validate', data, (valid) => {
-				if (!valid) {
-					Homey.alert('Invalid'); //TODO Translate
+			Homey.emit('validate', data, (result) => {
+				if (result !== true) {
+					Homey.alert(result);
 					$('#validate').prop('disabled', false);
 				} else {
-					Homey.addDevice({
-						name: 'Omnik',
-						data: data
-					}, (error, result) => {
-						if (error) return console.error(err);
-    					Homey.done();
-					})
+					Homey.showView('list_devices');
 				}
 			})
 		});

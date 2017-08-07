@@ -1,12 +1,11 @@
 'use strict';
 
 const Homey = require('homey');
+const SOTGBase = require('../sotg');
 
-class Omnik extends Homey.Driver {
-    onPair(socket) {
-        socket.on('validate', (data, callback) => {
-            callback(true);
-        });
+class Omnik extends SOTGBase.Driver {
+    getBaseUrl() {
+        return 'http://www.omnikportal.com:8080/OmnikApi/serverapi/';
     }
 }
 
