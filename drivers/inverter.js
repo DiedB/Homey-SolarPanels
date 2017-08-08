@@ -6,7 +6,7 @@ const uuid = require('uuid/v4');
 class Inverter extends Homey.Device {
     /* Overriden device methods */
     onInit() {
-        this.log(`Initializing device`);
+        this.log('Initializing device');
 
         if (this.getStoreValue('cronTask') === null) {
             this.createCronTask();
@@ -16,12 +16,12 @@ class Inverter extends Homey.Device {
     }
 
     onAdded() {
-        this.log(`Added device`);
+        this.log('Added device');
     }
 
     onDeleted() {
         this.deleteCronTask();
-        this.log(`Deleted device`);
+        this.log('Deleted device');
     }
     
     /* App-specific methods */

@@ -44,6 +44,24 @@
       "capabilities": ["measure_power", "meter_power"]
     },
     {
+      "id": "solaredge",
+      "name": {
+        "en": "SolarEdge",
+        "nl": "SolarEdge"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/solaredge/assets/images/large.jpg",
+        "small": "./drivers/solaredge/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
       "id": "omnik",
       "name": {
         "en": "Omnik",
