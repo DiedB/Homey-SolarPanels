@@ -44,6 +44,24 @@
       "capabilities": ["measure_power", "meter_power"]
     },
     {
+      "id": "enphase",
+      "name": {
+        "en": "Enphase",
+        "nl": "Enphase"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/enphase/assets/images/large.jpg",
+        "small": "./drivers/enphase/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
       "id": "solaredge",
       "name": {
         "en": "SolarEdge",
@@ -86,6 +104,64 @@
       "images": {
         "large": "./drivers/omnik/assets/images/large.jpg",
         "small": "./drivers/omnik/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
+      "id": "solarman",
+      "name": {
+        "en": "SolarMAN",
+        "nl": "SolarMAN"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "./drivers/solarman/assets/images/large.jpg",
+        "small": "./drivers/solarman/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
+      "id": "trannergy",
+      "name": {
+        "en": "Trannergy",
+        "nl": "Trannergy"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "./drivers/trannergy/assets/images/large.jpg",
+        "small": "./drivers/trannergy/assets/images/small.jpg"
       },
       "class": "sensor",
       "capabilities": ["measure_power", "meter_power"]

@@ -1,7 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-const SOTGBase = require('../sotg');
+const SOTGBase = require('../base');
 
 class Omnik extends SOTGBase.Device {
     getBaseUrl() {
