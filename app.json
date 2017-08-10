@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "compatibility": ">=1.5.0",
   "sdk": 2,
   "name": {
@@ -44,24 +44,6 @@
       "capabilities": ["measure_power", "meter_power"]
     },
     {
-      "id": "enphase",
-      "name": {
-        "en": "Enphase",
-        "nl": "Enphase"
-      },
-      "pair": [
-        {
-          "id": "pair"
-        }
-      ],
-      "images": {
-        "large": "./drivers/enphase/assets/images/large.jpg",
-        "small": "./drivers/enphase/assets/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": ["measure_power", "meter_power"]
-    },
-    {
       "id": "solaredge",
       "name": {
         "en": "SolarEdge",
@@ -75,6 +57,24 @@
       "images": {
         "large": "./drivers/solaredge/assets/images/large.jpg",
         "small": "./drivers/solaredge/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
+      "id": "enphase",
+      "name": {
+        "en": "Enphase",
+        "nl": "Enphase"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/enphase/assets/images/large.jpg",
+        "small": "./drivers/enphase/assets/images/small.jpg"
       },
       "class": "sensor",
       "capabilities": ["measure_power", "meter_power"]
@@ -162,6 +162,24 @@
       "images": {
         "large": "./drivers/trannergy/assets/images/large.jpg",
         "small": "./drivers/trannergy/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
+      "id": "sungrow",
+      "name": {
+        "en": "Sungrow",
+        "nl": "Sungrow"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/sungrow/assets/images/large.jpg",
+        "small": "./drivers/sungrow/assets/images/small.jpg"
       },
       "class": "sensor",
       "capabilities": ["measure_power", "meter_power"]
