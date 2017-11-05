@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
 
 const baseUrl = 'http://www.solarinfobank.com/openapi/loginvalidV2';
 
-class SolarEdge extends Homey.Driver {
+class Sungrow extends Homey.Driver {
     onPair(socket) {
         socket.on('validate', (device, callback) => {
             const validationUrl = `${baseUrl}?username=${device.data.username}&password=${device.data.password}`;
@@ -24,4 +24,4 @@ class SolarEdge extends Homey.Driver {
     }
 }
 
-module.exports = SolarEdge;
+module.exports = Sungrow;

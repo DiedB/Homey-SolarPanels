@@ -109,6 +109,24 @@
       "capabilities": ["measure_power", "meter_power"]
     },
     {
+      "id": "tigo",
+      "name": {
+        "en": "Tigo",
+        "nl": "Tigo"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/tigo/assets/images/large.jpg",
+        "small": "./drivers/tigo/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
       "id": "solarman",
       "name": {
         "en": "SolarMAN",
