@@ -12,8 +12,8 @@ class Tigo extends Homey.Driver {
                 const authorizationHeader = `Basic ${Buffer.from(`${device.data.username}:${device.data.password}`).toString('base64')}`;
                 const validationResponse = await fetch(`${baseUrl}/data/summary?system_id=${device.data.sid}`, {
                     headers: {
-                    'Authorization': authorizationHeader,
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                        'Authorization': authorizationHeader,
+                        'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 });
                 const validationData = await validationResponse.json();
@@ -24,7 +24,6 @@ class Tigo extends Homey.Driver {
                     callback(Homey.__('login_error'));
                 }
             } catch (error) {
-                console.log(error);
                 callback(Homey.__('network_error'));                
             }
         });

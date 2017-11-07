@@ -11,7 +11,6 @@ class Tigo extends Inverter {
 
         const data = this.getData();
         const dataUrl = `${baseUrl}/data/summary?system_id=${data.sid}`;
-
         const authorizationHeader = `Basic ${Buffer.from(`${data.username}:${data.password}`).toString('base64')}`;
         
         try {
@@ -45,7 +44,7 @@ class Tigo extends Inverter {
             }
         } catch (error) {
             this.log(`Unavailable (${error})`);
-            this.setUnavailable(`Error retrieving data (HTTP ${error})`);
+            this.setUnavailable(`Error retrieving data (${error})`);
         };
     }
 }
