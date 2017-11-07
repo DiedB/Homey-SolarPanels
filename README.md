@@ -1,18 +1,9 @@
 # Solar Panels  
 Let Homey monitor your solar panels. This app allows you to view production statistics using Insights, and lets you create triggers based on the current power output. For example, enable your car charger when your panels are producing!
 
-## Supported data sources
-* PVOutput
-* SolarEdge
-* Enphase
-* GoodWe
-* Omnik
-* Trannergy
-* SolarMAN
-* Ginlong/Solis
-* SAJ
-
 ## Release notes
+* 2.1.0 - Added support for Tigo Energy systems
+* 2.0.0 - Support for Apps SDK v2 and Sungrow
 * 1.4.3 - Fixed Omnik/SolarMAN/Trannergy API change, updated modules
 * 1.4.2 - Fixed SolarEdge cron issue
 * 1.4.1 - Added support for SAJ inverters, updated README
@@ -27,31 +18,6 @@ Let Homey monitor your solar panels. This app allows you to view production stat
 ## To do
 * Screensavers showing daily production
 * More data than just power and energy
-
----
-# Adding an inverter
-## PVOutput
-Get your System ID and read only API key from PVOutput. Add the inverter as a device in the Homey devices panel, and give the inverter a name (this will be used as the name for the device).
-
-![](http://i.imgur.com/REJxrUg.png)
-
-## SolarEdge
-Get your System ID and API key from SolarEdge. Add the inverter as a device in the Homey devices panel, and give the inverter a name (this will be used as the name for the device).
-
-## Enphase
-Create an account at https://developer.enphase.com/. Authorize your API account to access your system (instructions after logging in). Please let me know if everything works for you, Enphase support has only been tested on a demo system.
-
-## Omnik/Ginlong/Trannergy/SolarMAN
-Use your login data for the monitoring portal, as well as the plant ID found in the URL after logging in.
-
-## GoodWe
-You can get the station ID by logging in to your GoodWe portal and then right-clicking on the inverter station. Then, copy the link address. The link will contain something like: `powerStationDetail('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')` where the xx's represent a hex ID that totals to your station ID.
-
-## Fronius
-Connect your Fronius Datamanager to your network and enter its hostname. You're all set!
-
-## SAJ
-Connect the SAJ Inverter to your network and enter its hostname/IP address. You're all set!
 
 ---
 # Features
