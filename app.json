@@ -1,22 +1,29 @@
 {
   "id": "it.diederik.solar",
+  "version": "2.0.1",
+  "compatibility": ">=1.5.0",
+  "sdk": 2,
   "name": {
-    "en": "Solar Panels"
+    "en": "Solar Panels",
+    "nl": "Zonnepanelen"
   },
   "description": {
-    "en": "PV production tracker for Homey"
+    "en": "PV production tracker for Homey.",
+    "nl": "PV-opbrengsttracker voor Homey."
   },
-  "version": "1.4.3",
-  "compatibility": "0.x || 1.x",
-  "author": {
-    "name": "Diederik Bakker",
-    "email": "d@iederik.nl"
+  "category": "energy",
+  "tags": {
+    "en": [ "solar", "panels", "pv" ],
+    "nl": [ "zonnepanelen", "pv" ]
   },
   "images": {
     "large": "./assets/images/large.jpg",
     "small": "./assets/images/small.jpg"
   },
-  "category": "energy",
+  "author": {
+    "name": "Diederik Bakker",
+    "email": "diederik@outlook.com"
+  },
   "drivers": [
     {
       "id": "pvoutput",
@@ -32,24 +39,6 @@
       "images": {
         "large": "./drivers/pvoutput/assets/images/large.jpg",
         "small": "./drivers/pvoutput/assets/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": ["measure_power", "meter_power"]
-    },
-    {
-      "id": "enphase",
-      "name": {
-        "en": "Enphase",
-        "nl": "Enphase"
-      },
-      "pair": [
-        {
-          "id": "pair"
-        }
-      ],
-      "images": {
-        "large": "./drivers/enphase/assets/images/large.jpg",
-        "small": "./drivers/enphase/assets/images/small.jpg"
       },
       "class": "sensor",
       "capabilities": ["measure_power", "meter_power"]
@@ -73,6 +62,24 @@
       "capabilities": ["measure_power", "meter_power"]
     },
     {
+      "id": "enphase",
+      "name": {
+        "en": "Enphase",
+        "nl": "Enphase"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/enphase/assets/images/large.jpg",
+        "small": "./drivers/enphase/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
       "id": "omnik",
       "name": {
         "en": "Omnik",
@@ -81,11 +88,40 @@
       "pair": [
         {
           "id": "pair"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
         }
       ],
       "images": {
         "large": "./drivers/omnik/assets/images/large.jpg",
         "small": "./drivers/omnik/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
+      "id": "tigo",
+      "name": {
+        "en": "Tigo",
+        "nl": "Tigo"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/tigo/assets/images/large.jpg",
+        "small": "./drivers/tigo/assets/images/small.jpg"
       },
       "class": "sensor",
       "capabilities": ["measure_power", "meter_power"]
@@ -99,29 +135,22 @@
       "pair": [
         {
           "id": "pair"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
         }
       ],
       "images": {
         "large": "./drivers/solarman/assets/images/large.jpg",
         "small": "./drivers/solarman/assets/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": ["measure_power", "meter_power"]
-    },
-    {
-      "id": "ginlong",
-      "name": {
-        "en": "Ginlong/Solis",
-        "nl": "Ginlong/Solis"
-      },
-      "pair": [
-        {
-          "id": "pair"
-        }
-      ],
-      "images": {
-        "large": "./drivers/ginlong/assets/images/large.jpg",
-        "small": "./drivers/ginlong/assets/images/small.jpg"
       },
       "class": "sensor",
       "capabilities": ["measure_power", "meter_power"]
@@ -135,6 +164,17 @@
       "pair": [
         {
           "id": "pair"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
         }
       ],
       "images": {
@@ -145,10 +185,10 @@
       "capabilities": ["measure_power", "meter_power"]
     },
     {
-      "id": "goodwe",
+      "id": "sungrow",
       "name": {
-        "en": "GoodWe",
-        "nl": "GoodWe"
+        "en": "Sungrow",
+        "nl": "Sungrow"
       },
       "pair": [
         {
@@ -156,44 +196,8 @@
         }
       ],
       "images": {
-        "large": "./drivers/goodwe/assets/images/large.jpg",
-        "small": "./drivers/goodwe/assets/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": ["measure_power", "meter_power"]
-    },
-    {
-      "id": "fronius",
-      "name": {
-        "en": "Fronius",
-        "nl": "Fronius"
-      },
-      "pair": [
-        {
-          "id": "pair"
-        }
-      ],
-      "images": {
-        "large": "./drivers/fronius/assets/images/large.jpg",
-        "small": "./drivers/fronius/assets/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": ["measure_power", "meter_power"]
-    },
-    {
-      "id": "saj",
-      "name": {
-        "en": "SAJ",
-        "nl": "SAJ"
-      },
-      "pair": [
-        {
-          "id": "pair"
-        }
-      ],
-      "images": {
-        "large": "./drivers/saj/assets/images/large.jpg",
-        "small": "./drivers/saj/assets/images/small.jpg"
+        "large": "./drivers/sungrow/assets/images/large.jpg",
+        "small": "./drivers/sungrow/assets/images/small.jpg"
       },
       "class": "sensor",
       "capabilities": ["measure_power", "meter_power"]

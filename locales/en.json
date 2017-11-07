@@ -1,5 +1,6 @@
 {
     "login_error": "Login details incorrect",
+    "network_error": "Network error, please try again later",
     "plant_error": "Plant ID incorrect",
     "station_error": "Station ID incorrect",
     "ip_error": "IP address incorrect",

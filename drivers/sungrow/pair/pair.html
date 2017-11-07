@@ -1,0 +1,74 @@
+<style type="text/css">
+	.form-wrapper {
+		width: 100%;
+		height: 100%;
+
+		display: flex;
+		justify-content: center;
+	}
+
+	.form-group, .input-field {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.input-field {
+		margin-top: 10px;
+	}
+
+	.submit-button {
+		margin-top: 10px;
+	}
+</style>
+
+<div class="form-wrapper">
+	<div class="form-group">
+		
+		<div class="input-field">
+			<label>Please enter your Sungrow username and password:</label>
+			<input type="text" id="username" placeholder="Username" value="" />
+			<input type="text" id="password" placeholder="Password" value="" />
+		</div>
+
+		<div class="input-field">
+			<label>Give your inverter a name:</label>
+			<input type="text" id="name" placeholder="Name" value="" />
+		</div>
+
+		<button class="submit-button" id="validate">Connect</button>
+	</div>	
+</div>
+
+<script type="text/javascript">
+	$(() => {
+		$('#validate').click(() => {
+			$('#validate').prop('disabled', true);
+
+			var username = $('#username').val();
+			var password = $('#password').val();
+			var name = $('#name').val();
+
+			var device = {
+				name: name,
+				data: {
+					username: username,
+					password: password
+				}
+			};
+
+			Homey.emit('validate', device, (result) => {
+				if (result !== true) {
+					Homey.alert(result);
+					$('#validate').prop('disabled', false);
+				} else {
+					Homey.addDevice(device, (error, result) => {
+						if (error) return console.error(err);
+						Homey.done();
+					});
+				}
+			});		
+		});
+	});
+</script>
