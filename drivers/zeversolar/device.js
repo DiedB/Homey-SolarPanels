@@ -6,6 +6,10 @@ const fetch = require('node-fetch');
 const baseUrl = 'https://www.zevercloud.com/api/v1';
 
 class Zeversolar extends Inverter {
+    getCronString() {
+        return '*/1 * * * *';
+    }
+
     async checkProduction() {
         this.log('Checking production');
 
