@@ -32,7 +32,20 @@ class Zeversolar extends Inverter {
                 const currentEnergy = productionData['E-Today'].value;
                 this.setCapabilityValue('meter_power', currentEnergy);
     
-                const currentPower = productionData['Power'].value;
+                const currentPowerUnit = productionData['Power'].unit;
+                const currentPowerValue = productionData['Power'].value;
+                let currentPower;
+
+                switch (currentPowerUnit) {
+                    case 'kW':
+                        currentPower = currentPowerValue * 1000;
+                        break;
+                    case 'W':
+                    default:
+                        currentPower = currentPowerValue;
+                        break;
+                };      
+                
                 this.setCapabilityValue('measure_power', currentPower);
                 
                 this.log(`Current energy is ${currentEnergy}kWh`);
