@@ -6,10 +6,6 @@ const fetch = require('node-fetch');
 const baseUrl = 'https://eu.goodwe-power.com/Mobile/';
 
 class GoodWe extends Inverter {
-    getCronString() {
-        return '*/5 * * * *';
-    }
-
     checkProduction() {
         this.log('Checking production');
         
