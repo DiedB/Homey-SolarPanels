@@ -201,6 +201,24 @@
       },
       "class": "sensor",
       "capabilities": ["measure_power", "meter_power"]
+    },
+    {
+      "id": "solax",
+      "name": {
+        "en": "Solax",
+        "nl": "Solax"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/solax/assets/images/large.jpg",
+        "small": "./drivers/solax/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
     }
   ]
 }
