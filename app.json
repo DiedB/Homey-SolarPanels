@@ -24,6 +24,13 @@
     "name": "Diederik Bakker",
     "email": "diederik@outlook.com"
   },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "diederik"
+      }
+    }
+  },
   "drivers": [
     {
       "id": "pvoutput",
