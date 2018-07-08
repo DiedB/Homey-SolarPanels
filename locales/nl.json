@@ -11,7 +11,7 @@
     "solax": {
       "pair":{
         "instructions": "Vul uw Solax X-Monitoring site gegevens in",
-        "hint1": "Uw site-id is de laatste digits van de URL's van de diverse menu's op de Solax X-Monitoring site",
+        "hint1": "Uw site-id staat aan het einde van de menuknop URL's op de X-Monitoring site",
         "hint2": "Bijvoorbeeld: http://www.solax-portal.com/dz/User/overview/123456",
         "username": "gebruikersnaam",
         "password": "wachtwoord",
