@@ -7,5 +7,16 @@
     "name": "Give your inverter a name:",
     "saj": {
       "address": "Please enter the IP address or hostname of your SAJ inverter:"
+    },
+    "solax": {
+      "pair":{
+        "instructions": "Enter your Solax X-Monitoring site details",
+        "hint1": "Your site-id is the last digits found at the end of each URL of the menu options on the X-Monitoring site",
+        "hint2": "Example: http://www.solax-portal.com/dz/User/overview/123456",        
+        "username": "username",
+        "password": "password",
+        "site_id": "site-id",
+        "button": "Connect"
+      }
     }
 }
