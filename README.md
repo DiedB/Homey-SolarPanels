@@ -2,6 +2,7 @@
 Let Homey monitor your solar panels. This app allows you to view production statistics using Insights, and lets you create triggers based on the current power output. For example, enable your car charger when your panels are producing!
 
 ## Release notes
+* 2.3.2 - Update SolarMAN API URL
 * 2.3.0 - Upgrade GoodWe to SDK v2, support new GoodWe API
 * 2.2.0 - Added support for Zeversolar systems
 * 2.1.0 - Added support for Tigo Energy systems
