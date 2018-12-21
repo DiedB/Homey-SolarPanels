@@ -90,7 +90,7 @@ class SOTGBaseDriver extends Homey.Driver {
                 .then(token => {
                     systemData = data;
                     currentToken = token;
-                    callback(true);
+                    callback(null, true);
                 })
                 .catch(error => {
                     this.log(error);

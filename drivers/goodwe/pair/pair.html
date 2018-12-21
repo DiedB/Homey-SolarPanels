@@ -41,11 +41,11 @@
 
 			var username = $('#username').val();
 
-			var data = { username	};
+			var data = { username };
 
-			Homey.emit('validate', data, (result) => {
-				if (result !== true) {
-					Homey.alert(result);
+			Homey.emit('validate', device, (error, result) => {
+				if (error !== null) {
+					Homey.alert(error);
 					$('#validate').prop('disabled', false);
 				} else {
 					Homey.showView('list_devices');

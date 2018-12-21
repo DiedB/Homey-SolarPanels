@@ -16,7 +16,7 @@ class GoodWe extends Homey.Driver {
                 .then(result => {
                     if (result.ok) {
                         result.json().then(json => systemData = json);
-                        callback(true);
+                        callback(null, true);
                     } else {
                         callback(Homey.__('login_error'));
                     }

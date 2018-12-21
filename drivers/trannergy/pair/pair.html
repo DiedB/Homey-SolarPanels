@@ -55,9 +55,9 @@
 				password: password
 			}
 
-			Homey.emit('validate', data, (result) => {
-				if (result !== true) {
-					Homey.alert(result);
+			Homey.emit('validate', data, (error, result) => {
+				if (error !== null) {
+					Homey.alert(error);
 					$('#validate').prop('disabled', false);
 				} else {
 					Homey.showView('list_devices');

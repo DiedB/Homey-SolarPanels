@@ -13,7 +13,7 @@ class Zeversolar extends Homey.Driver {
                 const validationData = await validationResponse.json();
                 
                 if (validationData.code !== -1) {
-                    callback(true);
+                    callback(null, true);
                 } else {
                     callback(Homey.__('login_error'));
                 }

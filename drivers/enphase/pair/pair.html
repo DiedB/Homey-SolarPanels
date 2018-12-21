@@ -61,9 +61,9 @@
 				}
 			};
 
-			Homey.emit('validate', device, (result) => {
-				if (result !== true) {
-					Homey.alert(result);
+			Homey.emit('validate', device, (error, result) => {
+				if (error !== null) {
+					Homey.alert(error);
 					$('#validate').prop('disabled', false);
 				} else {
 					Homey.addDevice(device, (error, result) => {
