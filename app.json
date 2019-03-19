@@ -1,7 +1,7 @@
 {
   "id": "it.diederik.solar",
-  "version": "2.4.0",
-  "compatibility": ">=1.5.0",
+  "version": "2.5.0",
+  "compatibility": ">=2.0",
   "sdk": 2,
   "name": {
     "en": "Solar Panels",
@@ -82,6 +82,24 @@
       "images": {
         "large": "./drivers/enphase/assets/images/large.jpg",
         "small": "./drivers/enphase/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
+      "id": "fronius",
+      "name": {
+        "en": "Fronius",
+        "nl": "Fronius"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/fronius/assets/images/large.jpg",
+        "small": "./drivers/fronius/assets/images/small.jpg"
       },
       "class": "sensor",
       "capabilities": ["measure_power", "meter_power"]

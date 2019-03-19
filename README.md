@@ -2,6 +2,7 @@
 Let Homey monitor your solar panels. This app allows you to view production statistics using Insights, and lets you create triggers based on the current power output. For example, enable your car charger when your panels are producing!
 
 ## Release notes
+* 2.5.0 - Upgrade Fronius to SDK v2, improve error handling in pairing process
 * 2.4.0 - Fixed pairing process for Homey v2.0
 * 2.3.2 - Update SolarMAN API URL
 * 2.3.0 - Upgrade GoodWe to SDK v2, support new GoodWe API
