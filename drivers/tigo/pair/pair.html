@@ -67,7 +67,10 @@
 					$('#validate').prop('disabled', false);
 				} else {
 					Homey.addDevice(device, (error, result) => {
-						if (error) return console.error(err);
+						if (error !== null) {
+							$('#validate').prop('disabled', false);
+							Homey.alert(error);
+						}
 						Homey.done();
 					});
 				}
