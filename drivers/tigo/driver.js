@@ -19,7 +19,7 @@ class Tigo extends Homey.Driver {
                 const validationData = await validationResponse.json();
                 
                 if (validationData.summary) {
-                    callback(true);
+                    callback(null, true);
                 } else {
                     callback(Homey.__('login_error'));
                 }

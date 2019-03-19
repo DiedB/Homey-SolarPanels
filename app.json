@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "2.1.0",
+  "version": "2.4.0",
   "compatibility": ">=1.5.0",
   "sdk": 2,
   "name": {
@@ -134,6 +134,24 @@
       "capabilities": ["measure_power", "meter_power"]
     },
     {
+      "id": "zeversolar",
+      "name": {
+        "en": "Zeversolar",
+        "nl": "Zeversolar"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/zeversolar/assets/images/large.jpg",
+        "small": "./drivers/zeversolar/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
       "id": "solarman",
       "name": {
         "en": "SolarMAN",
@@ -205,6 +223,35 @@
       "images": {
         "large": "./drivers/sungrow/assets/images/large.jpg",
         "small": "./drivers/sungrow/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power", "meter_power"]
+    },
+    {
+      "id": "goodwe",
+      "name": {
+        "en": "GoodWe",
+        "nl": "GoodWe"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "./drivers/goodwe/assets/images/large.jpg",
+        "small": "./drivers/goodwe/assets/images/small.jpg"
       },
       "class": "sensor",
       "capabilities": ["measure_power", "meter_power"]

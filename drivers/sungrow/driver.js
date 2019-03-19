@@ -13,7 +13,7 @@ class Sungrow extends Homey.Driver {
             fetch(validationUrl)
                 .then(result => {
                     if (result.ok && !result.json().code) {
-                        callback(true);
+                        callback(null, true);
                     } else {
                         callback(Homey.__('login_error'));
                     }
