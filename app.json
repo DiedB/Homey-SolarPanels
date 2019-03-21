@@ -66,7 +66,33 @@
         "small": "./drivers/solaredge/assets/images/small.jpg"
       },
       "class": "sensor",
-      "capabilities": ["measure_power.production", "measure_power.consumption"]
+      "capabilities": ["measure_power.production", "measure_power.consumption", "meter_power.production", "meter_power.consumption"],
+      "capabilitiesOptions": {
+        "measure_power.production": {
+          "title": {
+            "en": "Production",
+            "nl": "Opbrengst"
+          }
+        },
+        "measure_power.consumption": {
+          "title": {
+            "en": "Consumption",
+            "nl": "Verbruik"
+          }
+        },
+        "meter_power.production": {
+          "title": {
+            "en": "Daily production",
+            "nl": "Opbrengst vandaag"
+          }
+        },
+        "meter_power.consumption": {
+          "title": {
+            "en": "Daily consumption",
+            "nl": "Verbruik vandaag"
+          }
+        }
+      }    
     },
     {
       "id": "enphase",
