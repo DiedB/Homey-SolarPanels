@@ -1,17 +1,8 @@
 <style type="text/css">
-	.form-wrapper {
-		width: 100%;
-		height: 100%;
-
-		display: flex;
-		justify-content: center;
-	}
-
 	.form-group, .input-field {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
 	}
 
 	.input-field {
@@ -23,57 +14,54 @@
 	}
 </style>
 
-<div class="form-wrapper">
-	<div class="form-group">
-		
-		<div class="input-field">
-			<label>Please enter your Enphase System ID, User ID and API key:</label>
-			<input type="text" id="sid" placeholder="System ID" value="" />
-			<input type="text" id="key" placeholder="API key" value="" />
-			<input type="text" id="uid" placeholder="User ID" value="" />
-		</div>
+<div class="form-group">
+	<div class="input-field">
+		<label>Please enter your Enphase System ID, User ID and API key:</label>
+		<input type="text" id="sid" placeholder="System ID" value="" />
+		<input type="text" id="key" placeholder="API key" value="" />
+		<input type="text" id="uid" placeholder="User ID" value="" />
+	</div>
 
-		<div class="input-field">
-			<label>Give your inverter a name:</label>
-			<input type="text" id="name" placeholder="Name" value="" />
-		</div>
+	<div class="input-field">
+		<label>Give your inverter a name:</label>
+		<input type="text" id="name" placeholder="Name" value="" />
+	</div>
 
-		<button class="submit-button" id="validate">Connect</button>
-	</div>	
+	<button class="submit-button" id="validate">Connect</button>
 </div>
 
 <script type="text/javascript">
 	$(() => {
 		$('#validate').click(() => {
-			$('#validate').prop('disabled', true);
+			Homey.showLoadingOverlay();
 
 			var sid = $('#sid').val();
 			var uid = $('#uid').val();
 			var key = $('#key').val();
 			var name = $('#name').val();
 
-			var device = {
+			var deviceDefinition = {
 				name: name,
-				data: {
-					sid: sid,
-					uid: uid,
-					key: key
-				}
+				data: { sid	},
+				settings: { uid, key }
 			};
 
-			Homey.emit('validate', device, (error, result) => {
+			Homey.emit('validate', deviceDefinition, (error, result) => {
 				if (error !== null) {
+					Homey.hideLoadingOverlay();
 					Homey.alert(error);
-					$('#validate').prop('disabled', false);
 				} else {
-Homey.addDevice(device, (error, result) => {
+					Homey.showLoadingOverlay();
+					Homey.createDevice(deviceDefinition, (error, result) => {
 						if (error !== null) {
-							$('#validate').prop('disabled', false);
+							Homey.hideLoadingOverlay();
 							Homey.alert(error);
+						} else {
+							Homey.done();
 						}
-						Homey.done();
-					});				}
-			});		
+					});
+				}
+			});
 		});
 	});
 </script>

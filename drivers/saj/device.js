@@ -2,10 +2,11 @@
 
 const Inverter = require('../inverter');
 const fetch = require('node-fetch');
+const parseXml = require("xml2js").parseString;
 
-const pathName = '/solar_api/v1/GetInverterRealtimeData.cgi?Scope=Device&DeviceID=1&DataCollection=CommonInverterData';
+const pathName = '/real_time_data.xml';
 
-class Fronius extends Inverter {
+class SAJ extends Inverter {
     getCronString() {
         return '* * * * *';
     }
@@ -27,34 +28,24 @@ class Fronius extends Inverter {
                         })
                     }
 
-                    return result.json();
+                    return result.text();
                 } else {
                     throw result.status;
                 }
             })
             .then(response => {
-                const lastUpdate = response.Head.Timestamp;
+                parseXml(response, (_, result => {
+                    const parsedResult = result.real_time_data;
 
-                if (lastUpdate !== this.getStoreValue('lastUpdate')) {
-                    this.setStoreValue('lastUpdate', lastUpdate).catch(error => {
-                        this.error('Failed setting last update value');
-                    });
-
-                    const currentEnergy = Number(response.Body.Data.DAY_ENERGY.Value / 1000);
+                    const currentEnergy = Number(parsedResult["e-today"][0]);
                     this.setCapabilityValue('meter_power.production', currentEnergy);
-
-                    if (response.Body.Data.PAC) {
-                        const currentPower = Number(response.Body.Data.PAC.Value);
-                        this.setCapabilityValue('measure_power.production', currentPower);    
-                    } else {
-                        this.setCapabilityValue('measure_power.production', 0)
-                    }
-
+    
+                    const currentPower = Number(parsedResult["p-ac"][0]);
+                    this.setCapabilityValue('measure_power.production', currentPower);
+    
                     this.log(`Current energy is ${currentEnergy}kWh`);
                     this.log(`Current power is ${currentPower}W`);
-                } else {
-                    this.log(`No new data`);
-                }
+                }))
             })
             .catch(error => {
                 this.log(`Unavailable (${error})`);
@@ -63,4 +54,4 @@ class Fronius extends Inverter {
     }
 }
 
-module.exports = Fronius;
+module.exports = SAJ;

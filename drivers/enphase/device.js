@@ -10,7 +10,8 @@ class Enphase extends Inverter {
         this.log('Checking production');
 
         const data = this.getData();
-        const dataUrl = `${baseUrl}${data.sid}/summary?key=${data.key}&user_id=${data.uid}`;
+        const settings = this.getSettings();
+        const dataUrl = `${baseUrl}${data.sid}/summary?key=${settings.key}&user_id=${settings.uid}`;
 
         fetch(dataUrl)
             .then(result => {
@@ -37,10 +38,10 @@ class Enphase extends Inverter {
                     });
 
                     const currentEnergy = Number(response.energy_today) / 1000;
-                    this.setCapabilityValue('meter_power', currentEnergy);
+                    this.setCapabilityValue('meter_power.production', currentEnergy);
 
                     const currentPower = Number(response.current_power);
-                    this.setCapabilityValue('measure_power', currentPower);
+                    this.setCapabilityValue('measure_power.production', currentPower);
 
                     this.log(`Current energy is ${currentEnergy}kWh`);
                     this.log(`Current power is ${currentPower}W`);
@@ -50,7 +51,7 @@ class Enphase extends Inverter {
             })
             .catch(error => {
                 this.log(`Unavailable (${error})`);
-                this.setUnavailable(`Error retrieving data (HTTP ${error})`);
+                this.setUnavailable(`Error retrieving data (${error})`);
             });
     }
 }
