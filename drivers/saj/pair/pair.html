@@ -1,0 +1,63 @@
+<style type="text/css">
+	.form-group, .input-field {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.input-field {
+		margin-top: 10px;
+	}
+
+	.submit-button {
+		margin-top: 10px;
+	}
+</style>
+
+<div class="form-group">
+	<div class="input-field">
+		<label>Please enter the IP address or hostname of your SAJ inverter:</label>
+		<input type="text" id="ip" placeholder="IP address" value="" />
+	</div>
+
+	<div class="input-field">
+		<label>Give your inverter a name:</label>
+		<input type="text" id="name" placeholder="Name" value="" />
+	</div>
+
+	<button class="submit-button" id="validate">Connect</button>
+</div>
+
+<script type="text/javascript">
+	$(() => {
+		$('#validate').click(() => {
+			Homey.showLoadingOverlay();
+
+			var ip = $('#ip').val();
+			var name = $('#name').val();
+
+			var deviceDefinition = {
+				name,
+				data: {},
+				settings: { ip }
+			};
+
+			Homey.emit('validate', deviceDefinition, (error, result) => {
+				if (error !== null) {
+					Homey.hideLoadingOverlay();
+					Homey.alert(error);
+				} else {
+					Homey.showLoadingOverlay();
+					Homey.createDevice(deviceDefinition, (error, result) => {
+						if (error !== null) {
+							Homey.hideLoadingOverlay();
+							Homey.alert(error);
+						} else {
+							Homey.done();
+						}
+					});
+				}
+			});
+		});
+	});
+</script>

@@ -272,6 +272,48 @@
           }
         }
       ]
+    },
+    {
+      "id": "saj",
+      "name": {
+        "en": "SAJ"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/saj/assets/images/large.jpg",
+        "small": "./drivers/saj/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power.production", "meter_power.production"],
+      "capabilitiesOptions": {
+        "measure_power.production": {
+          "title": {
+            "en": "Production",
+            "nl": "Opbrengst"
+          },
+          "isGenerator": true
+        },
+        "meter_power.production": {
+          "title": {
+            "en": "Daily production",
+            "nl": "Opbrengst vandaag"
+          },
+          "isGenerator": true
+        }
+      },
+      "settings": [
+        {
+          "id": "ip",
+          "type": "text",
+          "label": {
+            "en": "SAJ IP address"
+          }
+        }
+      ]
     }
   ]
 }

@@ -71,7 +71,7 @@ class SolarEdge extends Inverter {
             })
             .catch(error => {
                 this.log(`Unavailable (${error})`);
-                this.setUnavailable(`Error retrieving data (HTTP ${error})`);
+                this.setUnavailable(`Error retrieving data (${error})`);
             });
 
         // Energy values
@@ -111,7 +111,7 @@ class SolarEdge extends Inverter {
             })
             .catch(error => {
                 this.log(`Unavailable (${error})`);
-                this.setUnavailable(`Error retrieving data (HTTP ${error})`);
+                this.setUnavailable(`Error retrieving data (${error})`);
             });
 
     }
