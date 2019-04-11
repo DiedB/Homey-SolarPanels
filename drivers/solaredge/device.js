@@ -29,12 +29,13 @@ class SolarEdge extends Inverter {
         this.log('Checking production');
 
         const data = this.getData();
+        const settings = this.getSettings();
     
         const currentIsoString = this.getCurrentIsoString();
         const currentDateString = this.getCurrentDateString();
 
         // Power values
-        const powerDataUrl = `${baseUrl}${data.sid}/powerDetails?api_key=${data.key}&format=json&startTime=${currentIsoString}&endTime=${currentIsoString}`;
+        const powerDataUrl = `${baseUrl}${data.sid}/powerDetails?api_key=${settings.key}&format=json&startTime=${currentIsoString}&endTime=${currentIsoString}`;
         fetch(powerDataUrl)
             .then(result => {
                 if (result.ok || result.status === 304) {
@@ -74,7 +75,7 @@ class SolarEdge extends Inverter {
             });
 
         // Energy values
-        const energyDataUrl = `${baseUrl}${data.sid}/energyDetails?api_key=${data.key}&format=json&startTime=${currentDateString} 00:00:00&endTime=${currentDateString} 23:59:59`;
+        const energyDataUrl = `${baseUrl}${data.sid}/energyDetails?api_key=${settings.key}&format=json&startTime=${currentDateString} 00:00:00&endTime=${currentDateString} 23:59:59`;
         fetch(energyDataUrl)
             .then(result => {
                 if (result.ok || result.status === 304) {

@@ -10,7 +10,8 @@ class PVOutput extends Inverter {
         this.log('Checking production');
 
         const data = this.getData();
-        var dataUrl = `${baseUrl}?key=${data.key}&sid=${data.sid}`;
+        const settings = this.getSettings();
+        var dataUrl = `${baseUrl}?key=${settings.key}&sid=${data.sid}`;
 
         fetch(dataUrl)
             .then(result => {
@@ -38,10 +39,10 @@ class PVOutput extends Inverter {
                     });
 
                     const currentEnergy = Number(parsedResponse[2]) / 1000;
-                    this.setCapabilityValue('meter_power', currentEnergy);
+                    this.setCapabilityValue('meter_power.production', currentEnergy);
 
                     const currentPower = Number(parsedResponse[3]);
-                    this.setCapabilityValue('measure_power', currentPower);
+                    this.setCapabilityValue('measure_power.production', currentPower);
 
                     this.log(`Current energy is ${currentEnergy}kWh`);
                     this.log(`Current power is ${currentPower}W`);

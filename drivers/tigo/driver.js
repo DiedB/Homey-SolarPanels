@@ -9,7 +9,7 @@ class Tigo extends Homey.Driver {
     onPair(socket) {
         socket.on('validate', async (device, callback) => {
             try {
-                const authorizationHeader = `Basic ${Buffer.from(`${device.data.username}:${device.data.password}`).toString('base64')}`;
+                const authorizationHeader = `Basic ${Buffer.from(`${device.settings.username}:${device.settings.password}`).toString('base64')}`;
                 const validationResponse = await fetch(`${baseUrl}/data/summary?system_id=${device.data.sid}`, {
                     headers: {
                         'Authorization': authorizationHeader,
@@ -21,10 +21,10 @@ class Tigo extends Homey.Driver {
                 if (validationData.summary) {
                     callback(null, true);
                 } else {
-                    callback(Homey.__('login_error'));
+                    callback(new Error(Homey.__('login_error')));
                 }
             } catch (error) {
-                callback(Homey.__('network_error'));                
+                callback(new Error(Homey.__('network_error')));
             }
         });
     }
