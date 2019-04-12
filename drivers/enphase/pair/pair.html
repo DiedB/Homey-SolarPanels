@@ -47,13 +47,13 @@
 			};
 
 			Homey.emit('validate', deviceDefinition, (error, result) => {
-				if (error !== null) {
+				if (error) {
 					Homey.hideLoadingOverlay();
 					Homey.alert(error);
 				} else {
 					Homey.showLoadingOverlay();
 					Homey.createDevice(deviceDefinition, (error, result) => {
-						if (error !== null) {
+						if (error) {
 							Homey.hideLoadingOverlay();
 							Homey.alert(error);
 						} else {

@@ -2,7 +2,7 @@
 
 const Inverter = require('../inverter');
 const fetch = require('node-fetch');
-const parseXml = require("xml2js").parseString;
+const parseString = require('xml2js').parseString;
 
 const pathName = '/real_time_data.xml';
 
@@ -34,7 +34,7 @@ class SAJ extends Inverter {
                 }
             })
             .then(response => {
-                parseXml(response, (_, result => {
+                parseString(response, (_, result) => {
                     const parsedResult = result.real_time_data;
 
                     const currentEnergy = Number(parsedResult["e-today"][0]);
@@ -45,7 +45,7 @@ class SAJ extends Inverter {
     
                     this.log(`Current energy is ${currentEnergy}kWh`);
                     this.log(`Current power is ${currentPower}W`);
-                }))
+                });
             })
             .catch(error => {
                 this.log(`Unavailable (${error})`);
