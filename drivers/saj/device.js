@@ -34,7 +34,7 @@ class SAJ extends Inverter {
                 }
             })
             .then(response => {
-                parseXml(response, (_, result => {
+                parseXml(response, (_, result) => {
                     const parsedResult = result.real_time_data;
 
                     const currentEnergy = Number(parsedResult["e-today"][0]);
@@ -45,7 +45,7 @@ class SAJ extends Inverter {
     
                     this.log(`Current energy is ${currentEnergy}kWh`);
                     this.log(`Current power is ${currentPower}W`);
-                }))
+                })
             })
             .catch(error => {
                 this.log(`Unavailable (${error})`);
