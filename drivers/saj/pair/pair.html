@@ -38,7 +38,9 @@
 
 			var deviceDefinition = {
 				name,
-				data: {},
+				data: {
+					id: null,
+				},
 				settings: { ip }
 			};
 
@@ -48,6 +50,8 @@
 					Homey.alert(error);
 				} else {
 					Homey.showLoadingOverlay();
+
+					deviceDefinition.data.id = result.id;
 					Homey.createDevice(deviceDefinition, (error, result) => {
 						if (error) {
 							Homey.hideLoadingOverlay();
