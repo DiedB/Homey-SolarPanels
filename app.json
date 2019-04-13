@@ -288,7 +288,7 @@
         "small": "./drivers/saj/assets/images/small.jpg"
       },
       "class": "sensor",
-      "capabilities": ["measure_power.production", "meter_power.production"],
+      "capabilities": ["measure_power.production", "meter_power.production", "measure_voltage.grid"],
       "capabilitiesOptions": {
         "measure_power.production": {
           "title": {
@@ -303,6 +303,12 @@
             "nl": "Opbrengst vandaag"
           },
           "isGenerator": true
+        },
+        "measure_voltage.grid": {
+          "title": {
+            "en": "Grid voltage",
+            "nl": "Netspanning"
+          }
         }
       },
       "settings": [
