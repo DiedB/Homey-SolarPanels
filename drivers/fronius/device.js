@@ -41,7 +41,7 @@ class Fronius extends Inverter {
                     });
 
                     const currentEnergy = Number(response.Body.Data.DAY_ENERGY.Value / 1000);
-                    this.setCapabilityValue('meter_power.production', currentEnergy);
+                    this.setCapabilityValue('daily_production', currentEnergy);
 
                     let currentPower;
                     if (response.Body.Data.PAC) {
@@ -49,7 +49,7 @@ class Fronius extends Inverter {
                     } else {
                         currentPower = null;
                     }
-                    this.setCapabilityValue('measure_power.production', currentPower);    
+                    this.setCapabilityValue('production', currentPower);    
 
                     this.log(`Current energy is ${currentEnergy}kWh`);
                     this.log(`Current power is ${currentPower}W`);

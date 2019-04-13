@@ -5,7 +5,7 @@ const { getUserId, getPlantData } = require('./base');
 
 class Omnik extends Inverter {
     getCronString() {
-        return '* * * * *';
+        return '*/5 * * * *';
     }
 
     async checkProduction() {
@@ -19,10 +19,10 @@ class Omnik extends Inverter {
             const plantData = await getPlantData(userId, data.id);
     
             const currentEnergy = plantData.data.today_energy;
-            this.setCapabilityValue('meter_power.production', currentEnergy);
+            this.setCapabilityValue('daily_production', currentEnergy);
 
             const currentPower = plantData.data.current_power * 1000;
-            this.setCapabilityValue('measure_power.production', currentPower);
+            this.setCapabilityValue('production', currentPower);
             
             this.log(`Current energy is ${currentEnergy}kWh`);
             this.log(`Current power is ${currentPower}W`);

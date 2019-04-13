@@ -149,10 +149,10 @@ class SOTGBaseDevice extends Inverter {
                             });
 
                             const currentEnergy = Number(liveData.inverter[0].etoday[0]);
-                            this.setCapabilityValue('meter_power.production', currentEnergy);
+                            this.setCapabilityValue('daily_production', currentEnergy);
 
                             const currentPower = Number(liveData.inverter[0].power[0]) * 1000;
-                            this.setCapabilityValue('measure_power.production', currentPower);
+                            this.setCapabilityValue('production', currentPower);
 
                             this.log(`Current energy is ${currentEnergy}kWh`);
                             this.log(`Current power is ${currentPower}W`);

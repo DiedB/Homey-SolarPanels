@@ -38,17 +38,13 @@ class SAJ extends Inverter {
                     const parsedResult = result.real_time_data;
 
                     const currentEnergy = Number(parsedResult['e-today'][0]);
-                    this.setCapabilityValue('meter_power.production', currentEnergy);
+                    this.setCapabilityValue('daily_production', currentEnergy);
     
                     const currentPower = Number(parsedResult['p-ac'][0]);
-                    this.setCapabilityValue('measure_power.production', currentPower);
+                    this.setCapabilityValue('production', currentPower);
 
-                    const currentGridVoltage = Number(parsedResult['v-grid'][0]);
-                    this.setCapabilityValue('measure_voltage.grid', currentGridVoltage);
-    
                     this.log(`Current energy is ${currentEnergy}kWh`);
                     this.log(`Current power is ${currentPower}W`);
-                    this.log(`Current grid voltage is ${currentGridVoltage}V`);
                 });
             })
             .catch(error => {
