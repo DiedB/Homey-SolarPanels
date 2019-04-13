@@ -8,7 +8,7 @@ const pathName = '/real_time_data.xml';
 
 class SAJ extends Inverter {
     getCronString() {
-        return '* * * * *';
+        return '*/10 * * * * *';
     }
 
     checkProduction() {

@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "compatibility": ">=2.0",
   "sdk": 2,
   "name": {
@@ -379,6 +379,67 @@
             "en": "SolarMAN password"
           }
         }
-      ]    }
+      ]
+    },
+    {
+      "id": "omnik",
+      "name": {
+        "en": "Omnik"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "./drivers/omnik/assets/images/large.jpg",
+        "small": "./drivers/omnik/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["measure_power.production", "meter_power.production"],
+      "capabilitiesOptions": {
+        "measure_power.production": {
+          "title": {
+            "en": "Production",
+            "nl": "Opbrengst"
+          },
+          "isGenerator": true
+        },
+        "meter_power.production": {
+          "title": {
+            "en": "Daily production",
+            "nl": "Opbrengst vandaag"
+          },
+          "isGenerator": true
+        }
+      },
+      "settings": [
+        {
+          "id": "username",
+          "type": "text",
+          "label": {
+            "en": "Omnik username"
+          }
+        },
+        {
+          "id": "password",
+          "type": "password",
+          "label": {
+            "en": "Omnik password"
+          }
+        }
+      ]
+    }
   ]
 }

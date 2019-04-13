@@ -7,7 +7,7 @@ const pathName = '/solar_api/v1/GetInverterRealtimeData.cgi?Scope=Device&DeviceI
 
 class Fronius extends Inverter {
     getCronString() {
-        return '* * * * *';
+        return '*/30 * * * * *';
     }
 
     checkProduction() {

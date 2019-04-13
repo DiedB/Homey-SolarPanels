@@ -1,0 +1,47 @@
+<style type="text/css">
+	.form-group, .input-field {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.input-field {
+		margin-top: 10px;
+	}
+
+	.submit-button {
+		margin-top: 10px;
+	}
+</style>
+
+<div class="form-group">
+	<div class="input-field">
+		<label>Please enter your Omnik username and password:</label>
+		<input type="text" id="username" placeholder="Username" value="" />
+		<input type="password" id="password" placeholder="Password" value="" />
+	</div>
+
+	<button class="submit-button" id="validate">Connect</button>
+</div>
+
+<script type="text/javascript">
+	$(() => {
+		$('#validate').click(() => {
+			Homey.showLoadingOverlay();
+
+			var username = $('#username').val();
+			var password = $('#password').val();
+
+			var pairData = { username, password }
+
+			Homey.emit('validate', pairData, (error, result) => {
+				if (error) {
+					Homey.hideLoadingOverlay();
+					Homey.alert(error);
+				} else {
+					Homey.showView('list_devices');
+				}
+			})
+		});
+	})
+</script>
