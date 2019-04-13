@@ -51,7 +51,6 @@
 					Homey.hideLoadingOverlay();
 					Homey.alert(error);
 				} else {
-					Homey.showLoadingOverlay();
 					Homey.createDevice(deviceDefinition, (error, result) => {
 						if (error) {
 							Homey.hideLoadingOverlay();

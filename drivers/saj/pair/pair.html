@@ -49,7 +49,6 @@
 					Homey.hideLoadingOverlay();
 					Homey.alert(error);
 				} else {
-					Homey.showLoadingOverlay();
 
 					deviceDefinition.data.id = result.id;
 					Homey.createDevice(deviceDefinition, (error, result) => {
