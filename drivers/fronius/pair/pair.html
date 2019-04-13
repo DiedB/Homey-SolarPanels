@@ -16,9 +16,8 @@
 
 <div class="form-group">
 	<div class="input-field">
-		<label>Please enter your PVOutput system ID and read only API key:</label>
-		<input type="text" id="sid" placeholder="System ID" value="" />
-		<input type="text" id="key" placeholder="Read-only API key" value="" />
+		<label>Please enter the IP address or hostname of your Fronius Datamanager:</label>
+		<input type="text" id="ip" placeholder="IP address" value="" />
 	</div>
 
 	<div class="input-field">
@@ -34,14 +33,13 @@
 		$('#validate').click(() => {
 			Homey.showLoadingOverlay();
 
-			var sid = $('#sid').val();
-			var key = $('#key').val();
+			var ip = $('#ip').val();
 			var name = $('#name').val();
 
 			var deviceDefinition = {
 				name,
-				data: { sid },
-				settings: {	key }
+				data: {},
+				settings: { ip }
 			};
 
 			Homey.emit('validate', deviceDefinition, (error, result) => {

@@ -1,17 +1,8 @@
 <style type="text/css">
-	.form-wrapper {
-		width: 100%;
-		height: 100%;
-
-		display: flex;
-		justify-content: center;
-	}
-
 	.form-group, .input-field {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
 	}
 
 	.input-field {
@@ -23,42 +14,30 @@
 	}
 </style>
 
-<div class="form-wrapper">
-	<div class="form-group">
-		<div class="input-field">
-			<label>Please enter your Omnik Portal username and password:</label>
-			<input type="text" id="username" placeholder="Username" value="" />
-			<input type="text" id="password" placeholder="Password" value="" />
-		</div>
-
-		<div class="input-field">
-			<label>Enter your site/plant ID (found on Omnik Portal):</label>
-			<input type="text" id="sid" placeholder="Site ID" value="" />
-		</div>
-
-		<button class="submit-button" id="validate">Connect</button>
+<div class="form-group">
+	<div class="input-field">
+		<label>Please enter your Omnik username and password:</label>
+		<input type="text" id="username" placeholder="Username" value="" />
+		<input type="password" id="password" placeholder="Password" value="" />
 	</div>
+
+	<button class="submit-button" id="validate">Connect</button>
 </div>
 
 <script type="text/javascript">
 	$(() => {
 		$('#validate').click(() => {
-			$('#validate').prop('disabled', true);
+			Homey.showLoadingOverlay();
 
 			var username = $('#username').val();
 			var password = $('#password').val();
-			var sid = $('#sid').val();
 
-			var data = {
-				sid: sid,
-				username: username,
-				password: password
-			}
+			var pairData = { username, password }
 
-			Homey.emit('validate', data, (error, result) => {
-				if (error !== null) {
+			Homey.emit('validate', pairData, (error, result) => {
+				if (error) {
+					Homey.hideLoadingOverlay();
 					Homey.alert(error);
-					$('#validate').prop('disabled', false);
 				} else {
 					Homey.showView('list_devices');
 				}

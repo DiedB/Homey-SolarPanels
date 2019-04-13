@@ -2,52 +2,54 @@
 
 const Inverter = require('../inverter');
 const fetch = require('node-fetch');
+const parseString = require('xml2js').parseString;
 
-const baseUrl = 'https://api.enphaseenergy.com/api/v2/systems/';
+const pathName = '/real_time_data.xml';
 
-class Enphase extends Inverter {
+class SAJ extends Inverter {
+    getCronString() {
+        return '*/10 * * * * *';
+    }
+
     checkProduction() {
         this.log('Checking production');
 
-        const data = this.getData();
         const settings = this.getSettings();
-        const dataUrl = `${baseUrl}${data.sid}/summary?key=${settings.key}&user_id=${settings.uid}`;
+        var dataUrl = `http://${settings.ip}${pathName}`;
 
         fetch(dataUrl)
             .then(result => {
                 if (result.ok) {
                     if (!this.getAvailable()) {
-                        this.setAvailable().then(result => {
+                        this.setAvailable().then(_ => {
                             this.log('Available');
                         }).catch(error => {
                             this.error('Setting availability failed');
                         })
                     }
 
-                    return result.json();
+                    return result.text();
                 } else {
                     throw result.status;
                 }
             })
             .then(response => {
-                const lastUpdate = response.last_report_at;
+                parseString(response, (_, result) => {
+                    const parsedResult = result.real_time_data;
 
-                if (lastUpdate !== this.getStoreValue('lastUpdate')) {
-                    this.setStoreValue('lastUpdate', lastUpdate).catch(error => {
-                        this.error('Failed setting last update value');
-                    });
-
-                    const currentEnergy = Number(response.energy_today) / 1000;
+                    const currentEnergy = Number(parsedResult['e-today'][0]);
                     this.setCapabilityValue('meter_power.production', currentEnergy);
-
-                    const currentPower = Number(response.current_power);
+    
+                    const currentPower = Number(parsedResult['p-ac'][0]);
                     this.setCapabilityValue('measure_power.production', currentPower);
 
+                    const currentGridVoltage = Number(parsedResult['v-grid'][0]);
+                    this.setCapabilityValue('measure_voltage.grid', currentGridVoltage);
+    
                     this.log(`Current energy is ${currentEnergy}kWh`);
                     this.log(`Current power is ${currentPower}W`);
-                } else {
-                    this.log(`No new data`);
-                }
+                    this.log(`Current grid voltage is ${currentGridVoltage}V`);
+                });
             })
             .catch(error => {
                 this.log(`Unavailable (${error})`);
@@ -56,4 +58,4 @@ class Enphase extends Inverter {
     }
 }
 
-module.exports = Enphase;
+module.exports = SAJ;

@@ -3,12 +3,12 @@
 const Homey = require('homey');
 const fetch = require('node-fetch');
 
-const baseUrl = 'https://monitoringapi.solaredge.com/site/';
+const pathName = '/solar_api/v1/GetInverterRealtimeData.cgi?Scope=Device&DeviceID=1&DataCollection=CommonInverterData';
 
-class SolarEdge extends Homey.Driver {
+class Fronius extends Homey.Driver {
     onPair(socket) {
         socket.on('validate', (device, callback) => {
-            const validationUrl = `${baseUrl}${device.data.sid}/overview?api_key=${device.settings.key}&format=json`;
+            const validationUrl = `http://${device.settings.ip}${pathName}`;
 
             fetch(validationUrl)
                 .then(result => {
@@ -18,10 +18,10 @@ class SolarEdge extends Homey.Driver {
                         callback(new Error(Homey.__('login_error')));
                     }
                 }).catch(error => {
-                    callback(new Error(Homey.__('network_error')));
+                    callback(new Error(Homey.__('ip_error')));
                 });
         });
     }
 }
 
-module.exports = SolarEdge;
+module.exports = Fronius;

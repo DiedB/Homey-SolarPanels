@@ -6,13 +6,37 @@ const fetch = require('node-fetch');
 const baseUrl = 'https://monitoringapi.solaredge.com/site/';
 
 class SolarEdge extends Inverter {
+    getCurrentIsoString() {
+        const date = new Date();
+        const offsetMs = date.getTimezoneOffset() * 60 * 1000;
+        const msLocal =  date.getTime() - offsetMs;
+        const dateLocal = new Date(msLocal);
+        const iso = dateLocal.toISOString();
+        const isoLocal = iso.slice(0, 19).replace('T', ' ');
+
+        return isoLocal;
+    }
+
+    getCurrentDateString() {
+        return this.getCurrentIsoString().slice(0, 10);
+    }
+
+    getCronString() {
+        return '*/10 * * * *'
+    }
+
     checkProduction() {
         this.log('Checking production');
 
         const data = this.getData();
-        const dataUrl = `${baseUrl}${data.sid}/overview?api_key=${data.key}&format=json`;
+        const settings = this.getSettings();
+    
+        const currentIsoString = this.getCurrentIsoString();
+        const currentDateString = this.getCurrentDateString();
 
-        fetch(dataUrl)
+        // Power values
+        const powerDataUrl = `${baseUrl}${data.sid}/powerDetails?api_key=${settings.key}&format=json&startTime=${currentIsoString}&endTime=${currentIsoString}`;
+        fetch(powerDataUrl)
             .then(result => {
                 if (result.ok || result.status === 304) {
                     if (!this.getAvailable()) {
@@ -29,29 +53,67 @@ class SolarEdge extends Inverter {
                 }
             })
             .then(response => {
-                const lastUpdate = response.overview.lastUpdateTime;
+                const meterData = response.powerDetails.meters;
 
-                if (lastUpdate !== this.getStoreValue('lastUpdate')) {
-                    this.setStoreValue('lastUpdate', lastUpdate).catch(error => {
-                        this.error('Failed setting last update value');
-                    });
+                meterData.forEach(meter => {
+                    const currentMeterType = meter.type.toLowerCase();
 
-                    const currentEnergy = Number(response.overview.lastDayData.energy) / 1000;
-                    this.setCapabilityValue('meter_power', currentEnergy);
+                    if ((currentMeterType === "production" || currentMeterType === "consumption") && meter.values.length > 0 && meter.values[0].value !== undefined) {
+                        const currentValue = Math.round(meter.values[0].value);
 
-                    const currentPower = Number(response.overview.currentPower.power);
-                    this.setCapabilityValue('measure_power', currentPower);
+                        this.setCapabilityValue(`measure_power.${currentMeterType}`, currentValue);
 
-                    this.log(`Current energy is ${currentEnergy}kWh`);
-                    this.log(`Current power is ${currentPower}W`);
-                } else {
-                    this.log(`No new data`);
-                }
+                        this.log(`Current ${currentMeterType} power is ${currentValue}W`);
+                    } else {
+                        this.log(`No new data for ${currentMeterType}`);
+                    }
+                })
             })
             .catch(error => {
                 this.log(`Unavailable (${error})`);
-                this.setUnavailable(`Error retrieving data (HTTP ${error})`);
+                this.setUnavailable(`Error retrieving data (${error})`);
             });
+
+        // Energy values
+        const energyDataUrl = `${baseUrl}${data.sid}/energyDetails?api_key=${settings.key}&format=json&startTime=${currentDateString} 00:00:00&endTime=${currentDateString} 23:59:59`;
+        fetch(energyDataUrl)
+            .then(result => {
+                if (result.ok || result.status === 304) {
+                    if (!this.getAvailable()) {
+                        this.setAvailable().then(result => {
+                            this.log('Available');
+                        }).catch(error => {
+                            this.error('Setting availability failed');
+                        })
+                    }
+
+                    return result.json();
+                } else {
+                    throw result.status;
+                }
+            })
+            .then(response => {
+                const meterData = response.energyDetails.meters;
+
+                meterData.forEach(meter => {
+                    const currentMeterType = meter.type.toLowerCase();
+
+                    if ((currentMeterType === "production" || currentMeterType === "consumption") && meter.values.length > 0 && meter.values[0].value !== undefined) {
+                        const currentValue = Math.round(meter.values[0].value) / 1000;
+
+                        this.setCapabilityValue(`meter_power.${currentMeterType}`, currentValue);
+
+                        this.log(`Current ${currentMeterType} energy is ${currentValue}kWh`);
+                    } else {
+                        this.log(`No new data for ${currentMeterType}`);
+                    }
+                })
+            })
+            .catch(error => {
+                this.log(`Unavailable (${error})`);
+                this.setUnavailable(`Error retrieving data (${error})`);
+            });
+
     }
 }
 

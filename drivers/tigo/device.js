@@ -10,8 +10,9 @@ class Tigo extends Inverter {
         this.log('Checking production');
 
         const data = this.getData();
+        const settings = this.getSettings();
         const dataUrl = `${baseUrl}/data/summary?system_id=${data.sid}`;
-        const authorizationHeader = `Basic ${Buffer.from(`${data.username}:${data.password}`).toString('base64')}`;
+        const authorizationHeader = `Basic ${Buffer.from(`${settings.username}:${settings.password}`).toString('base64')}`;
         
         try {
             const productionResponse = await fetch(dataUrl, {
@@ -32,10 +33,10 @@ class Tigo extends Inverter {
                 }
     
                 const currentEnergy = Number(productionData.summary.daily_energy_dc) / 1000;
-                this.setCapabilityValue('meter_power', currentEnergy);
+                this.setCapabilityValue('meter_power.production', currentEnergy);
     
                 const currentPower = Number(productionData.summary.last_power_dc);
-                this.setCapabilityValue('measure_power', currentPower);
+                this.setCapabilityValue('measure_power.production', currentPower);
                 
                 this.log(`Current energy is ${currentEnergy}kWh`);
                 this.log(`Current power is ${currentPower}W`);

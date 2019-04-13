@@ -1,15 +1,15 @@
 {
   "id": "it.diederik.solar",
-  "version": "2.4.0",
-  "compatibility": ">=1.5.0",
+  "version": "3.0.1",
+  "compatibility": ">=2.0",
   "sdk": 2,
   "name": {
     "en": "Solar Panels",
     "nl": "Zonnepanelen"
   },
   "description": {
-    "en": "PV production tracker for Homey.",
-    "nl": "PV-opbrengsttracker voor Homey."
+    "en": "Connect your Solar Panels to Homey",
+    "nl": "Verbind je zonnepanelen met Homey"
   },
   "category": "energy",
   "tags": {
@@ -48,7 +48,32 @@
         "small": "./drivers/pvoutput/assets/images/small.jpg"
       },
       "class": "sensor",
-      "capabilities": ["measure_power", "meter_power"]
+      "capabilities": ["measure_power.production", "meter_power.production"],
+      "capabilitiesOptions": {
+        "measure_power.production": {
+          "title": {
+            "en": "Production",
+            "nl": "Opbrengst"
+          },
+          "isGenerator": true
+        },
+        "meter_power.production": {
+          "title": {
+            "en": "Daily production",
+            "nl": "Opbrengst vandaag"
+          },
+          "isGenerator": true
+        }
+      },
+      "settings": [
+        {
+          "id": "key",
+          "type": "text",
+          "label": {
+            "en": "PVOutput (read-only) API key"
+          }
+        }
+      ]
     },
     {
       "id": "solaredge",
@@ -66,7 +91,44 @@
         "small": "./drivers/solaredge/assets/images/small.jpg"
       },
       "class": "sensor",
-      "capabilities": ["measure_power", "meter_power"]
+      "capabilities": ["measure_power.production", "measure_power.consumption", "meter_power.production", "meter_power.consumption"],
+      "capabilitiesOptions": {
+        "measure_power.production": {
+          "title": {
+            "en": "Production",
+            "nl": "Opbrengst"
+          },
+          "isGenerator": true
+        },
+        "measure_power.consumption": {
+          "title": {
+            "en": "Consumption",
+            "nl": "Verbruik"
+          }
+        },
+        "meter_power.production": {
+          "title": {
+            "en": "Daily production",
+            "nl": "Opbrengst vandaag"
+          },
+          "isGenerator": true
+        },
+        "meter_power.consumption": {
+          "title": {
+            "en": "Daily consumption",
+            "nl": "Verbruik vandaag"
+          }
+        }
+      },
+      "settings": [
+        {
+          "id": "key",
+          "type": "text",
+          "label": {
+            "en": "SolarEdge (read-only) API key"
+          }
+        }
+      ]
     },
     {
       "id": "enphase",
@@ -84,36 +146,82 @@
         "small": "./drivers/enphase/assets/images/small.jpg"
       },
       "class": "sensor",
-      "capabilities": ["measure_power", "meter_power"]
+      "capabilities": ["measure_power.production", "meter_power.production"],
+      "capabilitiesOptions": {
+        "measure_power.production": {
+          "title": {
+            "en": "Production",
+            "nl": "Opbrengst"
+          },
+          "isGenerator": true
+        },
+        "meter_power.production": {
+          "title": {
+            "en": "Daily production",
+            "nl": "Opbrengst vandaag"
+          },
+          "isGenerator": true
+        }
+      },
+      "settings": [
+        {
+          "id": "uid",
+          "type": "text",
+          "label": {
+            "en": "Enphase user ID"
+          }
+        },
+        {
+          "id": "key",
+          "type": "text",
+          "label": {
+            "en": "Enphase (read-only) API key"
+          }
+        }
+      ]
     },
     {
-      "id": "omnik",
+      "id": "fronius",
       "name": {
-        "en": "Omnik",
-        "nl": "Omnik"
+        "en": "Fronius",
+        "nl": "Fronius"
       },
       "pair": [
         {
           "id": "pair"
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
         }
       ],
       "images": {
-        "large": "./drivers/omnik/assets/images/large.jpg",
-        "small": "./drivers/omnik/assets/images/small.jpg"
+        "large": "./drivers/fronius/assets/images/large.jpg",
+        "small": "./drivers/fronius/assets/images/small.jpg"
       },
       "class": "sensor",
-      "capabilities": ["measure_power", "meter_power"]
+      "capabilities": ["measure_power.production", "meter_power.production"],
+      "capabilitiesOptions": {
+        "measure_power.production": {
+          "title": {
+            "en": "Production",
+            "nl": "Opbrengst"
+          },
+          "isGenerator": true
+        },
+        "meter_power.production": {
+          "title": {
+            "en": "Daily production",
+            "nl": "Opbrengst vandaag"
+          },
+          "isGenerator": true
+        }
+      },
+      "settings": [
+        {
+          "id": "ip",
+          "type": "text",
+          "label": {
+            "en": "Fronius Datamanager IP address"
+          }
+        }
+      ]
     },
     {
       "id": "tigo",
@@ -131,13 +239,44 @@
         "small": "./drivers/tigo/assets/images/small.jpg"
       },
       "class": "sensor",
-      "capabilities": ["measure_power", "meter_power"]
+      "capabilities": ["measure_power.production", "meter_power.production"],
+      "capabilitiesOptions": {
+        "measure_power.production": {
+          "title": {
+            "en": "Production",
+            "nl": "Opbrengst"
+          },
+          "isGenerator": true
+        },
+        "meter_power.production": {
+          "title": {
+            "en": "Daily production",
+            "nl": "Opbrengst vandaag"
+          },
+          "isGenerator": true
+        }
+      },
+      "settings": [
+        {
+          "id": "username",
+          "type": "text",
+          "label": {
+            "en": "Tigo username"
+          }
+        },
+        {
+          "id": "password",
+          "type": "password",
+          "label": {
+            "en": "Tigo password"
+          }
+        }
+      ]
     },
     {
-      "id": "zeversolar",
+      "id": "saj",
       "name": {
-        "en": "Zeversolar",
-        "nl": "Zeversolar"
+        "en": "SAJ"
       },
       "pair": [
         {
@@ -145,17 +284,47 @@
         }
       ],
       "images": {
-        "large": "./drivers/zeversolar/assets/images/large.jpg",
-        "small": "./drivers/zeversolar/assets/images/small.jpg"
+        "large": "./drivers/saj/assets/images/large.jpg",
+        "small": "./drivers/saj/assets/images/small.jpg"
       },
       "class": "sensor",
-      "capabilities": ["measure_power", "meter_power"]
+      "capabilities": ["measure_power.production", "meter_power.production", "measure_voltage.grid"],
+      "capabilitiesOptions": {
+        "measure_power.production": {
+          "title": {
+            "en": "Production",
+            "nl": "Opbrengst"
+          },
+          "isGenerator": true
+        },
+        "meter_power.production": {
+          "title": {
+            "en": "Daily production",
+            "nl": "Opbrengst vandaag"
+          },
+          "isGenerator": true
+        },
+        "measure_voltage.grid": {
+          "title": {
+            "en": "Grid voltage",
+            "nl": "Netspanning"
+          }
+        }
+      },
+      "settings": [
+        {
+          "id": "ip",
+          "type": "text",
+          "label": {
+            "en": "SAJ IP address"
+          }
+        }
+      ]
     },
     {
       "id": "solarman",
       "name": {
-        "en": "SolarMAN",
-        "nl": "SolarMAN"
+        "en": "SolarMAN"
       },
       "pair": [
         {
@@ -178,13 +347,44 @@
         "small": "./drivers/solarman/assets/images/small.jpg"
       },
       "class": "sensor",
-      "capabilities": ["measure_power", "meter_power"]
+      "capabilities": ["measure_power.production", "meter_power.production"],
+      "capabilitiesOptions": {
+        "measure_power.production": {
+          "title": {
+            "en": "Production",
+            "nl": "Opbrengst"
+          },
+          "isGenerator": true
+        },
+        "meter_power.production": {
+          "title": {
+            "en": "Daily production",
+            "nl": "Opbrengst vandaag"
+          },
+          "isGenerator": true
+        }
+      },
+      "settings": [
+        {
+          "id": "username",
+          "type": "text",
+          "label": {
+            "en": "SolarMAN username"
+          }
+        },
+        {
+          "id": "password",
+          "type": "password",
+          "label": {
+            "en": "SolarMAN password"
+          }
+        }
+      ]
     },
     {
-      "id": "trannergy",
+      "id": "omnik",
       "name": {
-        "en": "Trannergy",
-        "nl": "Trannergy"
+        "en": "Omnik"
       },
       "pair": [
         {
@@ -203,58 +403,43 @@
         }
       ],
       "images": {
-        "large": "./drivers/trannergy/assets/images/large.jpg",
-        "small": "./drivers/trannergy/assets/images/small.jpg"
+        "large": "./drivers/omnik/assets/images/large.jpg",
+        "small": "./drivers/omnik/assets/images/small.jpg"
       },
       "class": "sensor",
-      "capabilities": ["measure_power", "meter_power"]
-    },
-    {
-      "id": "sungrow",
-      "name": {
-        "en": "Sungrow",
-        "nl": "Sungrow"
-      },
-      "pair": [
-        {
-          "id": "pair"
-        }
-      ],
-      "images": {
-        "large": "./drivers/sungrow/assets/images/large.jpg",
-        "small": "./drivers/sungrow/assets/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": ["measure_power", "meter_power"]
-    },
-    {
-      "id": "goodwe",
-      "name": {
-        "en": "GoodWe",
-        "nl": "GoodWe"
-      },
-      "pair": [
-        {
-          "id": "pair"
+      "capabilities": ["measure_power.production", "meter_power.production"],
+      "capabilitiesOptions": {
+        "measure_power.production": {
+          "title": {
+            "en": "Production",
+            "nl": "Opbrengst"
+          },
+          "isGenerator": true
         },
+        "meter_power.production": {
+          "title": {
+            "en": "Daily production",
+            "nl": "Opbrengst vandaag"
+          },
+          "isGenerator": true
+        }
+      },
+      "settings": [
         {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
+          "id": "username",
+          "type": "text",
+          "label": {
+            "en": "Omnik username"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "password",
+          "type": "password",
+          "label": {
+            "en": "Omnik password"
+          }
         }
-      ],
-      "images": {
-        "large": "./drivers/goodwe/assets/images/large.jpg",
-        "small": "./drivers/goodwe/assets/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": ["measure_power", "meter_power"]
+      ]
     }
   ]
 }

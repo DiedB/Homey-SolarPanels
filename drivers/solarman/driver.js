@@ -1,7 +1,6 @@
 'use strict';
 
-const Homey = require('homey');
-const SOTGBase = require('../base');
+const SOTGBase = require('./base');
 
 class SolarMAN extends SOTGBase.Driver {
     getBaseUrl() {

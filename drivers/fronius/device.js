@@ -3,24 +3,24 @@
 const Inverter = require('../inverter');
 const fetch = require('node-fetch');
 
-const baseUrl = 'http://www.solarinfobank.com/openapi/loginvalidV2';
+const pathName = '/solar_api/v1/GetInverterRealtimeData.cgi?Scope=Device&DeviceID=1&DataCollection=CommonInverterData';
 
-class Sungrow extends Inverter {
+class Fronius extends Inverter {
     getCronString() {
-        return '* * * * *';
+        return '*/30 * * * * *';
     }
 
     checkProduction() {
         this.log('Checking production');
 
-        const data = this.getData();
-        const dataUrl = `${baseUrl}?username=${data.username}&password=${data.password}`;
+        const settings = this.getSettings();
+        var dataUrl = `http://${settings.ip}${pathName}`;
 
         fetch(dataUrl)
             .then(result => {
                 if (result.ok) {
                     if (!this.getAvailable()) {
-                        this.setAvailable().then(result => {
+                        this.setAvailable().then(_ => {
                             this.log('Available');
                         }).catch(error => {
                             this.error('Setting availability failed');
@@ -33,18 +33,23 @@ class Sungrow extends Inverter {
                 }
             })
             .then(response => {
-                const lastUpdate = `${response.todayEnergy} ${response.power}`;
+                const lastUpdate = response.Head.Timestamp;
 
                 if (lastUpdate !== this.getStoreValue('lastUpdate')) {
                     this.setStoreValue('lastUpdate', lastUpdate).catch(error => {
                         this.error('Failed setting last update value');
                     });
 
-                    const currentEnergy = response.todayEnergy;
-                    this.setCapabilityValue('meter_power', currentEnergy);
+                    const currentEnergy = Number(response.Body.Data.DAY_ENERGY.Value / 1000);
+                    this.setCapabilityValue('meter_power.production', currentEnergy);
 
-                    const currentPower = response.power * 1000;
-                    this.setCapabilityValue('measure_power', currentPower);
+                    let currentPower;
+                    if (response.Body.Data.PAC) {
+                        currentPower = Number(response.Body.Data.PAC.Value);
+                    } else {
+                        currentPower = null;
+                    }
+                    this.setCapabilityValue('measure_power.production', currentPower);    
 
                     this.log(`Current energy is ${currentEnergy}kWh`);
                     this.log(`Current power is ${currentPower}W`);
@@ -54,9 +59,9 @@ class Sungrow extends Inverter {
             })
             .catch(error => {
                 this.log(`Unavailable (${error})`);
-                this.setUnavailable(`Error retrieving data (HTTP ${error})`);
+                this.setUnavailable(`Error retrieving data (${error})`);
             });
     }
 }
 
-module.exports = Sungrow;
+module.exports = Fronius;

@@ -1,7 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-const Inverter = require('./inverter');
+const Inverter = require('../inverter');
 
 const fetch = require('node-fetch');
 const parseXml = require('xml2js').parseString;
@@ -37,7 +37,7 @@ class SOTGBase {
     }
 
     static getInverters(url, sid, username, password, token) {
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             const dataUrl = `${url}Data?username=${username}&stationid=${sid}&token=${token}&key=apitest`;
 
             fetch(dataUrl)
@@ -56,10 +56,9 @@ class SOTGBase {
                                     name: currentInverter.inverter[0].SN[0],
                                     data: {
                                         id: currentInverter.id[0],
-                                        sid: sid,
-                                        username: username,
-                                        password: password
-                                    }
+                                        sid
+                                    },
+                                    settings: { username, password }
                                 });
                                 return devices;
                             }, []);
@@ -68,9 +67,6 @@ class SOTGBase {
                             throw result.error.errorMessage[0];
                         }
                     });
-                })
-                .catch(error => {
-                    // TODO Handle
                 });
         });
     }
@@ -82,7 +78,7 @@ class SOTGBaseDriver extends Homey.Driver {
     }
 
     onPair(socket) {
-        let systemData = {};
+        let systemData = null;
         let currentToken = null;
 
         socket.on('validate', (data, callback) => {
@@ -93,12 +89,12 @@ class SOTGBaseDriver extends Homey.Driver {
                     callback(null, true);
                 })
                 .catch(error => {
-                    this.log(error);
-                    callback(error);
+                    this.error(error);
+                    callback(new Error(error));
                 });
         });
 
-        socket.on('list_devices', (data, callback) => {
+        socket.on('list_devices', (_, callback) => {
             SOTGBase.getInverters(this.getBaseUrl(), systemData.sid, systemData.username, systemData.password, currentToken)
                 .then(devices => {
                     callback(null, devices);
@@ -120,8 +116,9 @@ class SOTGBaseDevice extends Inverter {
         this.log('Checking production');
 
         const data = this.getData();
+        const settings = this.getSettings();
         const currentToken = this.getStoreValue('currentToken');
-        const dataUrl = `${this.getBaseUrl()}Data?username=${data.username}&stationid=${data.sid}&token=${currentToken}&key=apitest`;
+        const dataUrl = `${this.getBaseUrl()}Data?username=${settings.username}&stationid=${data.sid}&token=${currentToken}&key=apitest`;
 
         fetch(dataUrl)
             .then(result => {
@@ -152,10 +149,10 @@ class SOTGBaseDevice extends Inverter {
                             });
 
                             const currentEnergy = Number(liveData.inverter[0].etoday[0]);
-                            this.setCapabilityValue('meter_power', currentEnergy);
+                            this.setCapabilityValue('meter_power.production', currentEnergy);
 
                             const currentPower = Number(liveData.inverter[0].power[0]) * 1000;
-                            this.setCapabilityValue('measure_power', currentPower);
+                            this.setCapabilityValue('measure_power.production', currentPower);
 
                             this.log(`Current energy is ${currentEnergy}kWh`);
                             this.log(`Current power is ${currentPower}W`);
@@ -164,7 +161,7 @@ class SOTGBaseDevice extends Inverter {
                         }
                     } else {
                         this.log('Token expired, getting new token');
-                        SOTGBase.getToken(this.getBaseUrl(), data.username, data.password)
+                        SOTGBase.getToken(this.getBaseUrl(), settings.username, settings.password)
                             .then(token => {
                                 this.setStoreValue('currentToken', token).catch(error => {
                                     this.error('Failed setting new token');
