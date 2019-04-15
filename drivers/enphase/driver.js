@@ -1,25 +1,45 @@
 'use strict';
 
 const Homey = require('homey');
-const fetch = require('node-fetch');
-
-const baseUrl = 'https://api.enphaseenergy.com/api/v2/systems/';
+const { EnphaseApi } = require('./api');
 
 class Enphase extends Homey.Driver {
     onPair(socket) {
-        socket.on('validate', (device, callback) => {
-            const validationUrl = `${baseUrl}${device.data.sid}/summary?key=${device.settings.key}&user_id=${device.settings.uid}`;
+        let enphaseApi;
+        let userId;
+        let apiKey;
+        let systems;
 
-            fetch(validationUrl)
-                .then(result => {
-                    if (result.ok) {
-                        callback(null, true);
-                    } else {
-                        callback(new Error(Homey.__('login_error')));
-                    }
-                }).catch(error => {
-                    callback(new Error(Homey.__('network_error')));
-                });
+        socket.on('validate', async (pairData, callback) => {
+            try {
+                userId = pairData.uid;
+                apiKey = pairData.key;
+                enphaseApi = new EnphaseApi(userId, apiKey);
+
+                systems = await enphaseApi.getSystems();
+
+                callback(null, true);
+            } catch (error) {
+                this.error(error);
+                callback(error);
+            }
+        });
+
+        socket.on('list_devices', (_, callback) => {
+            try {
+                const devices = systems.map(system => ({
+                    name: system.system_name,
+                    data: {
+                        id: system.system_id
+                    },
+                    settings: { uid: userId, key: apiKey }
+                }));
+
+                callback(null, devices);
+            } catch (error) {
+                this.error(error);
+                callback(error);
+            }
         });
     }
 }

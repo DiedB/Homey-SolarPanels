@@ -1,7 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-const { getUserId, getPlantList } = require('./base');
+const { getUserId, getPlantList } = require('./api');
 
 class Omnik extends Homey.Driver {
     onPair(socket) {

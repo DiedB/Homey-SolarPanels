@@ -1,7 +1,7 @@
 'use strict';
 
 const Inverter = require('../inverter');
-const { getUserId, getPlantData } = require('./base');
+const { getUserId, getPlantData } = require('./api');
 
 class Omnik extends Inverter {
     getCronString() {

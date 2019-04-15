@@ -16,15 +16,9 @@
 
 <div class="form-group">
 	<div class="input-field">
-		<label>Please enter your Enphase System ID, User ID and API key:</label>
-		<input type="text" id="sid" placeholder="System ID" value="" />
+		<label>Please enter your Enphase user ID and API key:</label>
 		<input type="text" id="key" placeholder="API key" value="" />
 		<input type="text" id="uid" placeholder="User ID" value="" />
-	</div>
-
-	<div class="input-field">
-		<label>Give your inverter a name:</label>
-		<input type="text" id="name" placeholder="Name" value="" />
 	</div>
 
 	<button class="submit-button" id="validate">Connect</button>
@@ -35,32 +29,19 @@
 		$('#validate').click(() => {
 			Homey.showLoadingOverlay();
 
-			var sid = $('#sid').val();
-			var uid = $('#uid').val();
 			var key = $('#key').val();
-			var name = $('#name').val();
+			var uid = $('#uid').val();
 
-			var deviceDefinition = {
-				name: name,
-				data: { sid	},
-				settings: { uid, key }
-			};
+			var pairData = { key, uid };
 
-			Homey.emit('validate', deviceDefinition, (error, result) => {
+			Homey.emit('validate', pairData, (error, result) => {
 				if (error) {
 					Homey.hideLoadingOverlay();
 					Homey.alert(error);
 				} else {
-					Homey.createDevice(deviceDefinition, (error, result) => {
-						if (error) {
-							Homey.hideLoadingOverlay();
-							Homey.alert(error);
-						} else {
-							Homey.done();
-						}
-					});
+					Homey.showView('list_devices');
 				}
-			});
+			})
 		});
 	});
 </script>
