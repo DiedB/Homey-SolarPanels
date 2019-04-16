@@ -1,0 +1,47 @@
+<style type="text/css">
+	.form-group, .input-field {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.input-field {
+		margin-top: 10px;
+	}
+
+	.submit-button {
+		margin-top: 10px;
+	}
+</style>
+
+<div class="form-group">
+	<div class="input-field">
+		<label>Please enter your Ginlong user ID and plant ID:</label>
+		<input type="text" id="plant" placeholder="Plant ID" value="" />
+		<input type="text" id="uid" placeholder="User ID" value="" />
+	</div>
+
+	<button class="submit-button" id="validate">Connect</button>
+</div>
+
+<script type="text/javascript">
+	$(() => {
+		$('#validate').click(() => {
+			Homey.showLoadingOverlay();
+
+			var plant = $('#plant').val();
+			var uid = $('#uid').val();
+
+			var pairData = { plant, uid };
+
+			Homey.emit('validate', pairData, (error, result) => {
+				if (error) {
+					Homey.hideLoadingOverlay();
+					Homey.alert(error);
+				} else {
+					Homey.showView('list_devices');
+				}
+			})
+		});
+	});
+</script>
