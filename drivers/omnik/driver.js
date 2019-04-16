@@ -1,20 +1,22 @@
 'use strict';
 
 const Homey = require('homey');
-const { getUserId, getPlantList } = require('./api');
+const { OmnikApi } = require('./api');
 
 class Omnik extends Homey.Driver {
     onPair(socket) {
-        let userId;
         let username;
         let password;
+        let omnikApi;
 
-        socket.on('validate', async (pairData, callback) => {
-            username = pairData.username;
-            password = pairData.password;
-
+        socket.on('login', async (credentials, callback) => {
             try {
-                userId = await getUserId(pairData.username, pairData.password);
+                username = credentials.username;
+                password = credentials.password;
+
+                omnikApi = new OmnikApi(username, password);
+                await omnikApi.initializeSession();
+
                 callback(null, true);
             } catch (error) {
                 this.error(error);
@@ -24,12 +26,12 @@ class Omnik extends Homey.Driver {
 
         socket.on('list_devices', async (_, callback) => {
             try {
-                const plants = await getPlantList(userId);
+                const systems = await omnikApi.getSystems();
 
-                const devices = plants.data.plants.map(currentPlant => ({
-                    name: currentPlant.name,
+                const devices = systems.data.plants.map(system => ({
+                    name: system.name,
                     data: {
-                        id: currentPlant.plant_id
+                        id: system.plant_id
                     },
                     settings: { username, password }
                 }));
