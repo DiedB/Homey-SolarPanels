@@ -16,9 +16,8 @@
 
 <div class="form-group">
 	<div class="input-field">
-		<label>Please enter your Ginlong user ID and plant ID:</label>
+		<label>Please enter your Ginlong plant ID:</label>
 		<input type="text" id="plant" placeholder="Plant ID" value="" />
-		<input type="text" id="uid" placeholder="User ID" value="" />
 	</div>
 
 	<button class="submit-button" id="validate">Connect</button>
@@ -30,9 +29,8 @@
 			Homey.showLoadingOverlay();
 
 			var plant = $('#plant').val();
-			var uid = $('#uid').val();
 
-			var pairData = { plant, uid };
+			var pairData = { plant };
 
 			Homey.emit('validate', pairData, (error, result) => {
 				if (error) {

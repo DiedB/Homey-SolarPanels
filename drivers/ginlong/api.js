@@ -1,11 +1,12 @@
 const fetch = require('node-fetch');
-               //http://apic-cdn.solarman.cn/v/ap.2.0/plant/get_plant_overview?uid=123456&plant_id=12345
-const baseUrl = 'http://apic-cdn.solarman.cn/v/ap.2.0/plant';
 
 class GinlongApi {
-    constructor(userID, plantID) {
-        this.userID = userID;
-        this.plantID = plantID;
+    constructor(plantId) {
+        this.plantId = plantId;
+    }
+
+    get BASE_URL() {
+        return 'http://apic-cdn.solarman.cn/v/ap.2.0';
     }
 
     async apiRequest(url) {
@@ -15,35 +16,26 @@ class GinlongApi {
         if (apiResponse.ok) {
             return apiData;
         } else {
-            throw new Error(apiData.message.join(', '))
+            throw new Error(apiResponse.status)
         }
     }
 
-    createUrl(endpoint, parameters) {
-        let url = `${baseUrl}/${endpoint}?uid=${this.userID}&plant_id=${this.plantID}`
-        if (parameters) {
-            url += `&${parameters.join('&')}`;
-        }
-        return url;
+    createUrl(endpoint) {
+        return `${this.BASE_URL}/${endpoint}`;
     }
 
-    async getSystems() {
-        // http://apic-cdn.solarman.cn/v/ap.2.0/plant/get_plant_device_list?uid=12345&plant_id=98765
-        
-        const url = this.createUrl('get_plant_device_list');
+    async getSystems() {       
+        const url = this.createUrl(`plant/get_plant_device_list?plant_id=${this.plantId}`);
         const apiData = await this.apiRequest(url);
 
-        return apiData.systems;
+        return apiData.invert_list;
     }
 
-    async getProductionData() {
-        // http://apic-cdn.solarman.cn/v/ap.2.0/plant/get_plant_overview?uid=12345&plant_id=98765
-        
-        const url = this.createUrl('get_plant_overview');
-        //const url = this.createUrl(`systems/${this.systemId}/stats`, ['datetime_format=iso8601'])
+    async getProductionData(id) {
+        const url = this.createUrl(`device/doInverterDetail?uid=1&deviceId=${id}`);
         const apiData = await this.apiRequest(url);
 
-        return apiData.intervals;
+        return apiData.DeviceWapper;
     }
 }
 

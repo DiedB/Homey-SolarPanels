@@ -333,23 +333,7 @@
         "small": "./drivers/ginlong/assets/images/small.jpg"
       },
       "class": "sensor",
-      "capabilities": ["production", "daily_production"],
-      "settings": [
-        {
-          "id": "uid",
-          "type": "text",
-          "label": {
-            "en": "Ginlong user ID"
-          }
-        },
-        {
-          "id": "plant",
-          "type": "text",
-          "label": {
-            "en": "Ginlong plant ID"
-          }
-        }
-      ]
+      "capabilities": ["production", "daily_production"]
     },
     {
       "id": "fronius",
