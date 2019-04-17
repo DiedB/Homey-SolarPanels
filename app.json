@@ -307,6 +307,35 @@
       ]
     },
     {
+      "id": "ginlong",
+      "name": {
+        "en": "Ginlong",
+        "nl": "Ginlong"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "./drivers/ginlong/assets/images/large.jpg",
+        "small": "./drivers/ginlong/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["production", "daily_production"]
+    },
+    {
       "id": "fronius",
       "name": {
         "en": "Fronius",
