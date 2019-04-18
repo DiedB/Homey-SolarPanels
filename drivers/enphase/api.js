@@ -16,7 +16,7 @@ class EnphaseApi {
         if (apiResponse.ok) {
             return apiData;
         } else {
-            throw new Error(apiData.message.join(', '))
+            throw new Error(apiData)
         }
     }
 
@@ -36,7 +36,9 @@ class EnphaseApi {
     }
 
     async getProductionData() {
-        const url = this.createUrl(`systems/${this.systemId}/stats`, ['datetime_format=iso8601'])
+        const startAt = new Date().toISOString();
+        
+        const url = this.createUrl(`systems/${this.systemId}/stats`, ['datetime_format=iso8601', `start_at=${startAt}`])
         const apiData = await this.apiRequest(url);
 
         return apiData.intervals;

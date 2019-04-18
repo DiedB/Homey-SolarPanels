@@ -30,10 +30,6 @@ class Omnik extends Inverter {
 
         try {
             const productionData = await this.omnikApi.getProductionData(data.id);
-    
-            if (!this.getAvailable()) {
-                await this.setAvailable();
-            }
 
             const currentEnergy = productionData.data.today_energy;
             this.setCapabilityValue('daily_production', currentEnergy);
@@ -41,6 +37,10 @@ class Omnik extends Inverter {
             const currentPower = productionData.data.current_power * 1000;
             this.setCapabilityValue('production', currentPower);
             
+            if (!this.getAvailable()) {
+                await this.setAvailable();
+            }
+
             this.log(`Current energy is ${currentEnergy}kWh`);
             this.log(`Current power is ${currentPower}W`);
         } catch (error) {

@@ -28,15 +28,20 @@ class Enphase extends Inverter {
         try {
             const productionData = await this.enphaseApi.getProductionData();
 
+            let currentEnergy = 0;
+            let currentPower = 0;
+
+            if (productionData.length > 0) {
+                currentEnergy = productionData.reduce((lastValue, report) => lastValue + report.enwh, 0) / 1000;
+                currentPower = productionData[productionData.length - 1].powr;
+            }
+
+            this.setCapabilityValue('daily_production', currentEnergy);
+            this.setCapabilityValue('production', currentPower);    
+
             if (!this.getAvailable()) {
                 await this.setAvailable();
             }
-
-            const currentEnergy = productionData.reduce((lastValue, report) => lastValue + report.enwh, 0) / 1000;
-            this.setCapabilityValue('daily_production', currentEnergy);
-
-            const currentPower = productionData[productionData.length - 1].powr;
-            this.setCapabilityValue('production', currentPower);
 
             this.log(`Current energy is ${currentEnergy}kWh`);
             this.log(`Current power is ${currentPower}W`);
