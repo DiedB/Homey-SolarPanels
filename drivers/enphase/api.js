@@ -36,12 +36,10 @@ class EnphaseApi {
     }
 
     async getProductionData() {
-        const startAt = new Date().toISOString();
-        
-        const url = this.createUrl(`systems/${this.systemId}/stats`, ['datetime_format=iso8601', `start_at=${startAt}`])
+        const url = this.createUrl(`systems/${this.systemId}/stats`, ['datetime_format=iso8601'])
         const apiData = await this.apiRequest(url);
 
-        return apiData.intervals;
+        return apiData.intervals || null;
     }
 }
 

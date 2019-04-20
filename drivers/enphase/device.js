@@ -31,7 +31,7 @@ class Enphase extends Inverter {
             let currentEnergy = 0;
             let currentPower = 0;
 
-            if (productionData.length > 0) {
+            if (productionData !== null) {
                 currentEnergy = productionData.reduce((lastValue, report) => lastValue + report.enwh, 0) / 1000;
                 currentPower = productionData[productionData.length - 1].powr;
             }
