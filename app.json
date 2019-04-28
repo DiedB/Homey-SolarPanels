@@ -25,6 +25,17 @@
     "name": "Diederik Bakker",
     "email": "diederik@outlook.com"
   },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Diederik Bakker",
+        "email": "diederik@outlook.com"
+      },
+      {
+        "name": "Rob (https://github.com/pro-sumer)"
+      }
+    ]
+  },
   "capabilities": {
     "production": {
       "type": "number",
@@ -511,6 +522,69 @@
           "label": {
             "en": "Omnik password"
           }
+        }
+      ]
+    },
+    {
+      "id": "growatt",
+      "name": {
+        "en": "Growatt",
+        "nl": "Growatt"
+      },
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "pair.svg"
+          },
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "./drivers/growatt/assets/images/large.jpg",
+        "small": "./drivers/growatt/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["production", "daily_production"],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Growatt credentials",
+            "nl": "Growatt inloggegevens"
+          },
+          "children": [
+            {
+              "id": "username",
+              "type": "text",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            }
+          ]
         }
       ]
     }
