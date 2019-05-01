@@ -20,7 +20,7 @@ class Growatt extends Homey.Driver {
                 if (loginData.back.success) {
                     for (let inverter of loginData.back.data) {
                         devices.push({
-                            name: inverter.plantName,
+                            name: inverter.plantName || 'Inverter',
                             data: { id: inverter.plantId },
                             settings: { username, password }
                         })
