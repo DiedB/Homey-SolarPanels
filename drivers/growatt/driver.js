@@ -13,8 +13,7 @@ class Growatt extends Homey.Driver {
         let devices = []
 
         socket.on('login', async (data, callback) => {
-            username = data.username
-            password = data.password
+            const { username, password } = data
             try {
                 const loginResponse = await api.login(username, password)
                 const loginData = await loginResponse.json()
