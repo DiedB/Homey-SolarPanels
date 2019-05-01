@@ -15,11 +15,7 @@ class Growatt extends Inverter {
             const productionData = await productionResponse.json()
             if (productionData.plantNumber === 1) {
                 if (!this.getAvailable()) {
-                    this.setAvailable().then(result => {
-                        this.log('Available')
-                    }).catch(_ => {
-                        this.error('Setting availability failed')
-                    })
+                    await this.setAvailable();
                 }
                 const currentEnergy = Number(productionData.todayValue)
                 this.setCapabilityValue('daily_production', currentEnergy)
