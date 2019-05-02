@@ -7,14 +7,14 @@ const fetch = require('node-fetch')
 const md5 = require('md5')
 
 const baseURL = 'https://server.growatt.com'
-const loginURL = `${baseURL}/newLoginAPI.do`
-const dataURL = `${baseURL}/newPlantAPI.do?action=getUserCenterEnertyData`
+const loginURL = `${baseURL}/LoginAPI.do`
+const plantListURL = `${baseURL}/PlantListAPI.do`
 
 let cookies
 
-function post (url, body) {
+function request (method, url, body = null) {
     return fetch(url, {
-        method: 'POST',
+        method: method,
         headers: { 'Content-Type': 'application/x-www-form-urlencoded', Cookie: cookies },
         body: body
     })
@@ -30,11 +30,11 @@ function md5c (message) {
 
 exports.login = async function (username, password) {
     cookies = undefined
-    const response = await post(loginURL, `userName=${username}&password=${md5c(password)}`)
+    const response = await request('POST', loginURL, `userName=${username}&password=${md5c(password)}`)
     cookies = getCookies(response)
     return response
 }
 
-exports.getProduction = function () {
-    return post(dataURL, 'language=1')
+exports.getPlantList = function () {
+    return request('GET', plantListURL)
 }

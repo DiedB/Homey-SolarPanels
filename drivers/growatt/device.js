@@ -11,18 +11,20 @@ class Growatt extends Inverter {
         try {
             const settings = this.getSettings()
             await api.login(settings.username, settings.password)
-            const productionResponse = await api.getProduction()
-            const productionData = await productionResponse.json()
-            if (productionData.plantNumber === 1) {
+            const plantListResponse = await api.getPlantList()
+            const plantList = await plantListResponse.json()
+            const data = this.getData()
+            const plantData = plantList.back.data.find(plant => plant.plantId === data.id)
+            if (plantData) {
                 if (!this.getAvailable()) {
-                    await this.setAvailable();
+                    await this.setAvailable()
                 }
-                const currentEnergy = Number(productionData.todayValue)
-                this.setCapabilityValue('daily_production', currentEnergy)
-                const currentPower = Number(productionData.powerValue)
+                const todayEnergy = this.value(plantData.todayEnergy)
+                this.setCapabilityValue('daily_production', todayEnergy)
+                const currentPower = this.value(plantData.currentPower)
                 this.setCapabilityValue('production', currentPower)
-                this.log(`Current energy is ${currentEnergy}kWh`)
-                this.log(`Current power is ${currentPower}W`)
+                this.log(`Current energy is ${todayEnergy} kWh`)
+                this.log(`Current power is ${currentPower} W`)
             } else {
                 throw new Error('Invalid Growatt API response')
             }
@@ -30,6 +32,10 @@ class Growatt extends Inverter {
             this.log(`Unavailable (${error})`)
             this.setUnavailable(`Error retrieving data (${error})`)
         }
+    }
+
+    value (string) {
+        return Number(string.split(' ')[0])
     }
 }
 

@@ -16,12 +16,14 @@ class Growatt extends Homey.Driver {
             const { username, password } = data
             try {
                 const loginResponse = await api.login(username, password)
-                const loginData = await loginResponse.json()
-                if (loginData.back.success) {
-                    for (let inverter of loginData.back.data) {
+                const login = await loginResponse.json()
+                const plantListResponse = await api.getPlantList()
+                const plantList = await plantListResponse.json()
+                if (login.back.success) {
+                    for (let plant of plantList.back.data) {
                         devices.push({
-                            name: inverter.plantName || 'Inverter',
-                            data: { id: inverter.plantId },
+                            name: plant.plantName || plant.plantId.toString(),
+                            data: { id: plant.plantId },
                             settings: { username, password }
                         })
                     }
