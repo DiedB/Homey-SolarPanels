@@ -10,23 +10,14 @@ class Growatt extends Homey.Driver {
     onPair (socket) {
         let username
         let password
-        let devices = []
 
-        socket.on('login', async (data, callback) => {
-            const { username, password } = data
+        socket.on('login', async (credentials, callback) => {
+            username = credentials.username
+            password = credentials.password
             try {
                 const loginResponse = await api.login(username, password)
                 const login = await loginResponse.json()
-                const plantListResponse = await api.getPlantList()
-                const plantList = await plantListResponse.json()
                 if (login.back.success) {
-                    for (let plant of plantList.back.data) {
-                        devices.push({
-                            name: plant.plantName || plant.plantId.toString(),
-                            data: { id: plant.plantId },
-                            settings: { username, password }
-                        })
-                    }
                     callback(null, true)
                 } else {
                     callback(new Error(Homey.__('login_error')))
@@ -36,7 +27,14 @@ class Growatt extends Homey.Driver {
             }
         })
 
-        socket.on('list_devices', (data, callback) => {
+        socket.on('list_devices', async (_, callback) => {
+            const plantListResponse = await api.getPlantList()
+            const plantList = await plantListResponse.json()
+            const devices = plantList.back.data.map(plant => ({
+                name: plant.plantName || plant.plantId.toString(),
+                data: { id: plant.plantId },
+                settings: { username, password }
+            }))
             callback(null, devices)
         })
     }
