@@ -4,29 +4,40 @@
 'use strict'
 
 const Inverter = require('../inverter')
-const api = require('./api')
+const { GrowattAPI } = require('./api')
 
 class Growatt extends Inverter {
+    async onInit () {
+        super.onInit()
+        const settings = this.getSettings()
+        this.api = new GrowattAPI(settings.username, settings.password)
+        await this.api.login()
+    }
+
+    async onSettings (_, newSettings) {
+        const api = new GrowattAPI(newSettings.username, newSettings.password)
+        await api.login()
+        this.api = api
+    }
+
     async checkProduction () {
+        this.log('Checking production')
+        const data = this.getData()
         try {
-            const settings = this.getSettings()
-            await api.login(settings.username, settings.password)
-            const plantListResponse = await api.getPlantList()
-            const plantList = await plantListResponse.json()
-            const data = this.getData()
-            const plantData = plantList.back.data.find(plant => plant.plantId === data.id)
+            const plantList = await this.api.getPlantList()
+            const plantData = plantList.data.find(plant => plant.plantId === data.id)
             if (plantData) {
+                const todayEnergy = this.value(plantData.todayEnergy)
+                const currentPower = this.value(plantData.currentPower)
+                this.setCapabilityValue('daily_production', todayEnergy)
+                this.setCapabilityValue('production', currentPower)
                 if (!this.getAvailable()) {
                     await this.setAvailable()
                 }
-                const todayEnergy = this.value(plantData.todayEnergy)
-                this.setCapabilityValue('daily_production', todayEnergy)
-                const currentPower = this.value(plantData.currentPower)
-                this.setCapabilityValue('production', currentPower)
-                this.log(`Current energy is ${todayEnergy} kWh`)
+                this.log(`Energy produced today is ${todayEnergy} kWh`)
                 this.log(`Current power is ${currentPower} W`)
             } else {
-                throw new Error('Invalid Growatt API response')
+                throw new Error('Could not get production data from Growatt server')
             }
         } catch (error) {
             this.log(`Unavailable (${error})`)
