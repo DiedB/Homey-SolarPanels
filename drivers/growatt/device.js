@@ -24,29 +24,20 @@ class Growatt extends Inverter {
         this.log('Checking production')
         const data = this.getData()
         try {
-            const plantList = await this.api.getPlantList()
-            const plantData = plantList.data.find(plant => plant.plantId === data.id)
-            if (plantData) {
-                const todayEnergy = this.value(plantData.todayEnergy)
-                const currentPower = this.value(plantData.currentPower)
-                this.setCapabilityValue('daily_production', todayEnergy)
-                this.setCapabilityValue('production', currentPower)
-                if (!this.getAvailable()) {
-                    await this.setAvailable()
-                }
-                this.log(`Energy produced today is ${todayEnergy} kWh`)
-                this.log(`Current power is ${currentPower} W`)
-            } else {
-                throw new Error('Could not get production data from Growatt server')
+            const production = await this.api.getInverterProductionData(data.id)
+            const energyToday = production.energyToday
+            const currentPower = production.currentPower
+            this.setCapabilityValue('daily_production', energyToday)
+            this.setCapabilityValue('production', currentPower)
+            if (!this.getAvailable()) {
+                await this.setAvailable()
             }
+            this.log(`Energy produced today is ${energyToday} kWh`)
+            this.log(`Current power is ${currentPower} W`)
         } catch (error) {
             this.log(`Unavailable (${error})`)
             this.setUnavailable(`Error retrieving data (${error})`)
         }
-    }
-
-    value (string) {
-        return Number(string.split(' ')[0])
     }
 }
 

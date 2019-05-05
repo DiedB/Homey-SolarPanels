@@ -27,10 +27,10 @@ class Growatt extends Homey.Driver {
 
         socket.on('list_devices', async (_, callback) => {
             try {
-                const plantList = await api.getPlantList()
-                const devices = plantList.data.map(plant => ({
-                    name: plant.plantName || plant.plantId.toString(),
-                    data: { id: plant.plantId },
+                const serialNumbers = await api.getInverterSerialNumbers()
+                const devices = serialNumbers.map(serialNumber => ({
+                    name: serialNumber,
+                    data: { id: serialNumber },
                     settings: { username, password }
                 }))
                 callback(null, devices)
