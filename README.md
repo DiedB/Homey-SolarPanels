@@ -5,6 +5,7 @@ Let Homey monitor your solar panels. This app allows you to view production stat
 Because of a change in device capabilities, you will have to re-add your inverters after the upgrade to v3.0.
 
 ## Release notes
+* 3.1.0 - Add support for Growatt inverters
 * 3.0.9 - Fix more Enphase bugs
 * 3.0.6 - Fix Enphase bug
 * 3.0.5 - Add back Ginlong/Solis inverters
