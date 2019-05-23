@@ -16,9 +16,8 @@
 
 <div class="form-group">
 	<div class="input-field">
-		<label>Please enter your Enphase user ID and API key:</label>
-		<input type="text" id="key" placeholder="API key" value="" />
-		<input type="text" id="uid" placeholder="User ID" value="" />
+		<label>Please enter your Ginlong plant ID:</label>
+		<input type="text" id="plant" placeholder="Plant ID" value="" />
 	</div>
 
 	<button class="submit-button" id="validate">Connect</button>
@@ -29,10 +28,9 @@
 		$('#validate').click(() => {
 			Homey.showLoadingOverlay();
 
-			var key = $('#key').val();
-			var uid = $('#uid').val();
+			var plant = $('#plant').val();
 
-			var pairData = { key, uid };
+			var pairData = { plant };
 
 			Homey.emit('validate', pairData, (error, result) => {
 				if (error) {

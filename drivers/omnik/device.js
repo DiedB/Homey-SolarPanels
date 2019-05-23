@@ -1,29 +1,46 @@
 'use strict';
 
 const Inverter = require('../inverter');
-const { getUserId, getPlantData } = require('./base');
+const { OmnikApi } = require('./api');
 
 class Omnik extends Inverter {
-    getCronString() {
-        return '*/5 * * * *';
+    async onInit() {
+        super.onInit();
+
+        const settings = this.getSettings();
+
+        this.omnikApi = new OmnikApi(settings.username, settings.password);
+        await this.omnikApi.initializeSession();
+    }
+
+    async onSettings(_, newSettings) {
+        const data = this.getData();
+
+        // Omnik API will throw an error if new settings are invalid
+        const omnikApi = new OmnikApi(newSettings.username, newSettings.password);
+        await omnikApi.getProductionData(data.id);
+
+        this.omnikApi = omnikApi;
     }
 
     async checkProduction() {
         this.log('Checking production');
 
         const data = this.getData();
-        const settings = this.getSettings();
 
         try {
-            const userId = await getUserId(settings.username, settings.password);
-            const plantData = await getPlantData(userId, data.id);
-    
-            const currentEnergy = plantData.data.today_energy;
+            const productionData = await this.omnikApi.getProductionData(data.id);
+
+            const currentEnergy = productionData.data.today_energy;
             this.setCapabilityValue('daily_production', currentEnergy);
 
-            const currentPower = plantData.data.current_power * 1000;
+            const currentPower = productionData.data.current_power * 1000;
             this.setCapabilityValue('production', currentPower);
             
+            if (!this.getAvailable()) {
+                await this.setAvailable();
+            }
+
             this.log(`Current energy is ${currentEnergy}kWh`);
             this.log(`Current power is ${currentPower}W`);
         } catch (error) {

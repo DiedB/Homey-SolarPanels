@@ -17,6 +17,9 @@ class Inverter extends Homey.Device {
 
     onAdded() {
         this.log('Added device');
+
+        // Force an initial production check
+        this.checkProduction();
     }
 
     onDeleted() {

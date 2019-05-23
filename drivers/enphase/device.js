@@ -1,58 +1,54 @@
 'use strict';
 
 const Inverter = require('../inverter');
-const fetch = require('node-fetch');
-
-const baseUrl = 'https://api.enphaseenergy.com/api/v2/systems/';
+const { EnphaseApi } = require('./api');
 
 class Enphase extends Inverter {
-    checkProduction() {
-        this.log('Checking production');
+    onInit() {
+        super.onInit();
 
         const data = this.getData();
         const settings = this.getSettings();
-        const dataUrl = `${baseUrl}${data.sid}/summary?key=${settings.key}&user_id=${settings.uid}`;
+        this.enphaseApi = new EnphaseApi(settings.uid, settings.key, data.id);
+    }
 
-        fetch(dataUrl)
-            .then(result => {
-                if (result.ok) {
-                    if (!this.getAvailable()) {
-                        this.setAvailable().then(result => {
-                            this.log('Available');
-                        }).catch(error => {
-                            this.error('Setting availability failed');
-                        })
-                    }
+    async onSettings(_, newSettings) {
+        const data = this.getData();
 
-                    return result.json();
-                } else {
-                    throw result.status;
-                }
-            })
-            .then(response => {
-                const lastUpdate = response.last_report_at;
+        // Enphase API will throw an error if new settings are invalid
+        const enphaseApi = new EnphaseApi(newSettings.uid, newSettings.key, data.id);
+        await enphaseApi.getProductionData();
 
-                if (lastUpdate !== this.getStoreValue('lastUpdate')) {
-                    this.setStoreValue('lastUpdate', lastUpdate).catch(error => {
-                        this.error('Failed setting last update value');
-                    });
+        this.enphaseApi = enphaseApi;
+    }
 
-                    const currentEnergy = Number(response.energy_today) / 1000;
-                    this.setCapabilityValue('daily_production', currentEnergy);
+    async checkProduction() {
+        this.log('Checking production');
 
-                    const currentPower = Number(response.current_power);
-                    this.setCapabilityValue('production', currentPower);
+        try {
+            const productionData = await this.enphaseApi.getProductionData();
 
-                    this.log(`Current energy is ${currentEnergy}kWh`);
-                    this.log(`Current power is ${currentPower}W`);
-                } else {
-                    this.log(`No new data`);
-                }
-            })
-            .catch(error => {
-                this.log(`Unavailable (${error})`);
-                this.setUnavailable(`Error retrieving data (${error})`);
-            });
+            let currentEnergy = 0;
+            let currentPower = 0;
+
+            if (productionData !== null) {
+                currentEnergy = productionData.reduce((lastValue, report) => lastValue + report.enwh, 0) / 1000;
+                currentPower = productionData[productionData.length - 1].powr;
+            }
+
+            this.setCapabilityValue('daily_production', currentEnergy);
+            this.setCapabilityValue('production', currentPower);    
+
+            if (!this.getAvailable()) {
+                await this.setAvailable();
+            }
+
+            this.log(`Current energy is ${currentEnergy}kWh`);
+            this.log(`Current power is ${currentPower}W`);
+        } catch (error) {
+            this.log(`Unavailable (${error})`);
+            this.setUnavailable(`Error retrieving data (${error})`);
+        }
     }
 }
 

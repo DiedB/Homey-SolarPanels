@@ -5,6 +5,12 @@ Let Homey monitor your solar panels. This app allows you to view production stat
 Because of a change in device capabilities, you will have to re-add your inverters after the upgrade to v3.0.
 
 ## Release notes
+* 3.1.0 - Add support for Growatt inverters
+* 3.0.9 - Fix more Enphase bugs
+* 3.0.6 - Fix Enphase bug
+* 3.0.5 - Add back Ginlong/Solis inverters
+* 3.0.4 - Improve Omnik error handling and pairing process
+* 3.0.3 - Improve Enphase pairing and production checks
 * 3.0.2 - Add back Omnik, fix Fronius and SAJ bugs, fix flow triggers
 * 3.0.0 - Remove unstable inverter brands (might be added back in the future), use settings API, clean up pairing screens and fix error handling, add back SAJ support
 * 2.5.0 - Upgrade Fronius to SDK v2, improve error handling in pairing process

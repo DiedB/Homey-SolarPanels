@@ -1,22 +1,20 @@
 'use strict';
 
 const Homey = require('homey');
-const { EnphaseApi } = require('./api');
+const { GinlongApi } = require('./api');
 
-class Enphase extends Homey.Driver {
+class Ginlong extends Homey.Driver {
     onPair(socket) {
-        let enphaseApi;
-        let userId;
-        let apiKey;
+        let ginlongApi;
+        let plantId;
         let systems;
 
         socket.on('validate', async (pairData, callback) => {
             try {
-                userId = pairData.uid;
-                apiKey = pairData.key;
-                enphaseApi = new EnphaseApi(userId, apiKey);
+                plantId = pairData.plant;
+                ginlongApi = new GinlongApi(plantId, this.log);
 
-                systems = await enphaseApi.getSystems();
+                systems = await ginlongApi.getSystems();
 
                 callback(null, true);
             } catch (error) {
@@ -28,11 +26,11 @@ class Enphase extends Homey.Driver {
         socket.on('list_devices', (_, callback) => {
             try {
                 const devices = systems.map(system => ({
-                    name: system.system_name,
+                    name: system.name,
                     data: {
-                        id: system.system_id
+                        id: system.id,
+                        plantId: plantId
                     },
-                    settings: { uid: userId, key: apiKey }
                 }));
 
                 callback(null, devices);
@@ -44,4 +42,4 @@ class Enphase extends Homey.Driver {
     }
 }
 
-module.exports = Enphase;
+module.exports = Ginlong;
