@@ -14,7 +14,7 @@ const inverterURL = `${baseURL}/newInverterAPI.do`
 class GrowattAPI {
     constructor (username, password) {
         this.username = username
-        this.password = md5(password).replace(/0(.)/g, 'c$1')
+        this.password = md5(password).replace(/(.{2})/g, '_$1').replace(/_0(.)/g, '_c$1').replace(/_/g, '')
         this.cookies = undefined
         this.plants = undefined
     }
