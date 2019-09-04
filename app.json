@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "3.1.3",
+  "version": "3.2.0",
   "compatibility": ">=2.0",
   "sdk": 2,
   "brandColor": "#1f63d1",
@@ -318,6 +318,55 @@
       ]
     },
     {
+      "id": "goodwe",
+      "name": {
+        "en": "GoodWe",
+        "nl": "GoodWe"
+      },
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "goodwe.svg"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "./drivers/goodwe/assets/images/large.jpg",
+        "small": "./drivers/goodwe/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": ["production", "daily_production"],
+      "settings": [
+        {
+          "id": "username",
+          "type": "text",
+          "label": {
+            "en": "GoodWe SEMS username"
+          }
+        },
+        {
+          "id": "password",
+          "type": "password",
+          "label": {
+            "en": "GoodWe SEMS password"
+          }
+        }
+      ]
+    },
+    {
       "id": "ginlong",
       "name": {
         "en": "Ginlong",
@@ -513,14 +562,14 @@
           "id": "username",
           "type": "text",
           "label": {
-            "en": "Omnik username"
+            "en": "Omnik upairsername"
           }
         },
         {
           "id": "password",
           "type": "password",
           "label": {
-            "en": "Omnik password"
+            "en": "Omnik ppairassword"
           }
         }
       ]
