@@ -61,7 +61,9 @@ class SolarEdge extends Inverter {
                     if ((currentMeterType === "production" || currentMeterType === "consumption") && meter.values.length > 0 && meter.values[0].value !== undefined) {
                         const currentValue = Math.round(meter.values[0].value);
 
-                        this.setCapabilityValue(`${currentMeterType}`, currentValue);
+                        const capabilityId = currentMeterType === 'production' ? 'measure_power' : 'consumption';
+
+                        this.setCapabilityValue(capabilityId, currentValue);
 
                         this.log(`Current ${currentMeterType} power is ${currentValue}W`);
                     } else {
@@ -101,7 +103,9 @@ class SolarEdge extends Inverter {
                     if ((currentMeterType === "production" || currentMeterType === "consumption") && meter.values.length > 0 && meter.values[0].value !== undefined) {
                         const currentValue = Math.round(meter.values[0].value) / 1000;
 
-                        this.setCapabilityValue(`daily_${currentMeterType}`, currentValue);
+                        const capabilityId = currentMeterType === 'production' ? 'meter_power' : 'daily_consumption';
+
+                        this.setCapabilityValue(capabilityId, currentValue);
 
                         this.log(`Current ${currentMeterType} energy is ${currentValue}kWh`);
                     } else {

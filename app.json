@@ -1,7 +1,7 @@
 {
   "id": "it.diederik.solar",
-  "version": "3.1.2",
-  "compatibility": ">=2.0",
+  "version": "4.0.0",
+  "compatibility": ">=3.0",
   "sdk": 2,
   "brandColor": "#1f63d1",
   "name": {
@@ -37,49 +37,6 @@
     ]
   },
   "capabilities": {
-    "production": {
-      "type": "number",
-      "title": {
-        "en": "Power production",
-        "nl": "Stroomproductie"
-      },
-      "icon": "/assets/capabilities/production.svg",
-      "units": {
-        "en": "W"
-      },
-      "insights": true,
-      "desc": {
-        "en": "Power in Watt (W)",
-        "nl": "Vermogen in Watt (W)"
-      },
-      "chartType": "stepLine",
-      "decimals": 2,
-      "getable": true,
-      "setable": false,
-      "uiComponent": "sensor",
-      "$flow": {
-        "triggers": [
-          {
-            "id": "production_changed",
-            "title": {
-              "en": "The power production changed",
-              "nl": "De stroomproductie is veranderd"
-            },
-            "tokens": [
-              {
-                "name": "production",
-                "title": {
-                  "en": "Power production",
-                  "nl": "Stroomproductie"
-                },
-                "type": "number",
-                "example": 1430
-              }
-            ]
-          }
-        ]
-      }
-    },
     "consumption": {
       "type": "number",
       "title": {
@@ -110,56 +67,13 @@
             },
             "tokens": [
               {
-                "name": "production",
+                "name": "measure_power",
                 "title": {
                   "en": "Power consumption",
                   "nl": "Stroomverbruik"
                 },
                 "type": "number",
                 "example": 1430
-              }
-            ]
-          }
-        ]
-      }
-    },
-    "daily_production": {
-      "type": "number",
-      "title": {
-        "en": "Energy generation today",
-        "nl": "Energieproductie vandaag"
-      },
-      "icon": "/assets/capabilities/daily_production.svg",
-      "units": {
-        "en": "kWh"
-      },
-      "insights": true,
-      "desc": {
-        "en": "Energy generation today in kWh",
-        "nl": "Energieproductie vandaag in kWh"
-      },
-      "chartType": "stepLine",
-      "decimals": 2,
-      "getable": true,
-      "setable": false,
-      "uiComponent": "sensor",
-      "$flow": {
-        "triggers": [
-          {
-            "id": "daily_production_changed",
-            "title": {
-              "en": "The energy generated today changed",
-              "nl": "De energieproductie vandaag is veranderd"
-            },
-            "tokens": [
-              {
-                "name": "daily_production",
-                "title": {
-                  "en": "Energy generated today",
-                  "nl": "Energieproductie vandaag"
-                },
-                "type": "number",
-                "example": 7.8
               }
             ]
           }
@@ -196,7 +110,7 @@
             },
             "tokens": [
               {
-                "name": "daily_production",
+                "name": "meter_power",
                 "title": {
                   "en": "Energy consumption today",
                   "nl": "Stroomverbruik vandaag"
@@ -233,8 +147,8 @@
         "large": "./drivers/pvoutput/assets/images/large.jpg",
         "small": "./drivers/pvoutput/assets/images/small.jpg"
       },
-      "class": "sensor",
-      "capabilities": ["production", "daily_production"],
+      "class": "solarpanel",
+      "capabilities": ["measure_power", "meter_power"],
       "settings": [
         {
           "id": "key",
@@ -260,8 +174,8 @@
         "large": "./drivers/solaredge/assets/images/large.jpg",
         "small": "./drivers/solaredge/assets/images/small.jpg"
       },
-      "class": "sensor",
-      "capabilities": ["production", "consumption", "daily_production", "daily_consumption"],
+      "class": "solarpanel",
+      "capabilities": ["measure_power", "consumption", "meter_power", "daily_consumption"],
       "settings": [
         {
           "id": "key",
@@ -298,8 +212,8 @@
         "large": "./drivers/enphase/assets/images/large.jpg",
         "small": "./drivers/enphase/assets/images/small.jpg"
       },
-      "class": "sensor",
-      "capabilities": ["production", "daily_production"],
+      "class": "solarpanel",
+      "capabilities": ["measure_power", "meter_power"],
       "settings": [
         {
           "id": "uid",
@@ -343,8 +257,8 @@
         "large": "./drivers/ginlong/assets/images/large.jpg",
         "small": "./drivers/ginlong/assets/images/small.jpg"
       },
-      "class": "sensor",
-      "capabilities": ["production", "daily_production"]
+      "class": "solarpanel",
+      "capabilities": ["measure_power", "meter_power"]
     },
     {
       "id": "fronius",
@@ -361,8 +275,8 @@
         "large": "./drivers/fronius/assets/images/large.jpg",
         "small": "./drivers/fronius/assets/images/small.jpg"
       },
-      "class": "sensor",
-      "capabilities": ["production", "daily_production"],
+      "class": "solarpanel",
+      "capabilities": ["measure_power", "meter_power"],
       "settings": [
         {
           "id": "ip",
@@ -388,8 +302,8 @@
         "large": "./drivers/tigo/assets/images/large.jpg",
         "small": "./drivers/tigo/assets/images/small.jpg"
       },
-      "class": "sensor",
-      "capabilities": ["production", "daily_production"],
+      "class": "solarpanel",
+      "capabilities": ["measure_power", "meter_power"],
       "settings": [
         {
           "id": "username",
@@ -421,8 +335,8 @@
         "large": "./drivers/saj/assets/images/large.jpg",
         "small": "./drivers/saj/assets/images/small.jpg"
       },
-      "class": "sensor",
-      "capabilities": ["production", "daily_production"],
+      "class": "solarpanel",
+      "capabilities": ["measure_power", "meter_power"],
       "settings": [
         {
           "id": "ip",
@@ -458,8 +372,8 @@
         "large": "./drivers/solarman/assets/images/large.jpg",
         "small": "./drivers/solarman/assets/images/small.jpg"
       },
-      "class": "sensor",
-      "capabilities": ["production", "daily_production"],
+      "class": "solarpanel",
+      "capabilities": ["measure_power", "meter_power"],
       "settings": [
         {
           "id": "username",
@@ -506,8 +420,8 @@
         "large": "./drivers/omnik/assets/images/large.jpg",
         "small": "./drivers/omnik/assets/images/small.jpg"
       },
-      "class": "sensor",
-      "capabilities": ["production", "daily_production"],
+      "class": "solarpanel",
+      "capabilities": ["measure_power", "meter_power"],
       "settings": [
         {
           "id": "username",
@@ -555,8 +469,8 @@
         "large": "./drivers/growatt/assets/images/large.jpg",
         "small": "./drivers/growatt/assets/images/small.jpg"
       },
-      "class": "sensor",
-      "capabilities": ["production", "daily_production"],
+      "class": "solarpanel",
+      "capabilities": ["measure_power", "meter_power"],
       "settings": [
         {
           "type": "group",
