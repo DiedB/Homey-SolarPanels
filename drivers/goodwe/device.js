@@ -9,33 +9,37 @@ class GoodWe extends Inverter {
 
         const data = this.getData();
         const settings = this.getSettings();
-        this.GoodWeApi = new GoodWeApi(settings.uid, settings.key, data.id);
+        this.goodWeApi = new GoodWeApi(settings.username, settings.password, data.systemId);
+
+        this.goodWeApi.refreshToken();
+    }
+
+    getCronString() {
+        return '* * * * *';
     }
 
     async onSettings(_, newSettings) {
         const data = this.getData();
 
         // GoodWe API will throw an error if new settings are invalid
-        const GoodWeApi = new GoodWeApi(newSettings.uid, newSettings.key, data.id);
-        await GoodWeApi.getProductionData();
+        const goodWeApi = new GoodWeApi(newSettings.username, newSettings.password, data.systemId);
 
-        this.GoodWeApi = GoodWeApi;
+        this.goodWeApi = goodWeApi;
     }
 
     async checkProduction() {
         this.log('Checking production');
+        const data = this.getData();
 
         try {
-            const productionData = await this.GoodWeApi.getProductionData();
+            const productionData = await this.goodWeApi.getInverterData();
+            const inverterData = productionData.data.inverter.find(inverter => inverter.sn === data.inverterId);
 
-            let currentEnergy = 0;
-            let currentPower = 0;
+            this.log(inverterData);
 
-            if (productionData !== null) {
-                currentEnergy = productionData.reduce((lastValue, report) => lastValue + report.enwh, 0) / 1000;
-                currentPower = productionData[productionData.length - 1].powr;
-            }
-
+            const currentEnergy = inverterData.eday;
+            const currentPower = inverterData.out_pac;
+            
             this.setCapabilityValue('daily_production', currentEnergy);
             this.setCapabilityValue('production', currentPower);    
 

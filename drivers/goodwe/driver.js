@@ -8,7 +8,6 @@ class GoodWe extends Homey.Driver {
         let goodWeApi;
         let username;
         let password;
-        let systems;
 
         socket.on('login', async (credentials, callback) => {
             try {
@@ -16,25 +15,46 @@ class GoodWe extends Homey.Driver {
                 password = credentials.password;
                 goodWeApi = new GoodWeApi(username, password);
 
-                systems = await goodWeApi.getToken();
-                this.log(systems);
+                await goodWeApi.refreshToken();
 
                 callback(null, true);
             } catch (error) {
                 this.error(error);
-                callback(error);
+                callback(new Error(Homey.__('login_error')));
             }
         });
 
-        socket.on('list_devices', (_, callback) => {
+        socket.on('list_devices', async (_, callback) => {
             try {
-                const devices = systems.map(system => ({
-                    name: system.system_name,
-                    data: {
-                        id: system.system_id
-                    },
-                    settings: { uid: userId, key: apiKey }
-                }));
+                const systems = await goodWeApi.getSystems();
+
+                const promises = systems.data.map(system => {
+                    return new Promise(async (resolve, reject) => {
+                        try {
+                            resolve(await goodWeApi.getInverterData(system.powerstation_id))
+                        } catch (error) {
+                            reject(error)
+                        }
+                    })
+                })
+                const systemData = await Promise.all(promises);
+
+                const devices = []
+                systemData.forEach(system => {
+                    const systemId = system.data.info.powerstation_id;
+                    const stationName = system.data.info.stationname;
+
+                    system.data.inverter.forEach(inverter => {
+                        devices.push({
+                            name: `${stationName} (${inverter.sn})`,
+                            data: {
+                                systemId,
+                                inverterId: inverter.sn
+                            },
+                            settings: { username, password }    
+                        })
+                    })
+                })
 
                 callback(null, devices);
             } catch (error) {
