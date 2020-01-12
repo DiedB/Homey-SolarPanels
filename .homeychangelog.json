@@ -1,0 +1,8 @@
+{
+  "4.0.1": {
+    "en": "Add support for Homey Energy"
+  },
+  "4.0.2": {
+    "en": "Add support for GoodWe SEMS"
+  }
+}
