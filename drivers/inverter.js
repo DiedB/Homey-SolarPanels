@@ -5,13 +5,35 @@ const uuid = require('uuid/v4');
 
 class Inverter extends Homey.Device {
     /* Overriden device methods */
-    onInit() {
-        this.log('Initializing device');
+    async onInit() {
+        try {
+            this.log('Initializing device');
 
-        if (this.getStoreValue('cronTask') === null) {
-            this.createCronTask();
-        } else {
-            this.initializeCronTask();
+            // Homey v3.0 migration
+            if (this.getClass() !== 'solarpanel') {
+                // Old device, upgrade its class and capabilities
+                this.log('Migrating inverter to Homey v3.0')
+            
+                // Remove deprecated capabilities
+                await this.removeCapability('production');
+                await this.removeCapability('daily_production');
+    
+                await this.setClass('solarpanel');
+                await this.addCapability('measure_power');
+                await this.addCapability('meter_power');
+    
+                const upgradeNotification = new Homey.Notification({ excerpt: 'The Solar Panels app has been migrated to Homey v3.0. Please check your flows.' });
+                upgradeNotification.register()
+                    .catch(this.log)
+            }
+    
+            if (this.getStoreValue('cronTask') === null) {
+                this.createCronTask();
+            } else {
+                this.initializeCronTask();
+            }
+        } catch (error) {
+            this.error(error)
         }
     }
 

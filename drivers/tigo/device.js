@@ -33,10 +33,10 @@ class Tigo extends Inverter {
                 }
     
                 const currentEnergy = Number(productionData.summary.daily_energy_dc) / 1000;
-                this.setCapabilityValue('daily_production', currentEnergy);
+                this.setCapabilityValue('meter_power', currentEnergy);
     
                 const currentPower = Number(productionData.summary.last_power_dc);
-                this.setCapabilityValue('production', currentPower);
+                this.setCapabilityValue('measure_power', currentPower);
                 
                 this.log(`Current energy is ${currentEnergy}kWh`);
                 this.log(`Current power is ${currentPower}W`);
