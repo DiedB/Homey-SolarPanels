@@ -37,7 +37,7 @@ class GoodWeApi {
     }
 
     async getSystems() {
-        this.refreshToken();
+        await this.refreshToken();
 
         const url = `${this.apiBaseUrl}PowerStationMonitor/QueryPowerStationMonitorForApp`;
         const apiData = await this.apiPostRequest(url, {
@@ -54,7 +54,7 @@ class GoodWeApi {
     }
 
     async getInverterData(id) {
-        this.refreshToken();
+        await this.refreshToken();
 
         const url = `${this.apiBaseUrl}v1/PowerStation/GetMonitorDetailByPowerstationId`;
 
