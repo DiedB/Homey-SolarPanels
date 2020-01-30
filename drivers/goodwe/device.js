@@ -35,13 +35,11 @@ class GoodWe extends Inverter {
             const productionData = await this.goodWeApi.getInverterData();
             const inverterData = productionData.data.inverter.find(inverter => inverter.sn === data.inverterId);
 
-            this.log(inverterData);
-
             const currentEnergy = inverterData.eday;
             const currentPower = inverterData.out_pac;
             
-            this.setCapabilityValue('daily_production', currentEnergy);
-            this.setCapabilityValue('production', currentPower);    
+            this.setCapabilityValue('meter_power', currentEnergy);
+            this.setCapabilityValue('measure_power', currentPower);    
 
             if (!this.getAvailable()) {
                 await this.setAvailable();

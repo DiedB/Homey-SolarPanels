@@ -4,5 +4,11 @@
   },
   "4.0.2": {
     "en": "Add support for GoodWe SEMS"
+  },
+  "4.0.3": {
+    "en": "Fix GoodWe pairing race condition"
+  },
+  "4.0.4": {
+    "en": "GoodWe fixes"
   }
 }

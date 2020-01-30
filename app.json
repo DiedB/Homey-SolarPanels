@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "4.0.0",
+  "version": "4.0.4",
   "compatibility": ">=3.0",
   "sdk": 2,
   "brandColor": "#1f63d1",
@@ -14,8 +14,15 @@
   },
   "category": "energy",
   "tags": {
-    "en": [ "solar", "panels", "pv" ],
-    "nl": [ "zonnepanelen", "pv" ]
+    "en": [
+      "solar",
+      "panels",
+      "pv"
+    ],
+    "nl": [
+      "zonnepanelen",
+      "pv"
+    ]
   },
   "images": {
     "large": "./assets/images/large.jpg",
@@ -234,7 +241,10 @@
         "small": "./drivers/pvoutput/assets/images/small.jpg"
       },
       "class": "solarpanel",
-      "capabilities": ["measure_power", "meter_power"],
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
       "settings": [
         {
           "id": "key",
@@ -261,7 +271,12 @@
         "small": "./drivers/solaredge/assets/images/small.jpg"
       },
       "class": "solarpanel",
-      "capabilities": ["measure_power", "consumption", "meter_power", "daily_consumption"],
+      "capabilities": [
+        "measure_power",
+        "consumption",
+        "meter_power",
+        "daily_consumption"
+      ],
       "settings": [
         {
           "id": "key",
@@ -299,7 +314,10 @@
         "small": "./drivers/enphase/assets/images/small.jpg"
       },
       "class": "solarpanel",
-      "capabilities": ["measure_power", "meter_power"],
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
       "settings": [
         {
           "id": "uid",
@@ -350,8 +368,11 @@
         "large": "./drivers/goodwe/assets/images/large.jpg",
         "small": "./drivers/goodwe/assets/images/small.jpg"
       },
-      "class": "sensor",
-      "capabilities": ["production", "daily_production"],
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
       "settings": [
         {
           "id": "username",
@@ -396,7 +417,10 @@
         "small": "./drivers/ginlong/assets/images/small.jpg"
       },
       "class": "solarpanel",
-      "capabilities": ["measure_power", "meter_power"]
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ]
     },
     {
       "id": "fronius",
@@ -414,7 +438,10 @@
         "small": "./drivers/fronius/assets/images/small.jpg"
       },
       "class": "solarpanel",
-      "capabilities": ["measure_power", "meter_power"],
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
       "settings": [
         {
           "id": "ip",
@@ -441,7 +468,10 @@
         "small": "./drivers/tigo/assets/images/small.jpg"
       },
       "class": "solarpanel",
-      "capabilities": ["measure_power", "meter_power"],
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
       "settings": [
         {
           "id": "username",
@@ -474,7 +504,10 @@
         "small": "./drivers/saj/assets/images/small.jpg"
       },
       "class": "solarpanel",
-      "capabilities": ["measure_power", "meter_power"],
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
       "settings": [
         {
           "id": "ip",
@@ -511,7 +544,10 @@
         "small": "./drivers/solarman/assets/images/small.jpg"
       },
       "class": "solarpanel",
-      "capabilities": ["measure_power", "meter_power"],
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
       "settings": [
         {
           "id": "username",
@@ -559,7 +595,10 @@
         "small": "./drivers/omnik/assets/images/small.jpg"
       },
       "class": "solarpanel",
-      "capabilities": ["measure_power", "meter_power"],
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
       "settings": [
         {
           "id": "username",
@@ -608,7 +647,10 @@
         "small": "./drivers/growatt/assets/images/small.jpg"
       },
       "class": "solarpanel",
-      "capabilities": ["measure_power", "meter_power"],
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
       "settings": [
         {
           "type": "group",
