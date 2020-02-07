@@ -1,5 +1,6 @@
 {
-  "name": "SolarPanels",
+  "name": "homey-solarpanels",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://www.github.com/DiedB/SolarPanels.git"
@@ -7,7 +8,7 @@
   "dependencies": {
     "md5": "^2.2.1",
     "node-fetch": "^1.7.1",
-    "uuid": "^3.3.2",
-    "xml2js": "^0.4.19"
+    "uuid": "^3.4.0",
+    "xml2js": "^0.4.23"
   }
 }
