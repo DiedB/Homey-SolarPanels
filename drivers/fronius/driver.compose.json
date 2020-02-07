@@ -1,0 +1,29 @@
+{
+  "name": {
+    "en": "Fronius",
+    "nl": "Fronius"
+  },
+  "pair": [
+    {
+      "id": "pair"
+    }
+  ],
+  "images": {
+    "large": "./drivers/fronius/assets/images/large.jpg",
+    "small": "./drivers/fronius/assets/images/small.jpg"
+  },
+  "class": "solarpanel",
+  "capabilities": [
+    "measure_power",
+    "meter_power"
+  ],
+  "settings": [
+    {
+      "id": "ip",
+      "type": "text",
+      "label": {
+        "en": "Fronius Datamanager IP address"
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Energy generation today",
+    "nl": "Energieproductie vandaag"
+  },
+  "icon": "/assets/capabilities/daily_production.svg",
+  "units": {
+    "en": "kWh"
+  },
+  "insights": true,
+  "desc": {
+    "en": "Energy generation today in kWh",
+    "nl": "Energieproductie vandaag in kWh"
+  },
+  "chartType": "stepLine",
+  "decimals": 2,
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "$flow": {
+    "triggers": [
+      {
+        "id": "daily_production_changed",
+        "title": {
+          "en": "The energy generated today changed",
+          "nl": "De energieproductie vandaag is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "daily_production",
+            "title": {
+              "en": "Energy generated today",
+              "nl": "Energieproductie vandaag"
+            },
+            "type": "number",
+            "example": 7.8
+          }
+        ]
+      }
+    ]
+  }
+}

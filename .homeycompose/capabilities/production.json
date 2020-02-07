@@ -1,0 +1,43 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Power production",
+    "nl": "Stroomproductie"
+  },
+  "icon": "/assets/capabilities/production.svg",
+  "units": {
+    "en": "W"
+  },
+  "insights": true,
+  "desc": {
+    "en": "Power in Watt (W)",
+    "nl": "Vermogen in Watt (W)"
+  },
+  "chartType": "stepLine",
+  "decimals": 2,
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "$flow": {
+    "triggers": [
+      {
+        "id": "production_changed",
+        "title": {
+          "en": "The power production changed",
+          "nl": "De stroomproductie is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "production",
+            "title": {
+              "en": "Power production",
+              "nl": "Stroomproductie"
+            },
+            "type": "number",
+            "example": 1430
+          }
+        ]
+      }
+    ]
+  }
+}

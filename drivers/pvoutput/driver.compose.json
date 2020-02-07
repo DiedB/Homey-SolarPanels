@@ -1,0 +1,29 @@
+{
+  "name": {
+    "en": "PVOutput",
+    "nl": "PVOutput"
+  },
+  "pair": [
+    {
+      "id": "pair"
+    }
+  ],
+  "images": {
+    "large": "./drivers/pvoutput/assets/images/large.jpg",
+    "small": "./drivers/pvoutput/assets/images/small.jpg"
+  },
+  "class": "solarpanel",
+  "capabilities": [
+    "measure_power",
+    "meter_power"
+  ],
+  "settings": [
+    {
+      "id": "key",
+      "type": "text",
+      "label": {
+        "en": "PVOutput (read-only) API key"
+      }
+    }
+  ]
+}
