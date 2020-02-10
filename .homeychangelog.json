@@ -10,5 +10,8 @@
   },
   "4.0.4": {
     "en": "GoodWe fixes"
+  },
+  "4.0.5": {
+    "en": "Improve support for GoodWe systems with multiple inverters"
   }
 }
