@@ -40,24 +40,22 @@ class GoodWe extends Homey.Driver {
                 const systemData = await Promise.all(promises);
 
                 const devices = []
-                let checkDelay = 0
                 systemData.forEach(system => {
                     const systemId = system.data.info.powerstation_id;
                     const stationName = system.data.info.stationname;
+                    const checkDelay = Math.random() * 10 * 1000
 
-                    system.data.inverter.forEach(inverter => {
+                    system.data.inverter.forEach((inverter, index) => {
                         devices.push({
                             name: `${stationName} (${inverter.sn})`,
                             data: {
                                 systemId,
                                 inverterId: inverter.sn,
-                                checkDelay
+                                checkDelay: checkDelay + (index * 3 * 1000)
                             },
                             settings: { username, password }    
                         })
                     })
-
-                    checkDelay += 3
                 })
 
                 callback(null, devices);

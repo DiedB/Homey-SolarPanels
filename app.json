@@ -1,0 +1,592 @@
+{
+  "id": "it.diederik.solar",
+  "version": "4.0.4",
+  "compatibility": ">=3.0",
+  "sdk": 2,
+  "brandColor": "#1f63d1",
+  "name": {
+    "en": "Solar Panels",
+    "nl": "Zonnepanelen"
+  },
+  "description": {
+    "en": "Connect your Solar Panels to Homey",
+    "nl": "Verbind je zonnepanelen met Homey"
+  },
+  "category": "energy",
+  "tags": {
+    "en": [
+      "solar",
+      "panels",
+      "pv"
+    ],
+    "nl": [
+      "zonnepanelen",
+      "pv"
+    ]
+  },
+  "images": {
+    "large": "./assets/images/large.jpg",
+    "small": "./assets/images/small.jpg"
+  },
+  "author": {
+    "name": "Diederik Bakker",
+    "email": "diederik@outlook.com"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Diederik Bakker",
+        "email": "diederik@outlook.com"
+      },
+      {
+        "name": "Rob (pro-sumer on GitHub)"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "diederik"
+      }
+    }
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "Enphase",
+        "nl": "Enphase"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "./drivers/enphase/assets/images/large.jpg",
+        "small": "./drivers/enphase/assets/images/small.jpg"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
+      "settings": [
+        {
+          "id": "uid",
+          "type": "text",
+          "label": {
+            "en": "Enphase user ID"
+          }
+        },
+        {
+          "id": "key",
+          "type": "text",
+          "label": {
+            "en": "Enphase (read-only) API key"
+          }
+        }
+      ],
+      "id": "enphase"
+    },
+    {
+      "name": {
+        "en": "Fronius",
+        "nl": "Fronius"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/fronius/assets/images/large.jpg",
+        "small": "./drivers/fronius/assets/images/small.jpg"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
+      "settings": [
+        {
+          "id": "ip",
+          "type": "text",
+          "label": {
+            "en": "Fronius Datamanager IP address"
+          }
+        }
+      ],
+      "id": "fronius"
+    },
+    {
+      "name": {
+        "en": "Ginlong",
+        "nl": "Ginlong"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "./drivers/ginlong/assets/images/large.jpg",
+        "small": "./drivers/ginlong/assets/images/small.jpg"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
+      "id": "ginlong"
+    },
+    {
+      "name": {
+        "en": "GoodWe",
+        "nl": "GoodWe"
+      },
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "pair.svg"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "./drivers/goodwe/assets/images/large.jpg",
+        "small": "./drivers/goodwe/assets/images/small.jpg"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
+      "settings": [
+        {
+          "id": "username",
+          "type": "text",
+          "label": {
+            "en": "GoodWe SEMS username"
+          }
+        },
+        {
+          "id": "password",
+          "type": "password",
+          "label": {
+            "en": "GoodWe SEMS password"
+          }
+        }
+      ],
+      "id": "goodwe"
+    },
+    {
+      "name": {
+        "en": "Growatt",
+        "nl": "Growatt"
+      },
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "pair.svg"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "./drivers/growatt/assets/images/large.jpg",
+        "small": "./drivers/growatt/assets/images/small.jpg"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Growatt credentials",
+            "nl": "Growatt inloggegevens"
+          },
+          "children": [
+            {
+              "id": "username",
+              "type": "text",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ],
+      "id": "growatt"
+    },
+    {
+      "name": {
+        "en": "Omnik"
+      },
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "pair.svg"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "./drivers/omnik/assets/images/large.jpg",
+        "small": "./drivers/omnik/assets/images/small.jpg"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
+      "settings": [
+        {
+          "id": "username",
+          "type": "text",
+          "label": {
+            "en": "Omnik username"
+          }
+        },
+        {
+          "id": "password",
+          "type": "password",
+          "label": {
+            "en": "Omnik password"
+          }
+        }
+      ],
+      "id": "omnik"
+    },
+    {
+      "name": {
+        "en": "PVOutput",
+        "nl": "PVOutput"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/pvoutput/assets/images/large.jpg",
+        "small": "./drivers/pvoutput/assets/images/small.jpg"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
+      "settings": [
+        {
+          "id": "key",
+          "type": "text",
+          "label": {
+            "en": "PVOutput (read-only) API key"
+          }
+        }
+      ],
+      "id": "pvoutput"
+    },
+    {
+      "name": {
+        "en": "SAJ"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/saj/assets/images/large.jpg",
+        "small": "./drivers/saj/assets/images/small.jpg"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
+      "settings": [
+        {
+          "id": "ip",
+          "type": "text",
+          "label": {
+            "en": "SAJ IP address"
+          }
+        }
+      ],
+      "id": "saj"
+    },
+    {
+      "name": {
+        "en": "SolarEdge",
+        "nl": "SolarEdge"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/solaredge/assets/images/large.jpg",
+        "small": "./drivers/solaredge/assets/images/small.jpg"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "consumption",
+        "meter_power",
+        "daily_consumption"
+      ],
+      "settings": [
+        {
+          "id": "key",
+          "type": "text",
+          "label": {
+            "en": "SolarEdge (read-only) API key"
+          }
+        }
+      ],
+      "id": "solaredge"
+    },
+    {
+      "name": {
+        "en": "SolarMAN"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "./drivers/solarman/assets/images/large.jpg",
+        "small": "./drivers/solarman/assets/images/small.jpg"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
+      "settings": [
+        {
+          "id": "username",
+          "type": "text",
+          "label": {
+            "en": "SolarMAN username"
+          }
+        },
+        {
+          "id": "password",
+          "type": "password",
+          "label": {
+            "en": "SolarMAN password"
+          }
+        }
+      ],
+      "id": "solarman"
+    },
+    {
+      "name": {
+        "en": "Tigo",
+        "nl": "Tigo"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/tigo/assets/images/large.jpg",
+        "small": "./drivers/tigo/assets/images/small.jpg"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
+      "settings": [
+        {
+          "id": "username",
+          "type": "text",
+          "label": {
+            "en": "Tigo username"
+          }
+        },
+        {
+          "id": "password",
+          "type": "password",
+          "label": {
+            "en": "Tigo password"
+          }
+        }
+      ],
+      "id": "tigo"
+    }
+  ],
+  "capabilities": {
+    "consumption": {
+      "type": "number",
+      "title": {
+        "en": "Power consumption",
+        "nl": "Stroomverbruik"
+      },
+      "icon": "/assets/capabilities/consumption.svg",
+      "units": {
+        "en": "W"
+      },
+      "insights": true,
+      "desc": {
+        "en": "Power in Watt (W)",
+        "nl": "Vermogen in Watt (W)"
+      },
+      "chartType": "stepLine",
+      "decimals": 2,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
+    "daily_consumption": {
+      "type": "number",
+      "title": {
+        "en": "Energy consumption today",
+        "nl": "Stroomverbruik vandaag"
+      },
+      "icon": "/assets/capabilities/daily_consumption.svg",
+      "units": {
+        "en": "kWh"
+      },
+      "insights": true,
+      "desc": {
+        "en": "Energy consumption today in kWh",
+        "nl": "Stroomverbruik vandaag in kWh"
+      },
+      "chartType": "stepLine",
+      "decimals": 2,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
+    "daily_production": {
+      "type": "number",
+      "title": {
+        "en": "Energy generation today",
+        "nl": "Energieproductie vandaag"
+      },
+      "icon": "/assets/capabilities/daily_production.svg",
+      "units": {
+        "en": "kWh"
+      },
+      "insights": true,
+      "desc": {
+        "en": "Energy generation today in kWh",
+        "nl": "Energieproductie vandaag in kWh"
+      },
+      "chartType": "stepLine",
+      "decimals": 2,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
+    "production": {
+      "type": "number",
+      "title": {
+        "en": "Power production",
+        "nl": "Stroomproductie"
+      },
+      "icon": "/assets/capabilities/production.svg",
+      "units": {
+        "en": "W"
+      },
+      "insights": true,
+      "desc": {
+        "en": "Power in Watt (W)",
+        "nl": "Vermogen in Watt (W)"
+      },
+      "chartType": "stepLine",
+      "decimals": 2,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    }
+  }
+}

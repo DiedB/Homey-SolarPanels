@@ -28,12 +28,13 @@ class GoodWe extends Inverter {
     }
 
     async checkProduction() {
-        this.log('Checking production');
         const data = this.getData();
 
         // Use checkDelay to prevent concurrent API fetches
-        setTimeout(() => {
+        setTimeout(async () => {
             try {
+                this.log('Checking production');
+
                 const productionData = await this.goodWeApi.getInverterData();
                 const inverterData = productionData.data.inverter.find(inverter => inverter.sn === data.inverterId);
 
@@ -53,7 +54,7 @@ class GoodWe extends Inverter {
                 this.log(`Unavailable (${error})`);
                 this.setUnavailable(`Error retrieving data (${error})`);
             }
-        }, data.checkDelay)
+        }, data.checkDelay || 0)
     }
 }
 
