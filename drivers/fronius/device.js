@@ -1,6 +1,6 @@
 'use strict';
 
-const Inverter = require('../inverter');
+const Inverter = require('../../inverter');
 const fetch = require('node-fetch');
 
 const pathName = '/solar_api/v1/GetInverterRealtimeData.cgi?Scope=Device&DeviceID=1&DataCollection=CommonInverterData';

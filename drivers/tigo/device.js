@@ -1,6 +1,6 @@
 'use strict';
 
-const Inverter = require('../inverter');
+const Inverter = require('../../inverter');
 const fetch = require('node-fetch');
 
 const baseUrl = 'https://api2.tigoenergy.com/api/v3';

@@ -1,6 +1,6 @@
 'use strict';
 
-const Inverter = require('../inverter');
+const Inverter = require('../../inverter');
 const { OmnikApi } = require('./api');
 
 class Omnik extends Inverter {

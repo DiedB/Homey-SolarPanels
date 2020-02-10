@@ -1,7 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-const Inverter = require('../inverter');
+const Inverter = require('../../inverter');
 
 const fetch = require('node-fetch');
 const parseXml = require('xml2js').parseString;

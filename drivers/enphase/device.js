@@ -1,6 +1,6 @@
 'use strict';
 
-const Inverter = require('../inverter');
+const Inverter = require('../../inverter');
 const { EnphaseApi } = require('./api');
 
 class Enphase extends Inverter {

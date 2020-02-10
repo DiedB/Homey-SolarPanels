@@ -1,6 +1,6 @@
 'use strict';
 
-const Inverter = require('../inverter');
+const Inverter = require('../../inverter');
 const { GoodWeApi } = require('./api');
 
 class GoodWe extends Inverter {
@@ -31,26 +31,29 @@ class GoodWe extends Inverter {
         this.log('Checking production');
         const data = this.getData();
 
-        try {
-            const productionData = await this.goodWeApi.getInverterData();
-            const inverterData = productionData.data.inverter.find(inverter => inverter.sn === data.inverterId);
+        // Use checkDelay to prevent concurrent API fetches
+        setTimeout(() => {
+            try {
+                const productionData = await this.goodWeApi.getInverterData();
+                const inverterData = productionData.data.inverter.find(inverter => inverter.sn === data.inverterId);
 
-            const currentEnergy = inverterData.eday;
-            const currentPower = inverterData.out_pac;
-            
-            this.setCapabilityValue('meter_power', currentEnergy);
-            this.setCapabilityValue('measure_power', currentPower);    
+                const currentEnergy = inverterData.eday;
+                const currentPower = inverterData.out_pac;
+                
+                this.setCapabilityValue('meter_power', currentEnergy);
+                this.setCapabilityValue('measure_power', currentPower);    
 
-            if (!this.getAvailable()) {
-                await this.setAvailable();
+                if (!this.getAvailable()) {
+                    await this.setAvailable();
+                }
+
+                this.log(`Current energy is ${currentEnergy}kWh`);
+                this.log(`Current power is ${currentPower}W`);
+            } catch (error) {
+                this.log(`Unavailable (${error})`);
+                this.setUnavailable(`Error retrieving data (${error})`);
             }
-
-            this.log(`Current energy is ${currentEnergy}kWh`);
-            this.log(`Current power is ${currentPower}W`);
-        } catch (error) {
-            this.log(`Unavailable (${error})`);
-            this.setUnavailable(`Error retrieving data (${error})`);
-        }
+        }, data.checkDelay)
     }
 }
 
