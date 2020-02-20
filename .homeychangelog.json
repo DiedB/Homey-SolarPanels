@@ -13,5 +13,8 @@
   },
   "4.0.5": {
     "en": "Improve support for GoodWe systems with multiple inverters"
+  },
+  "4.0.6": {
+    "en": "Fix Growatt bug"
   }
 }
