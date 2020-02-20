@@ -3,7 +3,7 @@
 
 'use strict'
 
-const Inverter = require('../inverter')
+const Inverter = require('../../inverter');
 const { GrowattAPI } = require('./api')
 
 class Growatt extends Inverter {
