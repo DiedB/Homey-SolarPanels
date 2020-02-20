@@ -1,6 +1,6 @@
 'use strict';
 
-const Inverter = require('../inverter');
+const Inverter = require('../../inverter');
 const { EnphaseApi } = require('./api');
 
 class Enphase extends Inverter {
@@ -9,6 +9,7 @@ class Enphase extends Inverter {
 
         const data = this.getData();
         const settings = this.getSettings();
+
         this.enphaseApi = new EnphaseApi(settings.uid, settings.key, data.id);
     }
 
@@ -36,8 +37,8 @@ class Enphase extends Inverter {
                 currentPower = productionData[productionData.length - 1].powr;
             }
 
-            this.setCapabilityValue('daily_production', currentEnergy);
-            this.setCapabilityValue('production', currentPower);    
+            this.setCapabilityValue('meter_power', currentEnergy);
+            this.setCapabilityValue('measure_power', currentPower);    
 
             if (!this.getAvailable()) {
                 await this.setAvailable();

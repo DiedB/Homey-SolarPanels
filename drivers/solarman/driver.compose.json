@@ -1,0 +1,46 @@
+{
+  "name": {
+    "en": "SolarMAN"
+  },
+  "pair": [
+    {
+      "id": "pair"
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "images": {
+    "large": "./drivers/solarman/assets/images/large.jpg",
+    "small": "./drivers/solarman/assets/images/small.jpg"
+  },
+  "class": "solarpanel",
+  "capabilities": [
+    "measure_power",
+    "meter_power"
+  ],
+  "settings": [
+    {
+      "id": "username",
+      "type": "text",
+      "label": {
+        "en": "SolarMAN username"
+      }
+    },
+    {
+      "id": "password",
+      "type": "password",
+      "label": {
+        "en": "SolarMAN password"
+      }
+    }
+  ]
+}

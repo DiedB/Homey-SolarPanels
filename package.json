@@ -1,13 +1,14 @@
 {
-  "name": "SolarPanels",
-  "repository": {
-    "type": "git",
-    "url": "https://www.github.com/DiedB/SolarPanels.git"
-  },
+  "name": "homey-solarpanels",
+  "version": "4.0.5",
+  "main": "app.js",
   "dependencies": {
     "md5": "^2.2.1",
-    "node-fetch": "^1.7.1",
-    "uuid": "^3.3.2",
-    "xml2js": "^0.4.19"
+    "node-fetch": "^2.6.0",
+    "uuid": "^3.4.0",
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "homey": "^2.1.5"
   }
 }

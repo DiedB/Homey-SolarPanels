@@ -3,7 +3,7 @@
 
 'use strict'
 
-const Inverter = require('../inverter')
+const Inverter = require('../../inverter');
 const { GrowattAPI } = require('./api')
 
 class Growatt extends Inverter {
@@ -27,8 +27,8 @@ class Growatt extends Inverter {
             const production = await this.api.getInverterProductionData(data.id)
             const energyToday = production.energyToday
             const currentPower = production.currentPower
-            this.setCapabilityValue('daily_production', energyToday)
-            this.setCapabilityValue('production', currentPower)
+            this.setCapabilityValue('meter_power', energyToday)
+            this.setCapabilityValue('measure_power', currentPower)
             if (!this.getAvailable()) {
                 await this.setAvailable()
             }

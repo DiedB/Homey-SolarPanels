@@ -1,6 +1,6 @@
 'use strict';
 
-const Inverter = require('../inverter');
+const Inverter = require('../../inverter');
 const fetch = require('node-fetch');
 const parseString = require('xml2js').parseString;
 
@@ -38,10 +38,10 @@ class SAJ extends Inverter {
                     const parsedResult = result.real_time_data;
 
                     const currentEnergy = Number(parsedResult['e-today'][0]);
-                    this.setCapabilityValue('daily_production', currentEnergy);
+                    this.setCapabilityValue('meter_power', currentEnergy);
     
                     const currentPower = Number(parsedResult['p-ac'][0]);
-                    this.setCapabilityValue('production', currentPower);
+                    this.setCapabilityValue('measure_power', currentPower);
 
                     this.log(`Current energy is ${currentEnergy}kWh`);
                     this.log(`Current power is ${currentPower}W`);

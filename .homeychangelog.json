@@ -1,0 +1,20 @@
+{
+  "4.0.1": {
+    "en": "Add support for Homey Energy"
+  },
+  "4.0.2": {
+    "en": "Add support for GoodWe SEMS"
+  },
+  "4.0.3": {
+    "en": "Fix GoodWe pairing race condition"
+  },
+  "4.0.4": {
+    "en": "GoodWe fixes"
+  },
+  "4.0.5": {
+    "en": "Improve support for GoodWe systems with multiple inverters"
+  },
+  "4.0.6": {
+    "en": "Fix Growatt bug"
+  }
+}

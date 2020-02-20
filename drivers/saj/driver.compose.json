@@ -1,0 +1,28 @@
+{
+  "name": {
+    "en": "SAJ"
+  },
+  "pair": [
+    {
+      "id": "pair"
+    }
+  ],
+  "images": {
+    "large": "./drivers/saj/assets/images/large.jpg",
+    "small": "./drivers/saj/assets/images/small.jpg"
+  },
+  "class": "solarpanel",
+  "capabilities": [
+    "measure_power",
+    "meter_power"
+  ],
+  "settings": [
+    {
+      "id": "ip",
+      "type": "text",
+      "label": {
+        "en": "SAJ IP address"
+      }
+    }
+  ]
+}

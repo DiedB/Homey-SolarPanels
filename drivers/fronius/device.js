@@ -1,6 +1,6 @@
 'use strict';
 
-const Inverter = require('../inverter');
+const Inverter = require('../../inverter');
 const fetch = require('node-fetch');
 
 const pathName = '/solar_api/v1/GetInverterRealtimeData.cgi?Scope=Device&DeviceID=1&DataCollection=CommonInverterData';
@@ -41,7 +41,7 @@ class Fronius extends Inverter {
                     });
 
                     const currentEnergy = Number(response.Body.Data.DAY_ENERGY.Value / 1000);
-                    this.setCapabilityValue('daily_production', currentEnergy);
+                    this.setCapabilityValue('meter_power', currentEnergy);
 
                     let currentPower;
                     if (response.Body.Data.PAC) {
@@ -49,7 +49,7 @@ class Fronius extends Inverter {
                     } else {
                         currentPower = null;
                     }
-                    this.setCapabilityValue('production', currentPower);    
+                    this.setCapabilityValue('measure_power', currentPower);    
 
                     this.log(`Current energy is ${currentEnergy}kWh`);
                     this.log(`Current power is ${currentPower}W`);

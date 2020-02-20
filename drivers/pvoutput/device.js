@@ -1,6 +1,6 @@
 'use strict';
 
-const Inverter = require('../inverter');
+const Inverter = require('../../inverter');
 const fetch = require('node-fetch');
 
 const baseUrl = 'http://pvoutput.org/service/r2/getstatus.jsp';
@@ -39,10 +39,10 @@ class PVOutput extends Inverter {
                     });
 
                     const currentEnergy = Number(parsedResponse[2]) / 1000;
-                    this.setCapabilityValue('daily_production', currentEnergy);
+                    this.setCapabilityValue('meter_power', currentEnergy);
 
                     const currentPower = Number(parsedResponse[3]);
-                    this.setCapabilityValue('production', currentPower);
+                    this.setCapabilityValue('measure_power', currentPower);
 
                     this.log(`Current energy is ${currentEnergy}kWh`);
                     this.log(`Current power is ${currentPower}W`);

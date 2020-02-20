@@ -1,6 +1,6 @@
 'use strict';
 
-const Inverter = require('../inverter');
+const Inverter = require('../../inverter');
 const { GinlongApi } = require('./api');
 
 class Ginlong extends Inverter {
@@ -28,10 +28,10 @@ class Ginlong extends Inverter {
             }
             
             const currentEnergy = Number(productionData.realTimeDataImp.find(data => data.key === '1bd').value);
-            this.setCapabilityValue('daily_production', currentEnergy);
+            this.setCapabilityValue('meter_power', currentEnergy);
 
             const currentPower = Number(productionData.realTimeDataImp.find(data => data.key === '1ao').value);
-            this.setCapabilityValue('production', currentPower);
+            this.setCapabilityValue('measure_power', currentPower);
 
             this.log(`Current energy is ${currentEnergy}kWh`);
             this.log(`Current power is ${currentPower}W`);

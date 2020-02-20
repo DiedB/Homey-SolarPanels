@@ -1,7 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-const Inverter = require('../inverter');
+const Inverter = require('../../inverter');
 
 const fetch = require('node-fetch');
 const parseXml = require('xml2js').parseString;
@@ -149,10 +149,10 @@ class SOTGBaseDevice extends Inverter {
                             });
 
                             const currentEnergy = Number(liveData.inverter[0].etoday[0]);
-                            this.setCapabilityValue('daily_production', currentEnergy);
+                            this.setCapabilityValue('meter_power', currentEnergy);
 
                             const currentPower = Number(liveData.inverter[0].power[0]) * 1000;
-                            this.setCapabilityValue('production', currentPower);
+                            this.setCapabilityValue('measure_power', currentPower);
 
                             this.log(`Current energy is ${currentEnergy}kWh`);
                             this.log(`Current power is ${currentPower}W`);

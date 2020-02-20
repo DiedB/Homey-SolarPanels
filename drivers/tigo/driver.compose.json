@@ -1,0 +1,36 @@
+{
+  "name": {
+    "en": "Tigo",
+    "nl": "Tigo"
+  },
+  "pair": [
+    {
+      "id": "pair"
+    }
+  ],
+  "images": {
+    "large": "./drivers/tigo/assets/images/large.jpg",
+    "small": "./drivers/tigo/assets/images/small.jpg"
+  },
+  "class": "solarpanel",
+  "capabilities": [
+    "measure_power",
+    "meter_power"
+  ],
+  "settings": [
+    {
+      "id": "username",
+      "type": "text",
+      "label": {
+        "en": "Tigo username"
+      }
+    },
+    {
+      "id": "password",
+      "type": "password",
+      "label": {
+        "en": "Tigo password"
+      }
+    }
+  ]
+}

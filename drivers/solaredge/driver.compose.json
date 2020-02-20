@@ -1,0 +1,31 @@
+{
+  "name": {
+    "en": "SolarEdge",
+    "nl": "SolarEdge"
+  },
+  "pair": [
+    {
+      "id": "pair"
+    }
+  ],
+  "images": {
+    "large": "./drivers/solaredge/assets/images/large.jpg",
+    "small": "./drivers/solaredge/assets/images/small.jpg"
+  },
+  "class": "solarpanel",
+  "capabilities": [
+    "measure_power",
+    "consumption",
+    "meter_power",
+    "daily_consumption"
+  ],
+  "settings": [
+    {
+      "id": "key",
+      "type": "text",
+      "label": {
+        "en": "SolarEdge (read-only) API key"
+      }
+    }
+  ]
+}
