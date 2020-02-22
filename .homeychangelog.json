@@ -16,5 +16,11 @@
   },
   "4.0.6": {
     "en": "Fix Growatt bug"
+  },
+  "4.0.7": {
+    "en": "Fix (yet another) Growatt bug"
+  },
+  "4.0.8": {
+    "en": "Update dependencies"
   }
 }
