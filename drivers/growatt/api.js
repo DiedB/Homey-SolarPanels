@@ -25,8 +25,8 @@ class GrowattAPI {
         const error = 'Could not login to Growatt server'
         const response = await this.request('POST', loginURL, body, error)
         if (response.body.back.success) {
-            this.cookies = response.headers.getAll('Set-Cookie').map(directive => directive.split(';')[0]).join(';')
-            this.plants = response.body.back.data
+            this.cookies = response.headers.raw()['set-cookie'].map(directive => directive.split(';')[0]).join(';');
+            this.plants = response.body.back.data;
         } else {
             throw new Error(error)
         }
