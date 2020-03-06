@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "4.0.9",
+  "version": "4.1.0",
   "compatibility": ">=3.0",
   "sdk": 2,
   "brandColor": "#1f63d1",
@@ -40,6 +40,8 @@
       },
       {
         "name": "Rob (pro-sumer on GitHub)"
+      }, {
+        "name": "Max van de Laar"
       }
     ]
   },
