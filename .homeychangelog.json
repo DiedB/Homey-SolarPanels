@@ -25,5 +25,8 @@
   },
   "4.0.9": {
     "en": "Fix Growatt bug"
+  },
+  "4.0.10": {
+    "en": "Add battery sensor for storage-enabled GoodWe systems"
   }
 }
