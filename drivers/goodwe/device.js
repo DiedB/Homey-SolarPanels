@@ -44,6 +44,11 @@ class GoodWe extends Inverter {
                 this.setCapabilityValue('meter_power', currentEnergy);
                 this.setCapabilityValue('measure_power', currentPower);    
 
+                if (data.hasStorage) {
+                    this.setCapabilityValue('measure_battery', inverterData.invert_full.soc);
+                    this.log(`Current battery SoC is ${inverterData.invert_full.soc}%`);
+                }
+
                 if (!this.getAvailable()) {
                     await this.setAvailable();
                 }
