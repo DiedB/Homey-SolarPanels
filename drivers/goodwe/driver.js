@@ -46,23 +46,15 @@ class GoodWe extends Homey.Driver {
                     const checkDelay = Math.random() * 10 * 1000;
 
                     system.data.inverter.forEach((inverter, index) => {
-                        let device = {
+                        devices.push({
                             name: `${stationName} (${inverter.sn})`,
                             data: {
                                 systemId,
                                 inverterId: inverter.sn,
-                                checkDelay: checkDelay + (index * 3 * 1000),
-                                hasStorage: inverter.is_stored
+                                checkDelay: checkDelay + (index * 3 * 1000)
                             },
                             settings: { username, password }
-                        };
-
-                        // Add battery capability if system has storage enabled
-                        if (device.data.hasStorage) {
-                            device.capabilities = ['measure_battery', 'measure_power', 'meter_power'];
-                        }
-
-                        devices.push(device);
+                        });
                     })
                 })
 
