@@ -43,7 +43,7 @@ class GoodWe extends Homey.Driver {
                 systemData.forEach(system => {
                     const systemId = system.data.info.powerstation_id;
                     const stationName = system.data.info.stationname;
-                    const checkDelay = Math.random() * 10 * 1000
+                    const checkDelay = Math.random() * 10 * 1000;
 
                     system.data.inverter.forEach((inverter, index) => {
                         devices.push({
@@ -53,8 +53,8 @@ class GoodWe extends Homey.Driver {
                                 inverterId: inverter.sn,
                                 checkDelay: checkDelay + (index * 3 * 1000)
                             },
-                            settings: { username, password }    
-                        })
+                            settings: { username, password }
+                        });
                     })
                 })
 
