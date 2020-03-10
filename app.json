@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "4.0.11",
+  "version": "4.0.12",
   "compatibility": ">=3.0",
   "sdk": 2,
   "brandColor": "#1f63d1",
@@ -504,6 +504,53 @@
         }
       ],
       "id": "tigo"
+    },
+    {
+      "name": {
+        "en": "Trannergy"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "./drivers/trannergy/assets/images/large.png",
+        "small": "./drivers/trannergy/assets/images/small.png"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
+      "settings": [
+        {
+          "id": "username",
+          "type": "text",
+          "label": {
+            "en": "Trannergy email"
+          }
+        },
+        {
+          "id": "password",
+          "type": "password",
+          "label": {
+            "en": "Trannergy password"
+          }
+        }
+      ],
+      "id": "trannergy"
     }
   ],
   "capabilities": {

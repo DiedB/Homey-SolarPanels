@@ -31,5 +31,8 @@
   },
   "4.0.11": {
     "en": "Add battery sensor for storage-enabled GoodWe systems"
+  },
+  "4.0.12": {
+    "en": "Add Trannergy support"
   }
 }
