@@ -1,0 +1,53 @@
+<style type="text/css">
+	.form-group, .input-field {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.input-field {
+		margin-top: 10px;
+	}
+
+	.submit-button {
+		margin-top: 10px;
+	}
+</style>
+
+<div class="form-group">
+	<div class="input-field">
+		<label>Please enter your Trannergy email and password:</label>
+		<input type="text" id="username" placeholder="Email" value="" />
+		<input type="password" id="password" placeholder="Password" value="" />
+	</div>
+
+	<div class="input-field">
+		<label>Enter your site/plant ID (found on Trannergy Portal):</label>
+		<input type="text" id="sid" placeholder="Site ID" value="" />
+	</div>
+
+	<button class="submit-button" id="validate">Connect</button>
+</div>
+
+<script type="text/javascript">
+	$(() => {
+		$('#validate').click(() => {
+			Homey.showLoadingOverlay();
+
+			var username = $('#username').val();
+			var password = $('#password').val();
+			var sid = $('#sid').val();
+
+			var systemData = { sid, username, password };
+
+			Homey.emit('validate', systemData, (error, result) => {
+				if (error) {
+					Homey.hideLoadingOverlay();
+					Homey.alert(error);
+				} else {
+					Homey.showView('list_devices');
+				}
+			})
+		});
+	})
+</script>
