@@ -1,0 +1,46 @@
+{
+  "name": {
+    "en": "Trannergy"
+  },
+  "pair": [
+    {
+      "id": "pair"
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "images": {
+    "large": "./drivers/trannergy/assets/images/large.png",
+    "small": "./drivers/trannergy/assets/images/small.png"
+  },
+  "class": "solarpanel",
+  "capabilities": [
+    "measure_power",
+    "meter_power"
+  ],
+  "settings": [
+    {
+      "id": "username",
+      "type": "text",
+      "label": {
+        "en": "Trannergy email"
+      }
+    },
+    {
+      "id": "password",
+      "type": "password",
+      "label": {
+        "en": "Trannergy password"
+      }
+    }
+  ]
+}
