@@ -3,7 +3,7 @@
 const Inverter = require('../../inverter');
 const fetch = require('node-fetch');
 
-const pathName = '/solar_api/v1/GetInverterRealtimeData.cgi?Scope=Device&DeviceID=1&DataCollection=CommonInverterData';
+const pathName = '/solar_api/v1/GetInverterRealtimeData.cgi?Scope=System&DataCollection=CumulationInverterData';
 
 class Fronius extends Inverter {
     getCronString() {
@@ -39,14 +39,24 @@ class Fronius extends Inverter {
                     this.setStoreValue('lastUpdate', lastUpdate).catch(error => {
                         this.error('Failed setting last update value');
                     });
-
-                    const currentEnergy = Number(response.Body.Data.DAY_ENERGY.Value / 1000);
+					
+					let x = 0;
+					let currentEnergy = 0;
+					
+					for (x in response.Body.Data.DAY_ENERGY.Values) {
+						currentEnergy += Number(response.Body.Data.DAY_ENERGY.Values[x] / 1000);
+					}
+					
                     this.setCapabilityValue('meter_power', currentEnergy);
 
-                    let currentPower;
+                    x = 0;
+					let currentPower = 0;
+					
                     if (response.Body.Data.PAC) {
-                        currentPower = Number(response.Body.Data.PAC.Value);
-                    } else {
+						for (x in response.Body.Data.PAC.Values) {
+						currentPower += Number(response.Body.Data.PAC.Values[x]);
+						}
+					} else {
                         currentPower = null;
                     }
                     this.setCapabilityValue('measure_power', currentPower);    
