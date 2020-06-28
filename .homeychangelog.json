@@ -34,5 +34,8 @@
   },
   "4.0.12": {
     "en": "Add Trannergy support"
+  },
+  "4.0.13": {
+    "en": "Fix GoodWe API connectivity"
   }
 }
