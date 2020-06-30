@@ -53,6 +53,9 @@
       }
     }
   },
+  "bugs": {
+    "url": "https://github.com/DiedB/Homey-SolarPanels/issues"
+  },
   "drivers": [
     {
       "name": {
