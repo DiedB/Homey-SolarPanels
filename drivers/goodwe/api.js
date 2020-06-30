@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-const loginUrl = 'https://globalapi.sems.com.cn/api/v1/Common/CrossLogin';
+const loginUrl = 'https://www.semsportal.com/api/v1/Common/CrossLogin';
 
 class GoodWeApi {
     constructor(username, password, systemId) {

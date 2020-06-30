@@ -9,6 +9,6 @@
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
-    "homey": "^2.1.5"
+    "homey": "^2.4.0"
   }
 }
