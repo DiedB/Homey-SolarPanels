@@ -3,23 +3,52 @@
 const Homey = require('homey');
 const fetch = require('node-fetch');
 
-const baseUrl = 'https://monitoringapi.solaredge.com/site/';
+const baseUrl = 'https://monitoringapi.solaredge.com';
 
 class SolarEdge extends Homey.Driver {
     onPair(socket) {
-        socket.on('validate', (device, callback) => {
-            const validationUrl = `${baseUrl}${device.data.sid}/overview?api_key=${device.settings.key}&format=json`;
+        let systemId;
+        let apiKey;
+        let equipmentList;
 
-            fetch(validationUrl)
+        socket.on('validate', (pairData, callback) => {
+            apiKey = pairData.apiKey
+            systemId = pairData.systemId
+
+            const equipmentUrl = `${baseUrl}/equipment/${systemId}/list?api_key=${apiKey}&format=json`
+
+            fetch(equipmentUrl)
                 .then(result => {
                     if (result.ok) {
-                        callback(null, true);
+                        return result.json();
                     } else {
                         callback(new Error(Homey.__('login_error')));
                     }
+                }).then(response => {
+                    equipmentList = response.reporters.list;
+
+                    callback(null, true);
                 }).catch(error => {
                     callback(new Error(Homey.__('network_error')));
                 });
+        });
+
+        socket.on('list_devices', (_, callback) => {
+            try {
+                const devices = equipmentList.map(item => ({
+                    name: item.name,
+                    data: {
+                        sid: systemId,
+                        serial_number: item.serialNumber
+                    },
+				    settings: { key: apiKey	}
+                }));
+
+                callback(null, devices);
+            } catch (error) {
+                this.error(error);
+                callback(error);
+            }
         });
     }
 }

@@ -11,10 +11,10 @@ class SolarEdge extends Inverter {
         return this.getIsoString(date);
     }
 
-    getIsoString10MinAgo() {
+    getIsoStringFromPast(minutes_offset) {
         // subtract 10 minutes from now
         const now = new Date()
-        const date = new Date(now.getTime() - 10 * 60000)
+        const date = new Date(now.getTime() - minutes_offset * 60000)
         return this.getIsoString(date);
     }
 
@@ -45,10 +45,10 @@ class SolarEdge extends Inverter {
     
         const currentIsoString = this.getCurrentIsoString();
         const currentDateString = this.getCurrentDateString();
-        const isoString10minAgo = this.getIsoString10MinAgo()
 
         // Power values
-        const powerDataUrl = `${baseUrl}/site/${data.sid}/powerDetails?api_key=${settings.key}&format=json&meters=Production,Consumption&startTime=${currentIsoString}&endTime=${currentIsoString}`;
+        const startTime = this.getIsoStringFromPast(1);
+        const powerDataUrl = `${baseUrl}/site/${data.sid}/powerDetails?api_key=${settings.key}&format=json&meters=Production,Consumption&startTime=${startTime}&endTime=${currentIsoString}`;
         fetch(powerDataUrl)
             .then(result => {
                 if (result.ok || result.status === 304) {
@@ -134,7 +134,8 @@ class SolarEdge extends Inverter {
         // Equipment values (inverter temperature)
         if (this.hasCapability("inverter_temperature") && data.serial_number) {
             // Only fetch equipment if inverter serialnumber is known and has capability
-            const equipmentDataUrl = `${baseUrl}/equipment/${data.sid}/${data.serial_number}/data?api_key=${settings.key}&format=json&startTime=${isoString10minAgo}&endTime=${currentIsoString}`;
+            const startTime = this.getIsoStringFromPast(10);
+            const equipmentDataUrl = `${baseUrl}/equipment/${data.sid}/${data.serial_number}/data?api_key=${settings.key}&format=json&startTime=${startTime}&endTime=${currentIsoString}`;
             fetch(equipmentDataUrl)
                 .then(result => {
                     if (result.ok || result.status === 304) {
