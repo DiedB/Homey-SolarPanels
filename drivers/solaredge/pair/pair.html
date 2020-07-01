@@ -1,10 +1,4 @@
 <style type="text/css">
-	.form-group, .input-field {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-
 	.input-field {
 		margin-top: 10px;
 	}
@@ -22,6 +16,13 @@
 	</div>
 
 	<div class="input-field">
+		<label>Inverter Serial Number (optional)</label>
+		<input type="text" id="serial_number" placeholder="Serial number" value="" />
+		<p>The last 10 digits of the device serial number, in the format: XXXXXXXX-XX.</p>
+		<p>For example: if the product serial number is SF0112A-07F123456-1B, insert: 7F123456-1B. The serial number is printed on the device label.</p>
+	</div>
+
+	<div class="input-field">
 		<label>Give your inverter a name:</label>
 		<input type="text" id="name" placeholder="Name" value="" />
 	</div>
@@ -36,11 +37,19 @@
 
 			var sid = $('#sid').val();
 			var key = $('#key').val();
+			var serial_number = $("#serial_number").val()
 			var name = $('#name').val();
+
+			if (serial_number.length) {
+				serial_number = serial_number.toUpperCase();
+				if (serial_number.length !== 11) {
+					serial_number = null;
+				}
+			}
 
 			var deviceDefinition = {
 				name,
-				data: { sid },
+				data: { sid, serial_number },
 				settings: { key	}
 			};
 

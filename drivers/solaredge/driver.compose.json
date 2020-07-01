@@ -17,7 +17,8 @@
     "measure_power",
     "consumption",
     "meter_power",
-    "daily_consumption"
+    "daily_consumption",
+    "inverter_temperature"
   ],
   "settings": [
     {

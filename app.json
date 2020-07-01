@@ -411,7 +411,8 @@
         "measure_power",
         "consumption",
         "meter_power",
-        "daily_consumption"
+        "daily_consumption",
+        "inverter_temperature"
       ],
       "settings": [
         {
@@ -613,6 +614,27 @@
       "desc": {
         "en": "Energy generation today in kWh",
         "nl": "Energieproductie vandaag in kWh"
+      },
+      "chartType": "stepLine",
+      "decimals": 2,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
+    "inverter_temperature": {
+      "type": "number",
+      "title": {
+        "en": "Inverter temperature",
+        "nl": "Temperatuur omvormer"
+      },
+      "icon": "/assets/capabilities/inverter_temperature.svg",
+      "units": {
+        "en": "°C"
+      },
+      "insights": true,
+      "desc": {
+        "en": "degrees celsius (°C)",
+        "nl": "graden Celsius (°C)"
       },
       "chartType": "stepLine",
       "decimals": 2,
