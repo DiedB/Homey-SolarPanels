@@ -132,7 +132,7 @@ class SolarEdge extends Inverter {
             });
 
         // Equipment values (inverter temperature)
-        if (this.hasCapability("inverter_temperature") && data.serial_number) {
+        if (this.hasCapability("measure_temperature") && data.serial_number) {
             // Only fetch equipment if inverter serialnumber is known and has capability
             const startTime = this.getIsoStringFromPast(10);
             const equipmentDataUrl = `${baseUrl}/equipment/${data.sid}/${data.serial_number}/data?api_key=${settings.key}&format=json&startTime=${startTime}&endTime=${currentIsoString}`;
@@ -157,7 +157,7 @@ class SolarEdge extends Inverter {
 
                     telemetries.forEach(telemetry => {
                         if (telemetry && telemetry.temperature !== undefined) {
-                            this.setCapabilityValue("inverter_temperature", telemetry.temperature);
+                            this.setCapabilityValue("measure_temperature", telemetry.temperature);
 
                             this.log(`Current inverter temperature is ${telemetry.temperature} degrees Celsius`);
                         } else {

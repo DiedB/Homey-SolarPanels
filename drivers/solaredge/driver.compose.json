@@ -29,8 +29,16 @@
     "consumption",
     "meter_power",
     "daily_consumption",
-    "inverter_temperature"
+    "measure_temperature"
   ],
+  "capabilitiesOptions": {
+    "measure_temperature": {
+      "title": {
+        "en": "Inverter temperature",
+        "nl": "Temperatuur omvormer"
+      }
+    }
+  },
   "settings": [
     {
       "id": "key",
