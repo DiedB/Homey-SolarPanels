@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "4.0.13",
+  "version": "4.0.15",
   "compatibility": ">=3.0",
   "sdk": 2,
   "brandColor": "#1f63d1",
@@ -423,8 +423,16 @@
         "consumption",
         "meter_power",
         "daily_consumption",
-        "inverter_temperature"
+        "measure_temperature"
       ],
+      "capabilitiesOptions": {
+        "measure_temperature": {
+          "title": {
+            "en": "Inverter temperature",
+            "nl": "Temperatuur omvormer"
+          }
+        }
+      },
       "settings": [
         {
           "id": "key",
@@ -625,27 +633,6 @@
       "desc": {
         "en": "Energy generation today in kWh",
         "nl": "Energieproductie vandaag in kWh"
-      },
-      "chartType": "stepLine",
-      "decimals": 2,
-      "getable": true,
-      "setable": false,
-      "uiComponent": "sensor"
-    },
-    "inverter_temperature": {
-      "type": "number",
-      "title": {
-        "en": "Inverter temperature",
-        "nl": "Temperatuur omvormer"
-      },
-      "icon": "/assets/capabilities/inverter_temperature.svg",
-      "units": {
-        "en": "°C"
-      },
-      "insights": true,
-      "desc": {
-        "en": "degrees celsius (°C)",
-        "nl": "graden Celsius (°C)"
       },
       "chartType": "stepLine",
       "decimals": 2,

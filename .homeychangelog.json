@@ -37,5 +37,11 @@
   },
   "4.0.13": {
     "en": "Fix GoodWe API connectivity"
+  },
+  "4.0.14": {
+    "en": "Add SolarEdge temperature measurement, improve pairing process"
+  },
+  "4.0.15": {
+    "en": "Implement flow triggers for SolarEdge inverter temperature"
   }
 }
