@@ -1,10 +1,4 @@
 <style type="text/css">
-	.form-group, .input-field {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-
 	.input-field {
 		margin-top: 10px;
 	}
@@ -17,13 +11,8 @@
 <div class="form-group">
 	<div class="input-field">
 		<label>Please enter your SolarEdge system ID and API key:</label>
-		<input type="text" id="sid" placeholder="System ID" value="" />
-		<input type="text" id="key" placeholder="API key" value="" />
-	</div>
-
-	<div class="input-field">
-		<label>Give your inverter a name:</label>
-		<input type="text" id="name" placeholder="Name" value="" />
+		<input type="text" id="systemId" placeholder="System ID" value="" />
+		<input type="text" id="apiKey" placeholder="API key" value="" />
 	</div>
 
 	<button class="submit-button" id="validate">Connect</button>
@@ -34,31 +23,19 @@
 		$('#validate').click(() => {
 			Homey.showLoadingOverlay();
 
-			var sid = $('#sid').val();
-			var key = $('#key').val();
-			var name = $('#name').val();
+			var systemId = $('#systemId').val();
+			var apiKey = $('#apiKey').val();
 
-			var deviceDefinition = {
-				name,
-				data: { sid },
-				settings: { key	}
-			};
+			var pairData = { systemId, apiKey };
 
-			Homey.emit('validate', deviceDefinition, (error, result) => {
+			Homey.emit('validate', pairData, (error, result) => {
 				if (error) {
 					Homey.hideLoadingOverlay();
 					Homey.alert(error);
 				} else {
-					Homey.createDevice(deviceDefinition, (error, result) => {
-						if (error) {
-							Homey.hideLoadingOverlay();
-							Homey.alert(error);
-						} else {
-							Homey.done();
-						}
-					});
+					Homey.showView('list_devices');
 				}
-			});
+			})
 		});
 	});
 </script>

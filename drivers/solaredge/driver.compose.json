@@ -6,6 +6,17 @@
   "pair": [
     {
       "id": "pair"
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
     }
   ],
   "images": {
@@ -17,7 +28,8 @@
     "measure_power",
     "consumption",
     "meter_power",
-    "daily_consumption"
+    "daily_consumption",
+    "inverter_temperature"
   ],
   "settings": [
     {
