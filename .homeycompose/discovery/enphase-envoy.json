@@ -4,5 +4,5 @@
       "name": "enphase-envoy",
       "protocol": "tcp"
     },
-    "id": "1"
+    "id": "{{txt.serialnum}}"
 }

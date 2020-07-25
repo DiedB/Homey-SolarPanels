@@ -7,6 +7,7 @@ class EnphaseEnvoy extends Homey.Driver {
         const discoveryStrategy = this.getDiscoveryStrategy();
         const discoveryResults = discoveryStrategy.getDiscoveryResults();
 
+        // TODO: remove log
         this.log(discoveryResults);
         
         const devices = Object.values(discoveryResults).map(discoveryResult => ({
