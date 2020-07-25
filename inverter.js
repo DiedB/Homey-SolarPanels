@@ -75,7 +75,7 @@ class Inverter extends Homey.Device {
             .then(task => {
                 this.log(`Cron job ${taskName} created successfully`);
                 this.setStoreValue('cronTask', taskName).catch(error => {
-                     this.error('Failed setting cron task name');
+                    this.error('Failed setting cron task name');
                 });
                 this.initializeCronTask(taskName);
             }).catch(error => {

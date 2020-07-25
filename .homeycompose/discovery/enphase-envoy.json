@@ -1,0 +1,8 @@
+{
+    "type": "mdns-sd",
+    "mdns-sd": {
+      "name": "enphase-envoy",
+      "protocol": "tcp"
+    },
+    "id": "1"
+}

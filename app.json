@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "4.0.15",
+  "version": "4.1.0",
   "compatibility": ">=3.0",
   "sdk": 2,
   "brandColor": "#1f63d1",
@@ -104,6 +104,38 @@
         }
       ],
       "id": "enphase"
+    },
+    {
+      "name": {
+        "en": "Enphase Envoy",
+        "nl": "Enphase Envoy"
+      },
+      "discovery": "enphase-envoy",
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "./drivers/enphase/assets/images/large.jpg",
+        "small": "./drivers/enphase/assets/images/small.jpg"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "consumption",
+        "meter_power",
+        "daily_consumption"
+      ],
+      "id": "enphase-envoy"
     },
     {
       "name": {
@@ -660,6 +692,16 @@
       "getable": true,
       "setable": false,
       "uiComponent": "sensor"
+    }
+  },
+  "discovery": {
+    "enphase-envoy": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "360Daemon",
+        "protocol": "tcp"
+      },
+      "id": "1"
     }
   }
 }
