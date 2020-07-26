@@ -39,15 +39,15 @@ class EnphaseEnvoy extends Inverter {
             try {
                 const productionData = await this.enphaseApi.getProductionData();
     
-                currentEnergy = productionData.production[1] ? Math.round(productionData.production[1].whToday / 1000) : null;
-                currentPower = productionData.production[1] ? productionData.production[1].wNow : productionData.production[0].wNow;
+                currentEnergy = productionData.production[1].activeCount > 0 ? Math.round(productionData.production[1].whToday / 1000) : null;
+                currentPower = productionData.production[1].activeCount > 0 ? productionData.production[1].wNow : productionData.production[0].wNow;
     
                 if (currentEnergy !== null) {
                     this.setCapabilityValue('meter_power', currentEnergy);
                 }
                 this.setCapabilityValue('measure_power', currentPower);    
     
-                if (productionData.consumption && productionData.consumption[0]) {
+                if (productionData.consumption[0].activeCount > 0) {
                     currentConsumptionPower = productionData.consumption[0].wNow;
                     currentConsumptionEnergy = Math.round(productionData.consumption[0].whToday / 1000)
 

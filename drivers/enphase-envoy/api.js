@@ -17,7 +17,7 @@ class EnphaseEnvoyApi {
     }
 
     async getProductionData() {
-        return await this.apiRequest(`${this.address}/production.json?details=1`);
+        return await this.apiRequest(`http://${this.address}/production.json?details=1`);
     }
 }
 
