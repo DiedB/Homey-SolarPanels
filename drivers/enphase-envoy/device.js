@@ -44,8 +44,11 @@ class EnphaseEnvoy extends Inverter {
     
                 if (currentEnergy !== null) {
                     this.setCapabilityValue('meter_power', currentEnergy);
+                    this.log(`Current production energy is ${currentEnergy}kWh`);
                 }
+                
                 this.setCapabilityValue('measure_power', currentPower);    
+                this.log(`Current production power is ${currentPower}W`);
     
                 if (productionData.consumption[0].activeCount > 0) {
                     currentConsumptionPower = productionData.consumption[0].wNow;
@@ -53,14 +56,15 @@ class EnphaseEnvoy extends Inverter {
 
                     this.setCapabilityValue('consumption', currentConsumptionPower);
                     this.setCapabilityValue('daily_consumption', currentConsumptionEnergy);
+
+                    this.log(`Current consumption power is ${currentConsumptionPower}W`);
+                    this.log(`Current consumption energy is ${currentConsumptionEnergy}W`);
                 }
 
                 if (!this.getAvailable()) {
                     await this.setAvailable();
                 }
     
-                this.log(`Current energy is ${currentEnergy}kWh`);
-                this.log(`Current power is ${currentPower}W`);
             } catch (error) {
                 this.log(`Unavailable (${error})`);
                 this.setUnavailable(`Error retrieving data (${error})`);
