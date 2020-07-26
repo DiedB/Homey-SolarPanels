@@ -44,16 +44,7 @@
   "4.0.15": {
     "en": "Implement flow triggers for SolarEdge inverter temperature"
   },
-  "4.1.0": {
-    "en": "Implement Enphase Envoy (local)"
-  },
-  "4.1.1": {
-    "en": "Implement Enphase Envoy (local)"
-  },
-  "4.1.2": {
-    "en": "Implement Enphase Envoy (local)"
-  },
-  "4.1.3": {
+  "4.1.5": {
     "en": "Implement Enphase Envoy (local)"
   }
 }
