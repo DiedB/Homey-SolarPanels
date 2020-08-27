@@ -1,0 +1,58 @@
+<style type="text/css">
+	.form-group, .input-field {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.input-field {
+		margin-top: 10px;
+	}
+
+	.submit-button {
+		margin-top: 10px;
+	}
+</style>
+
+<div class="form-group">
+	<div class="input-field">
+		<label>Please enter your Kostal inverter IP and password:</label>
+		<input type="text" id="ipAddress" placeholder="IP address" value="" />
+		<input type="password" id="password" placeholder="Password" value="" />
+	</div>
+
+	<button class="submit-button" id="validate">Connect</button>
+</div>
+
+<script type="text/javascript">
+	$(() => {
+		$('#validate').click(() => {
+			Homey.showLoadingOverlay();
+
+			var ipAddress = $('#ipAddress').val();
+			var password = $('#password').val();
+
+			Homey.emit('validate', { ipAddress, password }, (error, result) => {
+				if (error) {
+					Homey.hideLoadingOverlay();
+					Homey.alert(error);
+				} else {
+					var deviceDefinition = {
+						name: result.systemInfo.hostname,
+						data: { sn: result.serialNumber },
+						settings: {	ipAddress, password }
+					};
+
+					Homey.createDevice(deviceDefinition, (error, result) => {
+						if (error) {
+							Homey.hideLoadingOverlay();
+							Homey.alert(error);
+						} else {
+							Homey.done();
+						}
+					});
+				}
+			})
+		});
+	});
+</script>
