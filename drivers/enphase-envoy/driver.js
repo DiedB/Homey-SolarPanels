@@ -6,9 +6,6 @@ class EnphaseEnvoy extends Homey.Driver {
     onPairListDevices(data, callback) {
         const discoveryStrategy = this.getDiscoveryStrategy();
         const discoveryResults = discoveryStrategy.getDiscoveryResults();
-
-        // TODO: remove log
-        this.log(discoveryResults);
         
         const devices = Object.values(discoveryResults).map(discoveryResult => ({
             name: discoveryResult.txt.name,

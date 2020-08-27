@@ -1,0 +1,58 @@
+<style type="text/css">
+	.form-group, .input-field {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.input-field {
+		margin-top: 10px;
+	}
+
+	.submit-button {
+		margin-top: 10px;
+	}
+</style>
+
+<div class="form-group">
+	<div class="input-field">
+		<label>Please enter your Solax token ID (Service > API) and inverter registration number:</label>
+		<input type="text" id="tokenId" placeholder="Token ID" value="" />
+		<input type="text" id="regNo" placeholder="Registration number" value="" />
+	</div>
+
+	<button class="submit-button" id="validate">Connect</button>
+</div>
+
+<script type="text/javascript">
+	$(() => {
+		$('#validate').click(() => {
+			Homey.showLoadingOverlay();
+
+			var tokenId = $('#tokenId').val();
+			var regNo = $('#regNo').val();
+
+			Homey.emit('validate', { tokenId, regNo }, (error, result) => {
+				if (error) {
+					Homey.hideLoadingOverlay();
+					Homey.alert(error);
+				} else {
+					var deviceDefinition = {
+						name: result.inverterSN,
+						data: { regNo },
+						settings: {	tokenId }
+					};
+
+					Homey.createDevice(deviceDefinition, (error, result) => {
+						if (error) {
+							Homey.hideLoadingOverlay();
+							Homey.alert(error);
+						} else {
+							Homey.done();
+						}
+					});
+				}
+			})
+		});
+	});
+</script>

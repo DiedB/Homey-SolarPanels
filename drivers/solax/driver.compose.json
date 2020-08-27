@@ -1,0 +1,28 @@
+{
+  "name": {
+    "en": "Solax"
+  },
+  "pair": [
+    {
+      "id": "pair"
+    }
+  ],
+  "images": {
+    "large": "./drivers/solax/assets/images/large.jpg",
+    "small": "./drivers/solax/assets/images/small.jpg"
+  },
+  "class": "solarpanel",
+  "capabilities": [
+    "measure_power",
+    "meter_power"
+  ],
+  "settings": [
+    {
+      "id": "tokenId",
+      "type": "text",
+      "label": {
+        "en": "Solax API token ID"
+      }
+    }
+  ]
+}

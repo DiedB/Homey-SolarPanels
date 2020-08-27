@@ -44,7 +44,10 @@
   "4.0.15": {
     "en": "Implement flow triggers for SolarEdge inverter temperature"
   },
-  "4.1.5": {
-    "en": "Implement Enphase Envoy (local)"
+  "4.1.9": {
+    "en": "Implement Enphase Envoy (local API)"
+  },
+  "4.2.0": {
+    "en": "Add Solax Cloud support"
   }
 }

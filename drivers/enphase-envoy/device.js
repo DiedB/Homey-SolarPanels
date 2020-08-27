@@ -8,21 +8,19 @@ class EnphaseEnvoy extends Inverter {
         // Return a truthy value here if the discovery result matches your device.
         return discoveryResult.id === this.getData().id;
     }
-      
-    async onDiscoveryAvailable(discoveryResult) {
-        this.log('Discovery available');
 
+    async onDiscoveryAvailable(discoveryResult) {
         // This method will be executed once when the device has been found (onDiscoveryResult returned true)
         this.enphaseApi = new EnphaseEnvoyApi(`${discoveryResult.address}:${discoveryResult.port}`);
 
         await this.enphaseApi.getProductionData(); // When this throws, the device will become unavailable.
     }
-      
+
     onDiscoveryAddressChanged(discoveryResult) {
         // Update your connection details here, reconnect when the device is offline
         this.enphaseApi = new EnphaseEnvoyApi(`${discoveryResult.address}:${discoveryResult.port}`);
     }
-      
+
     onDiscoveryLastSeenChanged(_) {
         // When the device is offline, try to reconnect here
         this.setAvailable();
@@ -38,21 +36,41 @@ class EnphaseEnvoy extends Inverter {
         if (this.enphaseApi) {
             try {
                 const productionData = await this.enphaseApi.getProductionData();
-    
-                const currentEnergy = productionData.production[1].activeCount > 0 ? Math.round(productionData.production[1].whToday / 1000) : null;
-                const currentPower = productionData.production[1].activeCount > 0 ? productionData.production[1].wNow : productionData.production[0].wNow;
-    
-                if (currentEnergy !== null) {
-                    this.setCapabilityValue('meter_power', currentEnergy);
-                    this.log(`Current production energy is ${currentEnergy}kWh`);
+
+                const isMetered = productionData.production[1] && productionData.production[1].activeCount > 0;
+                const hasConsumption = productionData.consumption && productionData.consumption[0].activeCount > 0;
+
+                let currentProductionEnergy;
+                let currentProductionPower;
+                if (isMetered) {
+                    currentProductionEnergy = productionData.production[1].whToday;
+                    currentProductionPower = productionData.production[1].wNow;
+                } else {
+                    const enphaseEnergyMeterDate = this.getStoreValue('enphaseEnergyMeterDate');
+
+                    if (enphaseEnergyMeterDate && enphaseEnergyMeterDate === new Date().toDateString()) {
+                        currentProductionEnergy = (productionData.production[0].whLifetime - this.getStoreValue('enphaseEnergyMeter')) / 1000;
+                    } else {
+                        this.setStoreValue('enphaseEnergyMeterDate', new Date().toDateString());
+                        this.setStoreValue('enphaseEnergyMeter', productionData.production[0].whLifetime);
+
+                        currentProductionEnergy = 0;
+                    }
+
+                    currentProductionPower = productionData.production[0].wNow;
                 }
 
-                this.setCapabilityValue('measure_power', currentPower);    
-                this.log(`Current production power is ${currentPower}W`);
+                if (currentProductionEnergy !== null) {
+                    this.setCapabilityValue('meter_power', currentProductionEnergy);
+                    this.log(`Current production energy is ${currentProductionEnergy}kWh`);
+                }
+
+                this.setCapabilityValue('measure_power', currentProductionPower);    
+                this.log(`Current production power is ${currentProductionPower}W`);
     
-                if (productionData.consumption[0].activeCount > 0) {
+                if (hasConsumption) {
                     const currentConsumptionPower = productionData.consumption[0].wNow;
-                    const currentConsumptionEnergy = Math.round(productionData.consumption[0].whToday / 1000)
+                    const currentConsumptionEnergy = productionData.consumption[0].whToday;
 
                     this.setCapabilityValue('consumption', currentConsumptionPower);
                     this.setCapabilityValue('daily_consumption', currentConsumptionEnergy);
@@ -69,9 +87,6 @@ class EnphaseEnvoy extends Inverter {
                 this.log(`Unavailable (${error})`);
                 this.setUnavailable(`Error retrieving data (${error})`);
             }    
-        } else {
-            // TODO: remove
-            this.log('Tried fetching production before API init or device unavailable!')
         }
     }
 }
