@@ -49,5 +49,8 @@
   },
   "4.2.0": {
     "en": "Add Solax Cloud support"
+  },
+  "4.3.0": {
+    "en": "Add support for Kostal inverters"
   }
 }
