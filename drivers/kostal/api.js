@@ -9,13 +9,14 @@ class KostalApi {
         authCreateSession: "/auth/create_session",
         processData: "/processdata",
         info: "/info/version",
-        settings: "/info/settings"
+        settings: "/settings"
     }
 
-    constructor(ipAddress, password, logFunc) {
+    constructor(ipAddress, password, log) {
         this.baseUrl = `http://${ipAddress}/api/v1`;
         this.password = password;
-        this.log = logFunc;
+        this.log = log;
+        this.failedLoginCount = 0;
     }
 
     async createPbkdf2Hash(message, salt, rounds) {
@@ -25,6 +26,10 @@ class KostalApi {
                 resolve(pbkdf2Hash);
             });
         })
+    }
+    
+    hasValidSession() {
+        return Boolean(this.session);
     }
 
     createNonce(nonceLength) {
@@ -36,9 +41,14 @@ class KostalApi {
         return nonce;
     }
 
-    // TODO: Raise on login error
     async login() {
-        const userType = "user"
+        if (this.failedLoginCount > 2) {
+            // Prevent account lockout
+            this.log("Authentication attempt limit reached");
+            throw "Too many failed login attempts, please update your password in settings";
+        }
+
+        const userType = "user";
         const nonce = Buffer.from(this.createNonce(12)).toString('base64');
 
         // Authentication step 1
@@ -53,9 +63,11 @@ class KostalApi {
             }
         });
 
-        const authStartJson = await authStartResponse.json();
+        if (!authStartResponse.ok) {
+            throw "Inverter connection failed";
+        }
 
-        this.log(authStartJson)
+        const authStartJson = await authStartResponse.json();
 
         const salt = Buffer.from(authStartJson.salt, "base64");
 
@@ -86,10 +98,14 @@ class KostalApi {
                 "Content-Type": "application/json"
             }
         });
-        
+
         const authFinishJson = await authFinishResponse.json();
 
-        this.log(authFinishJson)
+        if (!authFinishResponse.ok) {
+            this.failedLoginCount += 1;
+
+            throw "Invalid credentials";
+        }
 
         const y = crypto.createHmac("sha256", hashedClientKey).update("Session Key");
         y.update(d);
@@ -116,75 +132,73 @@ class KostalApi {
         
         const authCreateSessionJson = await authCreateSessionResponse.json();
 
-        this.log(authCreateSessionJson)
+        if (!authCreateSessionResponse.ok && !authCreateSessionJson.sessionId) {
+            throw "Session creation failed";
+        }
+
+        this.log("Kostal (re)login successful");
 
         this.session = authCreateSessionJson.sessionId;
     }
 
-    async getInfo() {
-        const getInfoResponse = await fetch(`${this.baseUrl}${this.endpoints.info}`, {
+    async authenticatedApiRequest(url, method = "GET", body) {
+        const requestOptions = {
+            method,
             headers: {
                 "Content-Type": "application/json",
                 "authorization": `Session ${this.session}`
             }
-        });
-
-        if (getInfoResponse.ok) {
-            return await getInfoResponse.json();
         }
+
+        if (body) {
+            requestOptions.body = body;
+        }
+
+        const response = await fetch(url, requestOptions);
+
+        // Detect session expiry
+        if (response.status >= 400 && response.status < 500) {
+            // Attempt re-login
+            this.log("Session expired, logging back in")
+            await this.login();
+        } else if (response.ok) {
+            const json = await response.json();
+
+            if (!json.message) {
+                return json;
+            } else {
+                throw json.message;
+            }
+        }
+
+        throw "API request failed";
+    }
+
+    async getInfo() {
+        return await this.authenticatedApiRequest(`${this.baseUrl}${this.endpoints.info}`);
     }
 
     async getProcessData(moduleid, processdataid) {
-        const processDataResponse = await fetch(`${this.baseUrl}${this.endpoints.processData}`, {
-            method: "POST",
-            body: JSON.stringify([{
-                moduleid,
-                processdataids: [processdataid]
-            }]),
-            headers: {
-                "Content-Type": "application/json",
-                "authorization": `Session ${this.session}`
-            }
-        });
+        const processDataJson = await this.authenticatedApiRequest(`${this.baseUrl}${this.endpoints.processData}`, "POST", JSON.stringify([{
+            moduleid,
+            processdataids: [processdataid]
+        }]));
 
-        if (processDataResponse.ok) {
-            const processDataJson = await processDataResponse.json();
-            
-            if (!processDataJson.message) {
-                return processDataJson[0].processdata[0].value;
-            } else {
-                throw processDataJson.message;
-            }
-        }
+        return processDataJson[0].processdata[0].value;
     }
 
     async getSettings(moduleid, settingid) {
-        const settingsResponse = await fetch(`${this.baseUrl}${this.endpoints.processData}`, {
-            method: "POST",
-            body: JSON.stringify([{
-                moduleid,
-                settingids: [settingid]
-            }]),
-            headers: {
-                "Content-Type": "application/json",
-                "authorization": `Session ${this.session}`
-            }
-        });
-
-        if (settingsResponse.ok) {
-            const settingsJson = await settingsResponse.json();
-            
-            if (!settingsJson.message) {
-                return settingsJson[0].settings[0].value;
-            } else {
-                throw settingsJson.message;
-            }
-        }
+        const settingsJson = await this.authenticatedApiRequest(`${this.baseUrl}${this.endpoints.settings}`, "POST", JSON.stringify([{
+            moduleid,
+            settingids: [settingid]
+        }]));
+       
+        return settingsJson[0].settings[0].value;
     }
 
     getInverterSerialNumber = () => this.getSettings("devices:local", "Properties:SerialNo");
 
-    getPowerData = () => this.getProcessData("devices:local", "Dc_P");
+    getPowerData = () => this.getProcessData("devices:local:ac", "P");
 
     getProductionData = () => this.getProcessData("scb:statistic:EnergyFlow", "Statistic:Yield:Day");
 }

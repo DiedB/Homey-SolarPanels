@@ -16,7 +16,7 @@ class Kostal extends Homey.Driver {
                 callback(null, { systemInfo, serialNumber });
             } catch (error) {
                 this.error(error);
-                callback(error);
+                callback(new Error(error));
             }
         });
     }

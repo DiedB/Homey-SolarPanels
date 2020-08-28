@@ -9,9 +9,12 @@ class Kostal extends Inverter {
 
         const settings = this.getSettings();
 
-        // Todo: remove logging
-        this.kostalApi = new KostalApi(settings.ipAddress, settings.password, this.log);
-        await this.kostalApi.login()
+        try {
+            this.kostalApi = new KostalApi(settings.ipAddress, settings.password, this.log);
+            await this.kostalApi.login();
+        } catch (error) {
+            this.setUnavailable(error);
+        }
     }
 
     getCronString() {
@@ -25,27 +28,30 @@ class Kostal extends Inverter {
         await kostalApi.login()
 
         this.kostalApi = kostalApi;
+        this.setAvailable();
     }
 
     async checkProduction() {
         this.log('Checking production');
 
-        try {
-            const currentEnergy = await this.kostalApi.getProductionData();
-            const currentPower = await this.kostalApi.getPowerData();
-
-            this.setCapabilityValue('meter_power', currentEnergy / 1000);
-            this.setCapabilityValue('measure_power', currentPower);    
-
-            if (!this.getAvailable()) {
-                await this.setAvailable();
+        if (this.kostalApi && this.kostalApi.hasValidSession()) {
+            try {
+                const currentEnergy = await this.kostalApi.getProductionData();
+                const currentPower = await this.kostalApi.getPowerData();
+    
+                this.setCapabilityValue('meter_power', currentEnergy / 1000);
+                this.setCapabilityValue('measure_power', currentPower);    
+    
+                if (!this.getAvailable()) {
+                    await this.setAvailable();
+                }
+    
+                this.log(`Current energy is ${currentEnergy / 1000}kWh`);
+                this.log(`Current power is ${currentPower}W`);
+            } catch (error) {
+                this.log(`Unavailable (${error})`);
+                this.setUnavailable(error);
             }
-
-            this.log(`Current energy is ${currentEnergy / 1000}kWh`);
-            this.log(`Current power is ${currentPower}W`);
-        } catch (error) {
-            this.log(`Unavailable (${error})`);
-            this.setUnavailable(`Error retrieving data (${error})`);
         }
     }
 }
