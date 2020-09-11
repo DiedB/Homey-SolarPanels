@@ -4,7 +4,7 @@
   "main": "app.js",
   "dependencies": {
     "md5": "^2.2.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "uuid": "^3.4.0",
     "xml2js": "^0.4.23"
   },
