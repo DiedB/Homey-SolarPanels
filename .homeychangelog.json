@@ -52,5 +52,8 @@
   },
   "4.3.0": {
     "en": "Add support for Kostal inverters"
+  },
+  "4.3.1": {
+    "en": "Bump minimum Homey version, add source code URL"
   }
 }
