@@ -6,10 +6,9 @@
 const fetch = require('node-fetch')
 const md5 = require('md5')
 
-const baseURL = 'https://server.growatt.com'
-const loginURL = `${baseURL}/newLoginAPI.do`
-const plantURL = `${baseURL}/newPlantAPI.do`
-const inverterURL = `${baseURL}/newInverterAPI.do`
+const baseURL = 'https://server-api.growatt.com'
+const loginURL = `${baseURL}/newTwoLoginAPI.do`
+const plantURL = `${baseURL}/newTwoPlantAPI.do`
 
 class GrowattAPI {
     constructor (username, password) {
@@ -25,35 +24,41 @@ class GrowattAPI {
         const error = 'Could not login to Growatt server'
         const response = await this.request('POST', loginURL, body, error)
         if (response.body.back.success) {
-            this.cookies = response.headers.raw()['set-cookie'].map(directive => directive.split(';')[0]).join(';');
-            this.plants = response.body.back.data;
+            this.cookies = response.headers.raw()['set-cookie'].map(directive => directive.split(';')[0]).join(';')
+            this.plants = response.body.back.data
         } else {
             throw new Error(error)
         }
     }
 
+    async getDeviceList (plantId) {
+        const error = `Could not get device list for plant ${plantId} from Growatt server`
+        const url = `${plantURL}?op=getAllDeviceList&plantId=${plantId}`
+        const response = await this.request('GET', url, null, error)
+        return response.body.deviceList
+    }
+
     async getInverterSerialNumbers () {
         await this.login()
-        const error = 'Could not get inverters from Growatt server'
-        var serialNumbers = []
+        let serialNumbers = []
         for (let plant of this.plants) {
-            const url = `${plantURL}?op=getAllDeviceListThree&pageNum=1&pageSize=15&plantId=${plant.plantId}`
-            const response = await this.request('GET', url, null, error)
-            for (let inverter of response.body.deviceList) {
-                serialNumbers.push(inverter.deviceSn)
-            }
+            const deviceList = await this.getDeviceList(plant.plantId)
+            const inverters = deviceList.filter(device => ["inverter", "tlx"].includes(device.deviceType))
+            serialNumbers.push(...inverters.map(device => device.deviceSn))
         }
         return serialNumbers
     }
 
     async getInverterProductionData (serialNumber) {
         await this.login()
-        const today = new Date().toISOString().split('T')[0]
-        const url = `${inverterURL}?op=getInverterData&type=1&date=${today}&id=${serialNumber}`
-        const error = 'Could not get production data from Growatt server'
-        const response = await this.request('GET', url, null, error)
-        const data = { currentPower: Number(response.body.power), energyToday: Number(response.body.eToday) }
-        return data
+        for (let plant of this.plants) {
+            const deviceList = await this.getDeviceList(plant.plantId)
+            const device = deviceList.find(device => device.deviceSn == serialNumber)
+            if (device) {
+                return { currentPower: Number(device.power), energyToday: Number(device.eToday) }                
+            }
+        }
+        return undefined
     }
 
     async request (method, url, body, error) {
