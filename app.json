@@ -1,7 +1,7 @@
 {
   "id": "it.diederik.solar",
-  "version": "4.3.2",
-  "compatibility": ">=4.2",
+  "version": "4.3.3",
+  "compatibility": ">=3",
   "sdk": 2,
   "brandColor": "#1f63d1",
   "name": {
@@ -488,9 +488,7 @@
       "class": "solarpanel",
       "capabilities": [
         "measure_power",
-        "consumption",
         "meter_power",
-        "daily_consumption",
         "measure_temperature"
       ],
       "capabilitiesOptions": {

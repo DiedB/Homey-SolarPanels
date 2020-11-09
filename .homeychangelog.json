@@ -58,5 +58,8 @@
   },
   "4.3.2": {
     "en": "Fix Growatt API endpoint"
+  },
+  "4.3.3": {
+    "en": "Hide consumption capability for non-supported SolarEdge devices"
   }
 }
