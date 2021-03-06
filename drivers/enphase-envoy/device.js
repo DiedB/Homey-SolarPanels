@@ -43,7 +43,7 @@ class EnphaseEnvoy extends Inverter {
                 let currentProductionEnergy;
                 let currentProductionPower;
                 if (isMetered) {
-                    currentProductionEnergy = productionData.production[1].whToday;
+                    currentProductionEnergy = productionData.production[1].whToday / 1000;
                     currentProductionPower = productionData.production[1].wNow;
                 } else {
                     const enphaseEnergyMeterDate = this.getStoreValue('enphaseEnergyMeterDate');
@@ -70,7 +70,7 @@ class EnphaseEnvoy extends Inverter {
     
                 if (hasConsumption) {
                     const currentConsumptionPower = productionData.consumption[0].wNow;
-                    const currentConsumptionEnergy = productionData.consumption[0].whToday;
+                    const currentConsumptionEnergy = productionData.consumption[0].whToday / 1000;
 
                     this.setCapabilityValue('consumption', currentConsumptionPower);
                     this.setCapabilityValue('daily_consumption', currentConsumptionEnergy);

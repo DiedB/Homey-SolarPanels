@@ -1,17 +1,17 @@
 const fetch = require('node-fetch');
 const crypto = require('crypto');
 
-class KostalApi {
-    // Define API endpoints
-    endpoints = {
-        authStart: "/auth/start",
-        authFinish: "/auth/finish",
-        authCreateSession: "/auth/create_session",
-        processData: "/processdata",
-        info: "/info/version",
-        settings: "/settings"
-    }
+// Define API endpoints
+const endpoints = {
+    authStart: "/auth/start",
+    authFinish: "/auth/finish",
+    authCreateSession: "/auth/create_session",
+    processData: "/processdata",
+    info: "/info/version",
+    settings: "/settings"
+}
 
+class KostalApi {
     constructor(ipAddress, password, log) {
         this.baseUrl = `http://${ipAddress}/api/v1`;
         this.password = password;
@@ -52,7 +52,7 @@ class KostalApi {
         const nonce = Buffer.from(this.createNonce(12)).toString('base64');
 
         // Authentication step 1
-        const authStartResponse = await fetch(`${this.baseUrl}${this.endpoints.authStart}`, {
+        const authStartResponse = await fetch(`${this.baseUrl}${endpoints.authStart}`, {
             method: "POST",
             body: JSON.stringify({
                 username: userType,
@@ -88,7 +88,7 @@ class KostalApi {
         proof = Buffer.from(proof).toString("base64");;
 
         // Authentication step 2
-        const authFinishResponse = await fetch(`${this.baseUrl}${this.endpoints.authFinish}`, {
+        const authFinishResponse = await fetch(`${this.baseUrl}${endpoints.authFinish}`, {
             method: "POST",
             body: JSON.stringify({
                 transactionId: authStartJson.transactionId,
@@ -117,7 +117,7 @@ class KostalApi {
         const encrypted = Buffer.concat([aesCipher.update(authFinishJson.token, "utf8"), aesCipher.final()]);
 
         // Authentication step 3
-        const authCreateSessionResponse = await fetch(`${this.baseUrl}${this.endpoints.authCreateSession}`, {
+        const authCreateSessionResponse = await fetch(`${this.baseUrl}${endpoints.authCreateSession}`, {
             method: "POST",
             body: JSON.stringify({
                 transactionId: authStartJson.transactionId,
@@ -175,11 +175,11 @@ class KostalApi {
     }
 
     async getInfo() {
-        return await this.authenticatedApiRequest(`${this.baseUrl}${this.endpoints.info}`);
+        return await this.authenticatedApiRequest(`${this.baseUrl}${endpoints.info}`);
     }
 
     async getProcessData(moduleid, processdataid) {
-        const processDataJson = await this.authenticatedApiRequest(`${this.baseUrl}${this.endpoints.processData}`, "POST", JSON.stringify([{
+        const processDataJson = await this.authenticatedApiRequest(`${this.baseUrl}${endpoints.processData}`, "POST", JSON.stringify([{
             moduleid,
             processdataids: [processdataid]
         }]));
@@ -188,7 +188,7 @@ class KostalApi {
     }
 
     async getSettings(moduleid, settingid) {
-        const settingsJson = await this.authenticatedApiRequest(`${this.baseUrl}${this.endpoints.settings}`, "POST", JSON.stringify([{
+        const settingsJson = await this.authenticatedApiRequest(`${this.baseUrl}${endpoints.settings}`, "POST", JSON.stringify([{
             moduleid,
             settingids: [settingid]
         }]));
@@ -196,11 +196,17 @@ class KostalApi {
         return settingsJson[0].settings[0].value;
     }
 
-    getInverterSerialNumber = () => this.getSettings("devices:local", "Properties:SerialNo");
+    getInverterSerialNumber() {
+        return this.getSettings("devices:local", "Properties:SerialNo");
+    }
 
-    getPowerData = () => this.getProcessData("devices:local:ac", "P");
+    getPowerData() {
+        return this.getProcessData("devices:local:ac", "P");
+    }
 
-    getProductionData = () => this.getProcessData("scb:statistic:EnergyFlow", "Statistic:Yield:Day");
+    getProductionData() {
+        return this.getProcessData("scb:statistic:EnergyFlow", "Statistic:Yield:Day");
+    }
 }
 
 module.exports = { KostalApi };

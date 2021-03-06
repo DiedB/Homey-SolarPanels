@@ -26,9 +26,7 @@
   "class": "solarpanel",
   "capabilities": [
     "measure_power",
-    "consumption",
     "meter_power",
-    "daily_consumption",
     "measure_temperature"
   ],
   "capabilitiesOptions": {

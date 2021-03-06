@@ -61,5 +61,8 @@
   },
   "4.3.3": {
     "en": "Hide consumption capability for non-supported SolarEdge devices"
+  },
+  "4.3.4": {
+    "en": "Fix Enphase metered units"
   }
 }

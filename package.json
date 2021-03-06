@@ -3,12 +3,14 @@
   "version": "4.0.9",
   "main": "app.js",
   "dependencies": {
+    "-": "0.0.1",
+    "g": "^2.0.1",
     "md5": "^2.2.1",
     "node-fetch": "^2.6.1",
     "uuid": "^3.4.0",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
-    "homey": "^2.4.0"
+    "homey": "^2.9.0"
   }
 }
