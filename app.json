@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "4.3.4",
+  "version": "4.4.0",
   "compatibility": ">=3",
   "sdk": 2,
   "brandColor": "#1f63d1",
@@ -354,6 +354,7 @@
       "name": {
         "en": "Omnik"
       },
+      "deprecated": true,
       "pair": [
         {
           "id": "login_credentials",
@@ -400,6 +401,37 @@
         }
       ],
       "id": "omnik"
+    },
+    {
+      "name": {
+        "en": "Omnik",
+        "nl": "Omnik"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/omnik-local/assets/images/large.jpg",
+        "small": "./drivers/omnik-local/assets/images/small.jpg"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power",
+        "measure_voltage"
+      ],
+      "settings": [
+        {
+          "id": "ip",
+          "type": "text",
+          "label": {
+            "en": "Omnik inverter IP address"
+          }
+        }
+      ],
+      "id": "omnik-local"
     },
     {
       "name": {

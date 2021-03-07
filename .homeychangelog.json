@@ -64,5 +64,8 @@
   },
   "4.3.4": {
     "en": "Fix Enphase metered units"
+  },
+  "4.4.0": {
+    "en": "Add local Omnik support, deprecate Omnik Portal connection"
   }
 }
