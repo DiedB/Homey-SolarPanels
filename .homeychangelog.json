@@ -67,5 +67,8 @@
   },
   "4.4.0": {
     "en": "Add local Omnik support, deprecate Omnik Portal connection"
+  },
+  "4.4.1": {
+    "en": "Add local Omnik support, deprecate Omnik Portal connection"
   }
 }
