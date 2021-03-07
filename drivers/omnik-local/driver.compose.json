@@ -1,0 +1,26 @@
+{
+    "name": {
+        "en": "Omnik",
+        "nl": "Omnik"
+    },
+    "pair": [
+        {
+            "id": "pair"
+        }
+    ],
+    "images": {
+        "large": "./drivers/omnik-local/assets/images/large.jpg",
+        "small": "./drivers/omnik-local/assets/images/small.jpg"
+    },
+    "class": "solarpanel",
+    "capabilities": ["measure_power", "meter_power", "measure_voltage"],
+    "settings": [
+        {
+            "id": "ip",
+            "type": "text",
+            "label": {
+                "en": "Omnik inverter IP address"
+            }
+        }
+    ]
+}

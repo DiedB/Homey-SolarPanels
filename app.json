@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "4.4.1",
+  "version": "4.4.2",
   "compatibility": ">=3",
   "sdk": 2,
   "brandColor": "#1f63d1",
@@ -57,7 +57,8 @@
     "url": "https://github.com/DiedB/Homey-SolarPanels/issues"
   },
   "source": "https://github.com/DiedB/Homey-SolarPanels",
-  "support": "https://diederik.gitbook.io/homey-solar-panels-app/",
+  "homepage": "https://diederik.gitbook.io/homey-solar-panels-app/",
+  "support": "https://diederik.gitbook.io/homey-solar-panels-app/faq",
   "drivers": [
     {
       "name": {

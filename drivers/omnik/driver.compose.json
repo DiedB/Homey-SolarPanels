@@ -2,6 +2,7 @@
   "name": {
     "en": "Omnik"
   },
+  "deprecated": true,
   "pair": [
     {
       "id": "login_credentials",
