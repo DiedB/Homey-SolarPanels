@@ -59,6 +59,7 @@
   "source": "https://github.com/DiedB/Homey-SolarPanels",
   "homepage": "https://diederik.gitbook.io/homey-solar-panels-app/",
   "support": "https://diederik.gitbook.io/homey-solar-panels-app/faq",
+  "homeyCommunityTopicId": 44273,
   "drivers": [
     {
       "name": {
