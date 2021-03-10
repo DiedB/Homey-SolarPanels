@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "4.4.5",
+  "version": "4.4.6",
   "compatibility": ">=3",
   "sdk": 2,
   "brandColor": "#1f63d1",
@@ -423,7 +423,8 @@
       "capabilities": [
         "measure_power",
         "meter_power",
-        "measure_voltage"
+        "measure_voltage",
+        "measure_temperature"
       ],
       "settings": [
         {
