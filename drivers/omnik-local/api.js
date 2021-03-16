@@ -13,35 +13,51 @@ class OmnikLocalApi {
             client.setTimeout(10000);
 
             client.on("data", (data) => {
-                const inverterName = data.slice(15, 31).toString();
-                const currentPower =
-                    data.readUInt16BE(59) +
-                    data.readUInt16BE(63) +
-                    data.readUInt16BE(67);
-                const dailyProduction = data.readUInt16BE(69) / 100;
-                const voltageArray = [
-                    data.readUInt16BE(51),
-                    data.readUInt16BE(53),
-                    data.readUInt16BE(55),
-                ].filter((v) => v !== 0);
-                const currentVoltage =
-                    voltageArray.reduce((v1, v2) => v1 + v2, 0) /
-                    voltageArray.length /
-                    10;
+                if (Buffer.byteLength(data) > 70) {
+                    const inverterName = data.slice(15, 31).toString();
+                    const powerArray = [
+                        data.readInt16BE(59),
+                        data.readInt16BE(63),
+                        data.readInt16BE(67),
+                    ].filter((v) => v > 0);
 
-                client.destroy();
+                    const currentPower =
+                        powerArray.reduce((p1, p2) => p1 + p2, 0) /
+                        powerArray.length;
+                    const dailyProduction = data.readUInt16BE(69) / 100;
+                    const voltageArray = [
+                        data.readInt16BE(51),
+                        data.readInt16BE(53),
+                        data.readInt16BE(55),
+                    ].filter((v) => v > 0);
+                    const currentVoltage =
+                        voltageArray.reduce((v1, v2) => v1 + v2, 0) /
+                        voltageArray.length /
+                        10;
+                    const currentTemperature = data.readInt16BE(31) / 10;
 
-                resolve({
-                    inverterName,
-                    currentPower,
-                    currentVoltage,
-                    dailyProduction,
-                });
+                    client.destroy();
+
+                    resolve({
+                        inverterName,
+                        currentPower,
+                        currentVoltage,
+                        dailyProduction,
+                        currentTemperature,
+                    });
+                } else {
+                    reject(
+                        new Error(
+                            "Unexpected response from inverter: " +
+                                data.toString("hex")
+                        )
+                    );
+                }
             });
 
             client.on("timeout", () => {
                 client.destroy();
-                reject(new Error("Connection timed out"));
+                reject(new Error("The connection timed out"));
             });
 
             client.on("error", (error) => {

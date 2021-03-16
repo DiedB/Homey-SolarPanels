@@ -13,7 +13,12 @@
         "small": "./drivers/omnik-local/assets/images/small.jpg"
     },
     "class": "solarpanel",
-    "capabilities": ["measure_power", "meter_power", "measure_voltage"],
+    "capabilities": [
+        "measure_power",
+        "meter_power",
+        "measure_voltage",
+        "measure_temperature"
+    ],
     "settings": [
         {
             "id": "ip",

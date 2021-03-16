@@ -10,6 +10,10 @@ class OmnikLocal extends Inverter {
         const settings = this.getSettings();
         const data = this.getData();
 
+        if (!this.hasCapability("measure_temperature")) {
+            this.addCapability("measure_temperature");
+        }
+
         this.omnikLocalApi = new OmnikLocalApi(settings.ip, data.id);
     }
 
@@ -20,7 +24,7 @@ class OmnikLocal extends Inverter {
     }
 
     getCronString() {
-        return "*/5 * * * * *";
+        return "*/15 * * * * *";
     }
 
     async checkProduction() {
@@ -32,11 +36,16 @@ class OmnikLocal extends Inverter {
                 currentPower,
                 currentVoltage,
                 dailyProduction,
+                currentTemperature,
             } = await this.omnikLocalApi.getData();
 
             await this.setCapabilityValue("meter_power", dailyProduction);
             await this.setCapabilityValue("measure_voltage", currentVoltage);
             await this.setCapabilityValue("measure_power", currentPower);
+            await this.setCapabilityValue(
+                "measure_temperature",
+                currentTemperature
+            );
 
             if (!this.getAvailable()) {
                 await this.setAvailable();
