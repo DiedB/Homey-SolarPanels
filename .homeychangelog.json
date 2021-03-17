@@ -70,5 +70,8 @@
   },
   "4.4.6": {
     "en": "Add local Omnik support, deprecate Omnik Portal connection"
+  },
+  "4.5.0": {
+    "en": "Support Huawei SUN2000L inverters"
   }
 }

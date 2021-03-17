@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "4.4.6",
+  "version": "4.5.0",
   "compatibility": ">=3",
   "sdk": 2,
   "brandColor": "#1f63d1",
@@ -316,6 +316,38 @@
         }
       ],
       "id": "growatt"
+    },
+    {
+      "name": {
+        "en": "Huawei",
+        "nl": "Huawei"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/huawei/assets/images/large.png",
+        "small": "./drivers/huawei/assets/images/small.png"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power",
+        "measure_voltage",
+        "measure_temperature"
+      ],
+      "settings": [
+        {
+          "id": "ip",
+          "type": "text",
+          "label": {
+            "en": "Huawei inverter IP address"
+          }
+        }
+      ],
+      "id": "huawei"
     },
     {
       "name": {
