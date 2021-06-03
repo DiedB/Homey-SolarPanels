@@ -28,7 +28,7 @@ class Inverter extends Homey.Device {
             }
 
             // Enphase Envoy local support notification
-            if (this.getDriver() === 'enphase' && !this.getStoreValue('receivedEnphaseEnvoyNotification')) {
+            if (this.getDriver().id === 'enphase' && !this.getStoreValue('receivedEnphaseEnvoyNotification')) {
                 const envoyNotification = new Homey.Notification({ excerpt: 'Direct access to your Enphase Envoy is now supported in the Solar Panels app. Give it a try by adding your device with the Enphase Envoy driver.' });
                 envoyNotification.register()
                     .catch(this.log)
