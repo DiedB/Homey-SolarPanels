@@ -1,0 +1,22 @@
+{
+    "name": {
+        "en": "eSolar WiFi Module",
+        "nl": "eSolar WiFi Module"
+    },
+    "pair": [
+        {
+            "id": "pair"
+        }
+    ],
+    "class": "solarpanel",
+    "capabilities": ["measure_power", "meter_power", "measure_temperature"],
+    "settings": [
+        {
+            "id": "ip",
+            "type": "text",
+            "label": {
+                "en": "eSolar WiFi D Module IP address"
+            }
+        }
+    ]
+}
