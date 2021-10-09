@@ -1,6 +1,7 @@
 {
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "it.diederik.solar",
-  "version": "4.5.1",
+  "version": "4.6.0",
   "compatibility": ">=3",
   "sdk": 2,
   "brandColor": "#1f63d1",
@@ -140,33 +141,6 @@
         "daily_consumption"
       ],
       "id": "enphase-envoy"
-    },
-    {
-      "name": {
-        "en": "SAJ (eSolar WiFi)",
-        "nl": "SAJ (eSolar WiFi)"
-      },
-      "pair": [
-        {
-          "id": "pair"
-        }
-      ],
-      "class": "solarpanel",
-      "capabilities": [
-        "measure_power",
-        "meter_power",
-        "measure_temperature"
-      ],
-      "settings": [
-        {
-          "id": "ip",
-          "type": "text",
-          "label": {
-            "en": "eSolar WiFi D Module IP address"
-          }
-        }
-      ],
-      "id": "esolar"
     },
     {
       "name": {
@@ -528,7 +502,7 @@
     },
     {
       "name": {
-        "en": "SAJ"
+        "en": "SAJ (LAN)"
       },
       "pair": [
         {
@@ -554,6 +528,37 @@
         }
       ],
       "id": "saj"
+    },
+    {
+      "name": {
+        "en": "SAJ (eSolar WiFi)",
+        "nl": "SAJ (eSolar WiFi)"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/saj-esolar/assets/images/large.jpg",
+        "small": "./drivers/saj-esolar/assets/images/small.jpg"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power",
+        "measure_temperature"
+      ],
+      "settings": [
+        {
+          "id": "ip",
+          "type": "text",
+          "label": {
+            "en": "eSolar WiFi D Module IP address"
+          }
+        }
+      ],
+      "id": "saj-esolar"
     },
     {
       "name": {

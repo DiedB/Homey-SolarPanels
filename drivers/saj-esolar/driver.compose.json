@@ -8,6 +8,10 @@
             "id": "pair"
         }
     ],
+    "images": {
+        "large": "./drivers/saj-esolar/assets/images/large.jpg",
+        "small": "./drivers/saj-esolar/assets/images/small.jpg"
+    },
     "class": "solarpanel",
     "capabilities": ["measure_power", "meter_power", "measure_temperature"],
     "settings": [

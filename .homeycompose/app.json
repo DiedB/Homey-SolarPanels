@@ -1,0 +1,63 @@
+{
+  "id": "it.diederik.solar",
+  "version": "4.6.0",
+  "compatibility": ">=3",
+  "sdk": 2,
+  "brandColor": "#1f63d1",
+  "name": {
+    "en": "Solar Panels",
+    "nl": "Zonnepanelen"
+  },
+  "description": {
+    "en": "Connect your Solar Panels to Homey",
+    "nl": "Verbind je zonnepanelen met Homey"
+  },
+  "category": "energy",
+  "tags": {
+    "en": [
+      "solar",
+      "panels",
+      "pv"
+    ],
+    "nl": [
+      "zonnepanelen",
+      "pv"
+    ]
+  },
+  "images": {
+    "large": "./assets/images/large.jpg",
+    "small": "./assets/images/small.jpg"
+  },
+  "author": {
+    "name": "Diederik Bakker",
+    "email": "diederik@outlook.com"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Diederik Bakker",
+        "email": "diederik@outlook.com"
+      },
+      {
+        "name": "Rob (pro-sumer on GitHub)"
+      },
+      {
+        "name": "Max van de Laar"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "diederik"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/DiedB/Homey-SolarPanels/issues"
+  },
+  "source": "https://github.com/DiedB/Homey-SolarPanels",
+  "homepage": "https://diederik.gitbook.io/homey-solar-panels-app/",
+  "support": "https://diederik.gitbook.io/homey-solar-panels-app/faq",
+  "homeyCommunityTopicId": 44273
+}
