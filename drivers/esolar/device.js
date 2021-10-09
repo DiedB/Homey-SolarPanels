@@ -56,9 +56,7 @@ class ESolarWifiModule extends Inverter {
             })
             .catch((error) => {
                 if (error.code === "EHOSTUNREACH") {
-                    this.log("Inverter offline");
-                    this.setCapabilityValue("measure_power", 0);
-                    this.log(`Current power is 0W`);
+                    this.log("Inverter is offline");
                 } else {
                     this.log(`Unavailable (${error})`);
                     this.setUnavailable(`Error retrieving data (${error})`);
