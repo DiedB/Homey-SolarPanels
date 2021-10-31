@@ -19,8 +19,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm install --also=dev
-      - run: npm run-script validate
-      - run: npm run-script build
+      - run: npm run-script homey-validate
+      - run: npm run-script homey-build
 
       - name: Archive build artifacts
         uses: actions/upload-artifact@v2
