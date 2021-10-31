@@ -1,0 +1,192 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "it.diederik.solar",
+  "version": "5.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "brandColor": "#1f63d1",
+  "name": {
+    "en": "Solar Panels",
+    "nl": "Zonnepanelen"
+  },
+  "description": {
+    "en": "Connect your Solar Panels to Homey",
+    "nl": "Verbind je zonnepanelen met Homey"
+  },
+  "category": "energy",
+  "tags": {
+    "en": [
+      "solar",
+      "panels",
+      "pv"
+    ],
+    "nl": [
+      "zonnepanelen",
+      "pv"
+    ]
+  },
+  "images": {
+    "large": "./assets/images/large.jpg",
+    "small": "./assets/images/small.jpg"
+  },
+  "author": {
+    "name": "Diederik Bakker",
+    "email": "diederik@outlook.com"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Diederik Bakker",
+        "email": "diederik@outlook.com"
+      },
+      {
+        "name": "Rob (pro-sumer on GitHub)"
+      },
+      {
+        "name": "Max van de Laar"
+      },
+      {
+        "name": "Dries Hooghe",
+        "email": "dries@drieshooghe.com"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "diederik"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/DiedB/Homey-SolarPanels/issues"
+  },
+  "source": "https://github.com/DiedB/Homey-SolarPanels",
+  "homepage": "https://diederik.gitbook.io/homey-solar-panels-app/",
+  "support": "https://diederik.gitbook.io/homey-solar-panels-app/faq",
+  "homeyCommunityTopicId": 44273,
+  "drivers": [
+    {
+      "name": {
+        "en": "SolarEdge",
+        "nl": "SolarEdge"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "large": "/drivers/solaredge/assets/images/large.jpg",
+        "small": "/drivers/solaredge/assets/images/small.jpg"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power",
+        "measure_temperature"
+      ],
+      "capabilitiesOptions": {
+        "measure_temperature": {
+          "title": {
+            "en": "Inverter temperature",
+            "nl": "Temperatuur omvormer"
+          }
+        }
+      },
+      "settings": [
+        {
+          "id": "key",
+          "type": "password",
+          "label": {
+            "en": "SolarEdge (read-only) API key"
+          }
+        },
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Check interval",
+            "nl": "Controle-interval"
+          },
+          "hint": {
+            "en": "Increase this value if you are using other apps that use the SolarEdge API",
+            "nl": "Verhoog deze waarde als je andere apps gebruikt die de SolarEdge API gebruiken"
+          },
+          "value": 15,
+          "min": 15,
+          "max": 60,
+          "units": {
+            "en": "minutes",
+            "nl": "minuten"
+          }
+        },
+        {
+          "id": "checkTemperature",
+          "type": "checkbox",
+          "label": {
+            "en": "Fetch inverter temperature",
+            "nl": "Haal temperatuur omvormer op"
+          },
+          "value": true
+        }
+      ],
+      "id": "solaredge"
+    }
+  ],
+  "capabilities": {
+    "consumption": {
+      "type": "number",
+      "title": {
+        "en": "Power consumption",
+        "nl": "Stroomverbruik"
+      },
+      "icon": "/assets/capabilities/consumption.svg",
+      "units": {
+        "en": "W"
+      },
+      "insights": true,
+      "desc": {
+        "en": "Power in Watt (W)",
+        "nl": "Vermogen in Watt (W)"
+      },
+      "chartType": "stepLine",
+      "decimals": 2,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
+    "daily_consumption": {
+      "type": "number",
+      "title": {
+        "en": "Energy consumption today",
+        "nl": "Stroomverbruik vandaag"
+      },
+      "icon": "/assets/capabilities/daily_consumption.svg",
+      "units": {
+        "en": "kWh"
+      },
+      "insights": true,
+      "desc": {
+        "en": "Energy consumption today in kWh",
+        "nl": "Stroomverbruik vandaag in kWh"
+      },
+      "chartType": "stepLine",
+      "decimals": 2,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    }
+  }
+}

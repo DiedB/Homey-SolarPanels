@@ -1,0 +1,84 @@
+{
+    "4.0.1": {
+      "en": "Add support for Homey Energy"
+    },
+    "4.0.2": {
+      "en": "Add support for GoodWe SEMS"
+    },
+    "4.0.3": {
+      "en": "Fix GoodWe pairing race condition"
+    },
+    "4.0.4": {
+      "en": "GoodWe fixes"
+    },
+    "4.0.5": {
+      "en": "Improve support for GoodWe systems with multiple inverters"
+    },
+    "4.0.6": {
+      "en": "Fix Growatt bug"
+    },
+    "4.0.7": {
+      "en": "Fix (yet another) Growatt bug"
+    },
+    "4.0.8": {
+      "en": "Update dependencies"
+    },
+    "4.0.9": {
+      "en": "Fix Growatt bug"
+    },
+    "4.0.10": {
+      "en": "Add battery sensor for storage-enabled GoodWe systems"
+    },
+    "4.0.11": {
+      "en": "Add battery sensor for storage-enabled GoodWe systems"
+    },
+    "4.0.12": {
+      "en": "Add Trannergy support"
+    },
+    "4.0.13": {
+      "en": "Fix GoodWe API connectivity"
+    },
+    "4.0.14": {
+      "en": "Add SolarEdge temperature measurement, improve pairing process"
+    },
+    "4.0.15": {
+      "en": "Implement flow triggers for SolarEdge inverter temperature"
+    },
+    "4.1.9": {
+      "en": "Implement Enphase Envoy (local API)"
+    },
+    "4.2.0": {
+      "en": "Add Solax Cloud support"
+    },
+    "4.3.0": {
+      "en": "Add support for Kostal inverters"
+    },
+    "4.3.1": {
+      "en": "Bump minimum Homey version, add source code URL"
+    },
+    "4.3.2": {
+      "en": "Fix Growatt API endpoint"
+    },
+    "4.3.3": {
+      "en": "Hide consumption capability for non-supported SolarEdge devices"
+    },
+    "4.3.4": {
+      "en": "Fix Enphase metered units"
+    },
+    "4.4.5": {
+      "en": "Add local Omnik support, deprecate Omnik Portal connection"
+    },
+    "4.4.6": {
+      "en": "Add local Omnik support, deprecate Omnik Portal connection"
+    },
+    "4.5.0": {
+      "en": "Support Huawei SUN2000L inverters"
+    },
+    "4.5.1": {
+      "en": "Support Huawei SUN2000L inverters"
+    },
+    "4.6.2": {
+      "en": "Add support for SAJ eSolar WiFi modules"
+    }
+  }
+  
