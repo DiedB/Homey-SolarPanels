@@ -23,6 +23,8 @@
     "large": "{{driverAssetsPath}}/images/large.jpg",
     "small": "{{driverAssetsPath}}/images/small.jpg"
   },
+  "connectivity": ["cloud"],
+  "platforms": ["local", "cloud"],
   "class": "solarpanel",
   "capabilities": ["measure_power", "meter_power", "measure_temperature"],
   "capabilitiesOptions": {

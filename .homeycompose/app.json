@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "5.0.0",
+  "version": "5.0.4",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#1f63d1",
@@ -13,13 +13,15 @@
     "nl": "Verbind je zonnepanelen met Homey"
   },
   "category": "energy",
+  "platforms": ["local", "cloud"],
   "tags": {
     "en": ["solar", "panels", "pv"],
-    "nl": ["zonnepanelen", "pv"]
+    "nl": ["zonnepanelen", "solar", "pv"]
   },
   "images": {
-    "large": "./assets/images/large.jpg",
-    "small": "./assets/images/small.jpg"
+    "xlarge": "./assets/images/xlarge.png",
+    "large": "./assets/images/large.png",
+    "small": "./assets/images/small.png"
   },
   "author": {
     "name": "Diederik Bakker",

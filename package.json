@@ -3,7 +3,7 @@
   "version": "5.0.0",
   "main": "app.ts",
   "scripts": {
-    "homey-validate": "homey app validate",
+    "homey-validate": "homey app validate --level verified",
     "homey-build": "homey app build",
     "build": "tsc"
   },
