@@ -3,7 +3,8 @@
   "version": "5.0.0",
   "main": "app.ts",
   "scripts": {
-    "build": "tsc"
+    "validate": "homey app validate",
+    "build": "homey app build"
   },
   "dependencies": {
     "node-fetch": "^2.6.5",

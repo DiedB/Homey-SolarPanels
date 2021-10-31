@@ -4,30 +4,27 @@ on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [12.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Validate and build app
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm install --dev
-    - run: homey app validate
-    - run: homey app build
-    
-    - name: Archive build artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: build
-        path: |
-          build
+      - uses: actions/checkout@v2
 
+      - name: Validate and build app
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm install --also=dev
+      - run: npm run-script validate
+      - run: npm run-script build
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: |
+            build
