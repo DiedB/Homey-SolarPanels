@@ -28,19 +28,8 @@
 
 <base target="_parent" />
 <div class="form-wrapper">
-  <p>Please enter your SolarEdge system ID and API key:</p>
-  <div class="input-field">
-    <label for="ip">System ID</label>
-    <input
-      type="text"
-      minlength="5"
-      maxlength="7"
-      pattern="[0-9]{5,7}"
-      id="systemId"
-      placeholder="123456"
-      value=""
-    />
-  </div>
+  <p>Please enter your SolarEdge API key:</p>
+
   <div class="input-field">
     <label for="sn">API key</label>
     <input
@@ -68,16 +57,14 @@
     $("#validate").click(() => {
       Homey.showLoadingOverlay();
 
-      var systemId = $("#systemId").val();
       var apiKey = $("#apiKey").val();
 
-      Homey.emit("validate", { systemId, apiKey })
+      Homey.emit("validate", { apiKey })
         .then(() => {
           Homey.showView("list_devices");
         })
         .catch((error) => {
           Homey.hideLoadingOverlay();
-          // TODO: Implement error handling here
           Homey.alert(error.message);
         });
     });

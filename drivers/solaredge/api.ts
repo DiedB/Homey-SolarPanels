@@ -5,17 +5,18 @@ import {
   EnergyResponse,
   EquipmentListResponse,
   EquipmentDataResponse,
+  SitesResponse,
 } from "./types";
 
 export default class SolarEdgeApi {
-  private systemId: string;
   private apiKey: string;
+  private siteId?: number;
   private serialNumber?: string;
 
   private baseUrl = "https://monitoringapi.solaredge.com";
 
-  constructor(systemId: string, apiKey: string, serialNumber?: string) {
-    this.systemId = systemId;
+  constructor(apiKey: string, siteId?: number, serialNumber?: string) {
+    this.siteId = siteId;
     this.apiKey = apiKey;
     this.serialNumber = serialNumber;
   }
@@ -67,9 +68,28 @@ export default class SolarEdgeApi {
   }
 
   checkSettings = async (): Promise<void> => {
-    const equipmentUrl = `${this.baseUrl}/equipment/${this.systemId}/list?api_key=${this.apiKey}&format=json`;
+    if (!this.apiKey || !this.siteId) {
+      throw new Error("Please check your settings and try again");
+    }
 
-    return this.fetchApiEndpoint(equipmentUrl);
+    const equipmentUrl = `${this.baseUrl}/equipment/${this.siteId}/list?api_key=${this.apiKey}&format=json`;
+
+    try {
+      const equipmentListResponse =
+        this.fetchApiEndpoint<EquipmentListResponse>(equipmentUrl);
+
+      if ((await equipmentListResponse).reporters.count < 1) {
+        throw new Error("No SolarEdge inverters were found in this site");
+      }
+    } catch (e) {
+      // Check if equipment is available within site
+    }
+  };
+
+  getSites = async (): Promise<SitesResponse> => {
+    const sitesUrl = `${this.baseUrl}/sites/list?api_key=${this.apiKey}&format=json`;
+
+    return this.fetchApiEndpoint(sitesUrl);
   };
 
   getPowerData = async (): Promise<PowerResponse> => {
@@ -77,7 +97,7 @@ export default class SolarEdgeApi {
 
     // Power values
     const startTime = SolarEdgeApi.getIsoStringFromPast(1);
-    const powerDataUrl = `${this.baseUrl}/site/${this.systemId}/powerDetails?api_key=${this.apiKey}&format=json&meters=Production,Consumption&startTime=${startTime}&endTime=${currentIsoString}`;
+    const powerDataUrl = `${this.baseUrl}/site/${this.siteId}/powerDetails?api_key=${this.apiKey}&format=json&meters=Production,Consumption&startTime=${startTime}&endTime=${currentIsoString}`;
 
     return this.fetchApiEndpoint<PowerResponse>(powerDataUrl);
   };
@@ -85,13 +105,13 @@ export default class SolarEdgeApi {
   getEnergyData = async (): Promise<EnergyResponse> => {
     const currentDateString = SolarEdgeApi.getCurrentDateString();
 
-    const energyDataUrl = `${this.baseUrl}/site/${this.systemId}/energyDetails?api_key=${this.apiKey}&format=json&meters=Production,Consumption&startTime=${currentDateString} 00:00:00&endTime=${currentDateString} 23:59:59`;
+    const energyDataUrl = `${this.baseUrl}/site/${this.siteId}/energyDetails?api_key=${this.apiKey}&format=json&meters=Production,Consumption&startTime=${currentDateString} 00:00:00&endTime=${currentDateString} 23:59:59`;
 
     return this.fetchApiEndpoint<EnergyResponse>(energyDataUrl);
   };
 
   getEquipmentList = async (): Promise<EquipmentListResponse> => {
-    const equipmentUrl = `${this.baseUrl}/equipment/${this.systemId}/list?api_key=${this.apiKey}&format=json`;
+    const equipmentUrl = `${this.baseUrl}/equipment/${this.siteId}/list?api_key=${this.apiKey}&format=json`;
 
     return this.fetchApiEndpoint<EquipmentListResponse>(equipmentUrl);
   };
@@ -100,7 +120,7 @@ export default class SolarEdgeApi {
     const currentIsoString = SolarEdgeApi.getCurrentIsoString();
     const startTime = SolarEdgeApi.getIsoStringFromPast(10);
 
-    const equipmentDataUrl = `${this.baseUrl}/equipment/${this.systemId}/${this.serialNumber}/data?api_key=${this.apiKey}&format=json&startTime=${startTime}&endTime=${currentIsoString}`;
+    const equipmentDataUrl = `${this.baseUrl}/equipment/${this.siteId}/${this.serialNumber}/data?api_key=${this.apiKey}&format=json&startTime=${startTime}&endTime=${currentIsoString}`;
 
     return this.fetchApiEndpoint<EquipmentDataResponse>(equipmentDataUrl);
   };

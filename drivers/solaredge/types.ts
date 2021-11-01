@@ -1,3 +1,4 @@
+// SolarEdge API responses
 export interface Value {
   date: string;
   value?: number;
@@ -71,19 +72,78 @@ export interface EquipmentDataResponse {
   data: Data;
 }
 
+export interface Location {
+  country: string;
+  city: string;
+  address: string;
+  address2: string;
+  zip: string;
+  timeZone: string;
+  countryCode: string;
+}
+
+export interface PrimaryModule {
+  manufacturerName: string;
+  modelName: string;
+  maximumPower: number;
+}
+
+export interface Uris {
+  SITE_IMAGE: string;
+  DATA_PERIOD: string;
+  DETAILS: string;
+  OVERVIEW: string;
+}
+
+export interface PublicSettings {
+  isPublic: boolean;
+}
+
+export interface Site {
+  id: number;
+  name: string;
+  accountId: number;
+  status: string;
+  peakPower: number;
+  lastUpdateTime: string;
+  currency: string;
+  installationDate: string;
+  ptoDate?: any;
+  notes: string;
+  type: string;
+  location: Location;
+  primaryModule: PrimaryModule;
+  uris: Uris;
+  publicSettings: PublicSettings;
+}
+
+export interface Sites {
+  count: number;
+  site: Site[];
+}
+
+export interface SitesResponse {
+  sites: Sites;
+}
+
 // Homey types
 export interface PairData {
-  systemId: string;
   apiKey: string;
 }
 
 export interface DeviceData {
-  sid: string;
+  sid: number;
   serial_number: string;
 }
 
 export interface DeviceSettings {
   key: string;
-  interval: number;
-  checkTemperature: boolean;
+  interval?: number;
+  checkTemperature?: boolean;
+}
+
+export interface Device {
+  name: string;
+  data: DeviceData;
+  settings: DeviceSettings;
 }

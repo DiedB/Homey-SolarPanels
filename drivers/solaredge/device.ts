@@ -10,7 +10,7 @@ class SolarEdgeDevice extends Inverter {
     const data: DeviceData = this.getData();
     const settings: DeviceSettings = this.getSettings();
 
-    this.api = new SolarEdgeApi(data.sid, settings.key, data.serial_number);
+    this.api = new SolarEdgeApi(settings.key, data.sid, data.serial_number);
 
     super.onInit();
   }
@@ -28,8 +28,8 @@ class SolarEdgeDevice extends Inverter {
     if (changedKeys.includes("key")) {
       const data: DeviceData = this.getData();
       const newApi = new SolarEdgeApi(
-        data.sid,
         typedNewSettings.key,
+        data.sid,
         data.serial_number
       );
 
@@ -41,7 +41,7 @@ class SolarEdgeDevice extends Inverter {
       this.checkProduction();
     }
 
-    if (changedKeys.includes("interval")) {
+    if (changedKeys.includes("interval") && typedNewSettings.interval) {
       this.resetInterval(typedNewSettings.interval);
       this.log(`Changed interval to ${typedNewSettings.interval}`);
     }
