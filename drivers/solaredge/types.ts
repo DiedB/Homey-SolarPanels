@@ -139,7 +139,6 @@ export interface DeviceData {
 export interface DeviceSettings {
   key: string;
   interval?: number;
-  checkTemperature?: boolean;
 }
 
 export interface Device {

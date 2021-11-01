@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "it.diederik.solar",
-  "version": "5.0.6",
+  "version": "5.0.7",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#1f63d1",
@@ -106,13 +106,44 @@
       "capabilities": [
         "measure_power",
         "meter_power",
-        "measure_temperature"
+        "measure_temperature",
+        "meter_power.total"
       ],
       "capabilitiesOptions": {
         "measure_temperature": {
           "title": {
             "en": "Inverter temperature",
             "nl": "Temperatuur omvormer"
+          }
+        },
+        "meter_power": {
+          "title": {
+            "en": "Energy yield (today)",
+            "nl": "Energieproductie (vandaag)"
+          }
+        },
+        "meter_power.consumption": {
+          "title": {
+            "en": "Energy usage (today)",
+            "nl": "Energieverbruik (vandaag)"
+          }
+        },
+        "meter_power.total": {
+          "title": {
+            "en": "Energy yield (total)",
+            "nl": "Energieproductie (totaal)"
+          }
+        },
+        "measure_power": {
+          "title": {
+            "en": "Power (production)",
+            "nl": "Vermogen (productie)"
+          }
+        },
+        "measure_power.consumption": {
+          "title": {
+            "en": "Power (consumption)",
+            "nl": "Vermogen (gebruik)"
           }
         }
       },
@@ -137,67 +168,13 @@
           },
           "value": 15,
           "min": 10,
-          "max": 60,
           "units": {
             "en": "minutes",
             "nl": "minuten"
           }
-        },
-        {
-          "id": "checkTemperature",
-          "type": "checkbox",
-          "label": {
-            "en": "Fetch inverter temperature",
-            "nl": "Haal temperatuur omvormer op"
-          },
-          "value": true
         }
       ],
       "id": "solaredge"
     }
-  ],
-  "capabilities": {
-    "consumption": {
-      "type": "number",
-      "title": {
-        "en": "Power consumption",
-        "nl": "Stroomverbruik"
-      },
-      "icon": "/assets/capabilities/consumption.svg",
-      "units": {
-        "en": "W"
-      },
-      "insights": true,
-      "desc": {
-        "en": "Power in Watt (W)",
-        "nl": "Vermogen in Watt (W)"
-      },
-      "chartType": "stepLine",
-      "decimals": 2,
-      "getable": true,
-      "setable": false,
-      "uiComponent": "sensor"
-    },
-    "daily_consumption": {
-      "type": "number",
-      "title": {
-        "en": "Energy consumption today",
-        "nl": "Stroomverbruik vandaag"
-      },
-      "icon": "/assets/capabilities/daily_consumption.svg",
-      "units": {
-        "en": "kWh"
-      },
-      "insights": true,
-      "desc": {
-        "en": "Energy consumption today in kWh",
-        "nl": "Stroomverbruik vandaag in kWh"
-      },
-      "chartType": "stepLine",
-      "decimals": 2,
-      "getable": true,
-      "setable": false,
-      "uiComponent": "sensor"
-    }
-  }
+  ]
 }

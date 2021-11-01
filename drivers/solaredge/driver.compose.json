@@ -26,12 +26,47 @@
   "connectivity": ["cloud"],
   "platforms": ["local"],
   "class": "solarpanel",
-  "capabilities": ["measure_power", "meter_power", "measure_temperature"],
+  "capabilities": [
+    "measure_power",
+    "meter_power",
+    "measure_temperature",
+    "meter_power.total"
+  ],
   "capabilitiesOptions": {
     "measure_temperature": {
       "title": {
         "en": "Inverter temperature",
         "nl": "Temperatuur omvormer"
+      }
+    },
+    "meter_power": {
+      "title": {
+        "en": "Energy yield (today)",
+        "nl": "Energieproductie (vandaag)"
+      }
+    },
+    "meter_power.consumption": {
+      "title": {
+        "en": "Energy usage (today)",
+        "nl": "Energieverbruik (vandaag)"
+      }
+    },
+    "meter_power.total": {
+      "title": {
+        "en": "Energy yield (total)",
+        "nl": "Energieproductie (totaal)"
+      }
+    },
+    "measure_power": {
+      "title": {
+        "en": "Power (production)",
+        "nl": "Vermogen (productie)"
+      }
+    },
+    "measure_power.consumption": {
+      "title": {
+        "en": "Power (consumption)",
+        "nl": "Vermogen (gebruik)"
       }
     }
   },
@@ -54,15 +89,6 @@
       "value": 15,
       "min": 10,
       "units": { "en": "minutes", "nl": "minuten" }
-    },
-    {
-      "id": "checkTemperature",
-      "type": "checkbox",
-      "label": {
-        "en": "Fetch inverter temperature",
-        "nl": "Haal temperatuur omvormer op"
-      },
-      "value": true
     }
   ]
 }

@@ -10,7 +10,20 @@ class SolarEdgeDevice extends Inverter {
     const data: DeviceData = this.getData();
     const settings: DeviceSettings = this.getSettings();
 
-    this.api = new SolarEdgeApi(settings.key, data.sid, data.serial_number);
+    // SDK v3 migration
+    if (this.hasCapability("consumption")) {
+      this.removeCapability("consumption");
+    }
+    if (this.hasCapability("daily_consumption")) {
+      this.removeCapability("daily_consumption");
+    }
+
+    this.api = new SolarEdgeApi(
+      settings.key,
+      data.sid,
+      data.serial_number,
+      this.homey.clock.getTimezone()
+    );
 
     super.onInit();
   }
@@ -30,7 +43,8 @@ class SolarEdgeDevice extends Inverter {
       const newApi = new SolarEdgeApi(
         typedNewSettings.key,
         data.sid,
-        data.serial_number
+        data.serial_number,
+        this.homey.clock.getTimezone()
       );
 
       await newApi.checkSettings();
@@ -45,40 +59,34 @@ class SolarEdgeDevice extends Inverter {
       this.resetInterval(typedNewSettings.interval);
       this.log(`Changed interval to ${typedNewSettings.interval}`);
     }
-
-    if (changedKeys.includes("checkTemperature")) {
-      if (!typedNewSettings.checkTemperature) {
-        this.removeCapability("measure_temperature");
-      } else {
-        this.addCapability("measure_temperature");
-      }
-    }
   }
 
   async checkProduction(): Promise<void> {
     this.log("Checking production");
 
-    const data: DeviceData = this.getData();
-    const settings: DeviceSettings = this.getSettings();
-
     if (this.api) {
       try {
+        // Power values
         const powerResponse: PowerResponse = await this.api.getPowerData();
 
         powerResponse.powerDetails.meters.forEach((meter) => {
           const currentMeterType = meter.type.toLowerCase();
 
-          if (meter.values.length > 0 && meter.values[0].value !== undefined) {
-            const currentValue = Math.round(meter.values[0].value);
+          const lastMeasurement = meter.values
+            .filter((m) => m.value !== undefined)
+            .pop();
+
+          if (lastMeasurement) {
+            const currentValue = lastMeasurement.value as number;
 
             const capabilityId =
               currentMeterType === "production"
                 ? "measure_power"
-                : "consumption";
+                : "measure_power.consumption";
 
             // Check if consumption is supported, add capability if needed
             if (
-              capabilityId === "consumption" &&
+              capabilityId === "measure_power.consumption" &&
               !this.hasCapability(capabilityId)
             ) {
               this.addCapability(capabilityId);
@@ -88,9 +96,12 @@ class SolarEdgeDevice extends Inverter {
 
             this.log(`Current ${currentMeterType} power is ${currentValue}W`);
           } else {
-            this.log(`No new data for ${currentMeterType}`);
+            this.log(`No new power data for ${currentMeterType}`);
           }
         });
+
+        // Sleep to prevent hitting rate limits
+        await new Promise((r) => setTimeout(r, 30000));
 
         // Energy values
         const energyResponse = await this.api.getEnergyData();
@@ -98,17 +109,21 @@ class SolarEdgeDevice extends Inverter {
         energyResponse.energyDetails.meters.forEach((meter) => {
           const currentMeterType = meter.type.toLowerCase();
 
-          if (meter.values.length > 0 && meter.values[0].value !== undefined) {
-            const currentValue = Math.round(meter.values[0].value) / 1000;
+          const lastMeasurement = meter.values
+            .filter((m) => m.value !== undefined)
+            .pop();
+
+          if (lastMeasurement) {
+            const currentValue = (lastMeasurement.value as number) / 1000;
 
             const capabilityId =
               currentMeterType === "production"
                 ? "meter_power"
-                : "daily_consumption";
+                : "meter_power.consumption";
 
             // Check if consumption is supported, add capability if needed
             if (
-              capabilityId === "daily_consumption" &&
+              capabilityId === "meter_power.consumption" &&
               !this.hasCapability(capabilityId)
             ) {
               this.addCapability(capabilityId);
@@ -120,31 +135,48 @@ class SolarEdgeDevice extends Inverter {
               `Current ${currentMeterType} energy is ${currentValue}kWh`
             );
           } else {
-            this.log(`No new data for ${currentMeterType}`);
+            this.log(`No new energy data for ${currentMeterType}`);
           }
         });
 
-        // Equipment values (inverter temperature)
+        // Sleep to prevent hitting rate limits
+        await new Promise((r) => setTimeout(r, 30000));
+
+        // Equipment values (inverter temperature and total energy)
         // Only fetch equipment if inverter serial number is known
-        if (settings.checkTemperature && data.serial_number) {
-          const equipmentDataResponse = await this.api.getEquipmentData();
+        const equipmentDataResponse = await this.api.getEquipmentData();
 
-          const telemetries = equipmentDataResponse.data.telemetries;
+        if (equipmentDataResponse.data.count > 0) {
+          const latestTelemetry =
+            equipmentDataResponse.data.telemetries[
+              equipmentDataResponse.data.telemetries.length - 1
+            ];
 
-          telemetries.reverse().some((telemetry) => {
-            if (telemetry && telemetry.temperature !== undefined) {
-              this.setCapabilityValue(
-                "measure_temperature",
-                telemetry.temperature
-              );
+          if (latestTelemetry.temperature) {
+            this.setCapabilityValue(
+              "measure_temperature",
+              latestTelemetry.temperature
+            );
 
-              this.log(
-                `Current inverter temperature is ${telemetry.temperature} degrees Celsius`
-              );
-            }
+            this.log(
+              `Current inverter temperature is ${latestTelemetry.temperature} degrees Celsius`
+            );
+          }
 
-            return telemetry.temperature !== undefined;
-          });
+          if (latestTelemetry.totalEnergy) {
+            this.setCapabilityValue(
+              "meter_power.total",
+              latestTelemetry.totalEnergy / 1000
+            );
+
+            this.log(
+              `Current total energy yield is ${
+                latestTelemetry.totalEnergy / 1000
+              } kWh`
+            );
+          }
+        } else {
+          this.log("No new telemetry data");
         }
 
         this.setAvailable();
