@@ -1,10 +1,10 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "it.diederik.solar",
-  "version": "5.0.8",
+  "version": "5.0.10",
   "compatibility": ">=5.0.0",
   "sdk": 3,
-  "brandColor": "#1f63d1",
+  "brandColor": "#0c1845",
   "name": {
     "en": "Solar Panels",
     "nl": "Zonnepanelen"
@@ -15,7 +15,8 @@
   },
   "category": "energy",
   "platforms": [
-    "local"
+    "local",
+    "cloud"
   ],
   "tags": {
     "en": [
@@ -100,7 +101,8 @@
         "cloud"
       ],
       "platforms": [
-        "local"
+        "local",
+        "cloud"
       ],
       "class": "solarpanel",
       "capabilities": [
