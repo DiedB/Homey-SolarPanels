@@ -8,6 +8,7 @@
     "build": "tsc"
   },
   "dependencies": {
+    "homey-log": "^2.0.1",
     "node-fetch": "^2.6.5",
     "source-map-support": "^0.5.20"
   },
