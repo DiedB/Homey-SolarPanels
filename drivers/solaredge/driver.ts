@@ -9,7 +9,7 @@ class SolarEdgeDriver extends Driver {
 
   async onPair(session: PairSession) {
     session.setHandler("validate", async (data: PairData) => {
-      this.log("Pair data received");
+      this.homey.log("Pair data received");
 
       const { apiKey } = data;
       this.apiKey = apiKey;
@@ -18,7 +18,7 @@ class SolarEdgeDriver extends Driver {
     });
 
     session.setHandler("list_devices", async () => {
-      this.log("Listing devices");
+      this.homey.log("Listing devices");
 
       const devicesList: Device[] = [];
 

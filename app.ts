@@ -13,7 +13,7 @@ class SolarPanels extends Homey.App {
   async onInit(): Promise<void> {
     this.homeyLog = new Log({ homey: this.homey });
 
-    this.log("App has been initialized");
+    this.homey.log("App has been initialized");
   }
 }
 

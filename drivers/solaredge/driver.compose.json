@@ -24,7 +24,7 @@
     "small": "{{driverAssetsPath}}/images/small.jpg"
   },
   "connectivity": ["cloud"],
-  "platforms": ["local"],
+  "platforms": ["local", "cloud"],
   "class": "solarpanel",
   "capabilities": [
     "measure_power",

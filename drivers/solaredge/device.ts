@@ -57,12 +57,12 @@ class SolarEdgeDevice extends Inverter {
 
     if (changedKeys.includes("interval") && typedNewSettings.interval) {
       this.resetInterval(typedNewSettings.interval);
-      this.log(`Changed interval to ${typedNewSettings.interval}`);
+      this.homey.log(`Changed interval to ${typedNewSettings.interval}`);
     }
   }
 
   async checkProduction(): Promise<void> {
-    this.log("Checking production");
+    this.homey.log("Checking production");
 
     if (this.api) {
       try {
@@ -94,9 +94,11 @@ class SolarEdgeDevice extends Inverter {
 
             this.setCapabilityValue(capabilityId, currentValue);
 
-            this.log(`Current ${currentMeterType} power is ${currentValue}W`);
+            this.homey.log(
+              `Current ${currentMeterType} power is ${currentValue}W`
+            );
           } else {
-            this.log(`No new power data for ${currentMeterType}`);
+            this.homey.log(`No new power data for ${currentMeterType}`);
           }
         });
 
@@ -131,11 +133,11 @@ class SolarEdgeDevice extends Inverter {
 
             this.setCapabilityValue(capabilityId, currentValue);
 
-            this.log(
+            this.homey.log(
               `Current ${currentMeterType} energy is ${currentValue}kWh`
             );
           } else {
-            this.log(`No new energy data for ${currentMeterType}`);
+            this.homey.log(`No new energy data for ${currentMeterType}`);
           }
         });
 
@@ -158,7 +160,7 @@ class SolarEdgeDevice extends Inverter {
               latestTelemetry.temperature
             );
 
-            this.log(
+            this.homey.log(
               `Current inverter temperature is ${latestTelemetry.temperature} degrees Celsius`
             );
           }
@@ -169,21 +171,21 @@ class SolarEdgeDevice extends Inverter {
               latestTelemetry.totalEnergy / 1000
             );
 
-            this.log(
+            this.homey.log(
               `Current total energy yield is ${
                 latestTelemetry.totalEnergy / 1000
               } kWh`
             );
           }
         } else {
-          this.log("No new telemetry data");
+          this.homey.log("No new telemetry data");
         }
 
         this.setAvailable();
       } catch (err) {
         const errorMessage = (err as Error).message;
 
-        this.log(`Unavailable: ${errorMessage}`);
+        this.homey.log(`Unavailable: ${errorMessage}`);
         this.setUnavailable(errorMessage);
       }
     } else {

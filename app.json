@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "it.diederik.solar",
-  "version": "5.0.10",
+  "version": "5.0.11",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#0c1845",
@@ -72,6 +72,71 @@
   "support": "https://diederik.gitbook.io/homey-solar-panels-app/faq",
   "homeyCommunityTopicId": 44273,
   "drivers": [
+    {
+      "name": {
+        "en": "PVOutput"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
+      "images": {
+        "small": "/drivers/pvoutput/assets/images/small.jpg",
+        "large": "/drivers/pvoutput/assets/images/large.jpg"
+      },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "pair": [
+        {
+          "id": "pair"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "id": "key",
+          "type": "password",
+          "label": {
+            "en": "PVOutput (read-only) API key"
+          }
+        },
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Check interval",
+            "nl": "Controle-interval"
+          },
+          "hint": {
+            "en": "Increase this value if you are using other apps that use the PvOutput API. Decrease this value if you are in PVOutput Donation mode.",
+            "nl": "Verhoog deze waarde als je andere apps gebruikt die de PVOutput API gebruiken. Verlaag deze waarde als je aan PVOutput doneert."
+          },
+          "value": 5,
+          "min": 1,
+          "units": {
+            "en": "minutes",
+            "nl": "minuten"
+          }
+        }
+      ],
+      "id": "pvoutput"
+    },
     {
       "name": {
         "en": "SolarEdge",
