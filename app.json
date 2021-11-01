@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "it.diederik.solar",
-  "version": "5.0.5",
+  "version": "5.0.6",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#1f63d1",
@@ -15,8 +15,7 @@
   },
   "category": "energy",
   "platforms": [
-    "local",
-    "cloud"
+    "local"
   ],
   "tags": {
     "en": [
@@ -101,8 +100,7 @@
         "cloud"
       ],
       "platforms": [
-        "local",
-        "cloud"
+        "local"
       ],
       "class": "solarpanel",
       "capabilities": [
@@ -134,11 +132,11 @@
             "nl": "Controle-interval"
           },
           "hint": {
-            "en": "Increase this value if you are using other apps that use the SolarEdge API",
-            "nl": "Verhoog deze waarde als je andere apps gebruikt die de SolarEdge API gebruiken"
+            "en": "Increase this value if you are using other apps that use the SolarEdge API. A value lower than 15 is not recommended as it might cause the app to hit SolarEdge rate limits.",
+            "nl": "Verhoog deze waarde als je andere apps gebruikt die de SolarEdge API gebruiken. Een waarde lager dan 15 wordt niet aangeraden omdat de app tegen de door SolarEdge gestelde limieten aan kan lopen."
           },
           "value": 15,
-          "min": 15,
+          "min": 10,
           "max": 60,
           "units": {
             "en": "minutes",

@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "5.0.5",
+  "version": "5.0.6",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#1f63d1",
@@ -14,8 +14,7 @@
   },
   "category": "energy",
   "platforms": [
-    "local",
-    "cloud"
+    "local"
   ],
   "tags": {
     "en": [

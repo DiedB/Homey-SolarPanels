@@ -31,6 +31,8 @@ class SolarEdgeDriver extends Driver {
             site.id
           ).getEquipmentList();
 
+          const inverterCount = equipmentList.reporters.list.length;
+
           for (const reporter of equipmentList.reporters.list) {
             devicesList.push({
               name: `${reporter.name} (${reporter.manufacturer} ${reporter.model})`,
@@ -38,7 +40,7 @@ class SolarEdgeDriver extends Driver {
                 sid: site.id,
                 serial_number: reporter.serialNumber,
               },
-              settings: { key: this.apiKey },
+              settings: { key: this.apiKey, interval: 15 * inverterCount },
             });
           }
         }
