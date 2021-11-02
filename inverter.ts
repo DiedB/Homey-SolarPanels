@@ -4,10 +4,16 @@ export class Inverter extends Device {
   interval?: number;
   currentInterval?: NodeJS.Timeout;
 
+  private setInterval(interval: number) {
+    this.currentInterval = this.homey.setInterval(
+      this.checkProduction.bind(this),
+      interval * 60000
+    );
+  }
+
   resetInterval(newInterval: number) {
     this.homey.clearInterval(this.currentInterval);
-
-    this.homey.setInterval(this.checkProduction, newInterval * 60000);
+    this.setInterval(newInterval);
   }
 
   async onInit(): Promise<void> {
@@ -15,10 +21,7 @@ export class Inverter extends Device {
       throw new Error("Expected interval to be set");
     }
 
-    this.currentInterval = this.homey.setInterval(
-      this.checkProduction.bind(this),
-      this.interval * 60000
-    );
+    this.setInterval(this.interval);
 
     // Force immediate production check
     this.checkProduction();

@@ -1,0 +1,84 @@
+<style type="text/css">
+  .form-wrapper {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .input-field {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .submit-button {
+    margin-top: 20px;
+    background-color: #00c139 !important;
+    color: white !important;
+    width: 100%;
+  }
+
+  .help {
+    margin-top: auto;
+  }
+</style>
+
+<base target="_parent" />
+<div class="form-wrapper">
+  <p>Please enter your Enphase user ID and API key:</p>
+
+  <div class="input-field">
+    <label for="sn">User ID</label>
+    <input
+      type="text"
+      pattern="[0-9a-f]{10}"
+      id="userId"
+      placeholder="4d6a51330a"
+      value=""
+    />
+  </div>
+
+  <div class="input-field">
+    <label for="sn">API key</label>
+    <input
+      type="text"
+      pattern="[0-9a-z]{32}"
+      id="apiKey"
+      placeholder="c97c452323a8ff46d9d016bea871e05b"
+      value=""
+    />
+  </div>
+
+  <button class="submit-button" id="validate">Connect</button>
+  <p class="help">
+    ⚠️ Need help pairing? Click
+    <a
+      href="https://diederik.gitbook.io/homey-solar-panels-app/inverters/enphase-enlighten"
+      >here</a
+    >
+    to view documentation.
+  </p>
+</div>
+
+<script type="application/javascript">
+  $(() => {
+    $("#validate").click(() => {
+      Homey.showLoadingOverlay();
+
+      var userId = $("#userId").val();
+      var apiKey = $("#apiKey").val();
+
+      Homey.emit("validate", { userId, apiKey })
+        .then(() => {
+          Homey.showView("list_devices");
+        })
+        .catch((error) => {
+          Homey.hideLoadingOverlay();
+          Homey.alert(error.message);
+        });
+    });
+  });
+</script>

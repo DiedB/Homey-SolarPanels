@@ -1,0 +1,34 @@
+[
+  {
+    "type": "group",
+    "label": { "en": "Enphase Enlighten credentials" },
+    "children": [
+      {
+        "id": "uid",
+        "type": "text",
+        "label": {
+          "en": "User ID"
+        }
+      },
+      {
+        "id": "key",
+        "type": "password",
+        "label": {
+          "en": "API key"
+        }
+      }
+    ]
+  },
+  {
+    "id": "interval",
+    "type": "number",
+    "label": { "en": "Check interval", "nl": "Controle-interval" },
+    "hint": {
+      "en": "Increase this value if you are using other apps that use the Enphase API. A value lower than 5 is not recommended as it might cause the app to hit Enphase rate limits.",
+      "nl": "Verhoog deze waarde als je andere apps gebruikt die de Enphase API gebruiken. Een waarde lager dan 5 wordt niet aangeraden omdat de app tegen de door Enphase gestelde limieten aan kan lopen."
+    },
+    "value": 5,
+    "min": 5,
+    "units": { "en": "minutes", "nl": "minuten" }
+  }
+]

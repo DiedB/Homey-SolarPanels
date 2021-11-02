@@ -1,12 +1,12 @@
 {
   "name": {
-    "en": "PVOutput"
+    "en": "Enphase Enlighten"
   },
   "class": "solarpanel",
   "capabilities": ["measure_power", "meter_power"],
   "images": {
-    "small": "{{driverAssetsPath}}/images/small.jpg",
-    "large": "{{driverAssetsPath}}/images/large.jpg"
+    "large": "{{driverAssetsPath}}/images/large.jpg",
+    "small": "{{driverAssetsPath}}/images/small.jpg"
   },
   "connectivity": ["cloud"],
   "platforms": ["local", "cloud"],

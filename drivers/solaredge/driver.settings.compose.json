@@ -1,0 +1,21 @@
+[
+  {
+    "id": "key",
+    "type": "password",
+    "label": {
+      "en": "SolarEdge (read-only) API key"
+    }
+  },
+  {
+    "id": "interval",
+    "type": "number",
+    "label": { "en": "Check interval", "nl": "Controle-interval" },
+    "hint": {
+      "en": "Increase this value if you are using other apps that use the SolarEdge API. A value lower than 15 is not recommended as it might cause the app to hit SolarEdge rate limits.",
+      "nl": "Verhoog deze waarde als je andere apps gebruikt die de SolarEdge API gebruiken. Een waarde lager dan 15 wordt niet aangeraden omdat de app tegen de door SolarEdge gestelde limieten aan kan lopen."
+    },
+    "value": 15,
+    "min": 10,
+    "units": { "en": "minutes", "nl": "minuten" }
+  }
+]
