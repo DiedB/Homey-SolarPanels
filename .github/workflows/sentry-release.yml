@@ -3,7 +3,7 @@ name: Create Sentry release
 on:
   workflow_dispatch:
     inputs:
-      name:
+      version:
         description: 'The version of this release in the Homey App Store'
         required: true
 
@@ -19,4 +19,4 @@ jobs:
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         with:
           environment: production
-          version: ${{ github.ref }}
+          version: ${{ github.event.inputs.version }}
