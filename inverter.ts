@@ -16,7 +16,7 @@ export class Inverter extends Device {
     }
 
     this.currentInterval = this.homey.setInterval(
-      this.checkProduction,
+      this.checkProduction.bind(this),
       this.interval * 60000
     );
 

@@ -15,7 +15,7 @@ export default class PvOutputApi {
 
   private async fetchApiEndpoint<T>(endpoint: string): Promise<T> {
     const response = await fetch(
-      `${this.baseUrl}/${endpoint}?key=${this.apiKey}&sid=${this.systemId}&d=20170803`,
+      `${this.baseUrl}/${endpoint}?key=${this.apiKey}&sid=${this.systemId}`,
       { headers: { "X-Rate-Limit": 1 } }
     );
 
