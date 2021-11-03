@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "it.diederik.solar",
-  "version": "5.0.15",
+  "version": "5.0.16",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#0c1845",
@@ -188,14 +188,48 @@
           "template": "add_devices"
         }
       ],
+      "capabilitiesOptions": {
+        "meter_power": {
+          "title": {
+            "en": "Energy yield (today)",
+            "nl": "Energieproductie (vandaag)"
+          }
+        },
+        "meter_power.consumption": {
+          "title": {
+            "en": "Energy usage (today)",
+            "nl": "Energieverbruik (vandaag)"
+          }
+        },
+        "measure_power": {
+          "title": {
+            "en": "Power (production)",
+            "nl": "Vermogen (productie)"
+          }
+        },
+        "measure_power.consumption": {
+          "title": {
+            "en": "Power (consumption)",
+            "nl": "Vermogen (gebruik)"
+          }
+        }
+      },
       "id": "pvoutput",
       "settings": [
         {
-          "id": "key",
-          "type": "password",
+          "type": "group",
           "label": {
-            "en": "PVOutput (read-only) API key"
-          }
+            "en": "PVOutput login details"
+          },
+          "children": [
+            {
+              "id": "key",
+              "type": "password",
+              "label": {
+                "en": "Read-only API key"
+              }
+            }
+          ]
         },
         {
           "id": "interval",
@@ -214,6 +248,77 @@
             "en": "minutes",
             "nl": "minuten"
           }
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Advanced settings"
+          },
+          "hint": {
+            "en": "If you are a PVOutput donator and use extended fields, set them up here."
+          },
+          "children": [
+            {
+              "id": "useExtendedFields",
+              "type": "checkbox",
+              "value": false,
+              "label": {
+                "en": "Use PVOutput extended fields"
+              }
+            },
+            {
+              "id": "batteryPercentageField",
+              "type": "dropdown",
+              "value": "-1",
+              "label": {
+                "en": "Field ID for battery percentage"
+              },
+              "values": [
+                {
+                  "id": "-1",
+                  "label": {
+                    "en": "-"
+                  }
+                },
+                {
+                  "id": "7",
+                  "label": {
+                    "en": "Field 7"
+                  }
+                },
+                {
+                  "id": "8",
+                  "label": {
+                    "en": "Field 8"
+                  }
+                },
+                {
+                  "id": "9",
+                  "label": {
+                    "en": "Field 9"
+                  }
+                },
+                {
+                  "id": "10",
+                  "label": {
+                    "en": "Field 10"
+                  }
+                },
+                {
+                  "id": "11",
+                  "label": {
+                    "en": "Field 11"
+                  }
+                },
+                {
+                  "id": "12",
+                  "label": {
+                    "en": "Field 12"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -323,5 +428,27 @@
         }
       ]
     }
-  ]
+  ],
+  "capabilities": {
+    "battery_soc": {
+      "type": "number",
+      "title": {
+        "en": "Battery SoC",
+        "nl": "Batterij-percentage"
+      },
+      "icon": "/assets/capabilities/battery-soc.svg",
+      "units": {
+        "en": "%"
+      },
+      "insights": true,
+      "desc": {
+        "en": "Battery SoC percentage"
+      },
+      "chartType": "stepLine",
+      "decimals": 2,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    }
+  }
 }
