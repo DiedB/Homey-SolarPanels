@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "it.diederik.solar",
-  "version": "5.0.18",
+  "version": "5.0.19",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#0c1845",
@@ -186,6 +186,32 @@
       "images": {
         "small": "/drivers/enphase-envoy/assets/images/small.jpg",
         "large": "/drivers/enphase-envoy/assets/images/large.jpg"
+      },
+      "capabilitiesOptions": {
+        "meter_power": {
+          "title": {
+            "en": "Energy yield (today)",
+            "nl": "Energieproductie (vandaag)"
+          }
+        },
+        "meter_power.consumption": {
+          "title": {
+            "en": "Energy usage (today)",
+            "nl": "Energieverbruik (vandaag)"
+          }
+        },
+        "measure_power": {
+          "title": {
+            "en": "Power (production)",
+            "nl": "Vermogen (productie)"
+          }
+        },
+        "measure_power.consumption": {
+          "title": {
+            "en": "Power (consumption)",
+            "nl": "Vermogen (gebruik)"
+          }
+        }
       },
       "id": "enphase-envoy"
     },
@@ -462,6 +488,72 @@
             "en": "minutes",
             "nl": "minuten"
           }
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Tigo"
+      },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
+      "images": {
+        "small": "/drivers/tigo/assets/images/small.jpg",
+        "large": "/drivers/tigo/assets/images/large.jpg"
+      },
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "pair.svg"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "tigo",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Tigo credentials"
+          },
+          "children": [
+            {
+              "id": "username",
+              "type": "text",
+              "label": {
+                "en": "Username"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "label": {
+                "en": "Password"
+              }
+            }
+          ]
         }
       ]
     }
