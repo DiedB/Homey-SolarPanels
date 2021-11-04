@@ -13,10 +13,14 @@ export default class PvOutputApi {
     this.apiKey = apiKey;
   }
 
-  private async fetchApiEndpoint<T>(endpoint: string): Promise<T> {
+  private async fetchApiEndpoint<T>(
+    endpoint: string,
+    params?: string
+  ): Promise<T> {
     const response = await fetch(
-      `${this.baseUrl}/${endpoint}?key=${this.apiKey}&sid=${this.systemId}`,
-      { headers: { "X-Rate-Limit": 1 } }
+      `${this.baseUrl}/${endpoint}?key=${this.apiKey}&sid=${this.systemId}${
+        params || ""
+      }`
     );
 
     // Handle possible errors
@@ -43,16 +47,22 @@ export default class PvOutputApi {
     return response.text() as Promise<T>;
   }
 
-  async getStatusData(): Promise<StatusData> {
-    const systemInfo = await this.fetchApiEndpoint<string>("getstatus.jsp");
+  async getStatusData(extended?: boolean): Promise<StatusData> {
+    const systemInfo = await this.fetchApiEndpoint<string>(
+      "getstatus.jsp",
+      extended ? "&ext=1" : undefined
+    );
 
     const parsedInfo = systemInfo.split(",");
 
     return {
-      currentPower: parseInt(parsedInfo[3]),
-      dailyYield: parseInt(parsedInfo[2]) / 1000,
-      currentTemperature: parseInt(parsedInfo[7]),
-      currentVoltage: parseInt(parsedInfo[8]),
+      dailyProductionEnergy: parseInt(parsedInfo[2]) / 1000,
+      currentProductionPower: parseInt(parsedInfo[3]),
+      dailyConsumptionEnergy: parseInt(parsedInfo[4]) / 1000,
+      currentConsumptionPower: parseInt(parsedInfo[5]),
+      currentTemperature: parseFloat(parsedInfo[7]),
+      currentVoltage: parseFloat(parsedInfo[8]),
+      extendedFields: extended ? parsedInfo.slice(9) : undefined,
     };
   }
 

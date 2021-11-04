@@ -23,6 +23,9 @@ export class Inverter extends Device {
 
     this.setInterval(this.interval);
 
+    // SDK v3 migration, remove cron listeners
+    this.removeAllListeners();
+
     // Force immediate production check
     this.checkProduction();
   }

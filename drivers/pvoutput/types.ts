@@ -1,8 +1,11 @@
 export interface StatusData {
-  currentPower?: number;
-  dailyYield?: number;
+  dailyProductionEnergy?: number;
+  currentProductionPower?: number;
+  dailyConsumptionEnergy?: number;
+  currentConsumptionPower?: number;
   currentVoltage?: number;
   currentTemperature?: number;
+  extendedFields?: string[];
 }
 
 // Homey types
@@ -24,4 +27,6 @@ export interface DeviceData {
 export interface DeviceSettings {
   key: string;
   interval?: number;
+  useExtendedFields?: boolean;
+  batteryPercentageField?: string;
 }

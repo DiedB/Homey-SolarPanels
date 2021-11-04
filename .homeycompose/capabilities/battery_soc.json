@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Battery SoC",
+    "nl": "Batterij-percentage"
+  },
+  "icon": "/assets/capabilities/battery-soc.svg",
+  "units": {
+    "en": "%"
+  },
+  "insights": true,
+  "desc": {
+    "en": "Battery SoC percentage"
+  },
+  "chartType": "stepLine",
+  "decimals": 2,
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor"
+}

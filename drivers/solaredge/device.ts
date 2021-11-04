@@ -17,6 +17,9 @@ class SolarEdgeDevice extends Inverter {
     if (this.hasCapability("daily_consumption")) {
       this.removeCapability("daily_consumption");
     }
+    if (!this.hasCapability("meter_power.total")) {
+      this.addCapability("meter_power.total");
+    }
 
     this.api = new SolarEdgeApi(
       settings.key,
