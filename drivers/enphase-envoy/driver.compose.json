@@ -1,0 +1,32 @@
+{
+  "name": {
+    "en": "Enphase Envoy"
+  },
+  "class": "solarpanel",
+  "capabilities": [
+    "measure_power",
+    "measure_power.consumption",
+    "meter_power",
+    "meter_power.consumption"
+  ],
+  "connectivity": ["lan"],
+  "platforms": ["local"],
+  "discovery": "enphase-envoy",
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.jpg",
+    "large": "{{driverAssetsPath}}/images/large.jpg"
+  }
+}

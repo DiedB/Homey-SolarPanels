@@ -72,7 +72,7 @@ class SolarEdgeDevice extends Inverter {
         // Power values
         const powerResponse: PowerResponse = await this.api.getPowerData();
 
-        powerResponse.powerDetails.meters.forEach((meter) => {
+        powerResponse.powerDetails.meters.forEach(async (meter) => {
           const currentMeterType = meter.type.toLowerCase();
 
           const lastMeasurement = meter.values
@@ -92,10 +92,10 @@ class SolarEdgeDevice extends Inverter {
               capabilityId === "measure_power.consumption" &&
               !this.hasCapability(capabilityId)
             ) {
-              this.addCapability(capabilityId);
+              await this.addCapability(capabilityId);
             }
 
-            this.setCapabilityValue(capabilityId, currentValue);
+            await this.setCapabilityValue(capabilityId, currentValue);
 
             this.homey.log(
               `Current ${currentMeterType} power is ${currentValue}W`
@@ -111,7 +111,7 @@ class SolarEdgeDevice extends Inverter {
         // Energy values
         const energyResponse = await this.api.getEnergyData();
 
-        energyResponse.energyDetails.meters.forEach((meter) => {
+        energyResponse.energyDetails.meters.forEach(async (meter) => {
           const currentMeterType = meter.type.toLowerCase();
 
           const lastMeasurement = meter.values
@@ -134,7 +134,7 @@ class SolarEdgeDevice extends Inverter {
               this.addCapability(capabilityId);
             }
 
-            this.setCapabilityValue(capabilityId, currentValue);
+            await this.setCapabilityValue(capabilityId, currentValue);
 
             this.homey.log(
               `Current ${currentMeterType} energy is ${currentValue}kWh`
@@ -158,7 +158,7 @@ class SolarEdgeDevice extends Inverter {
             ];
 
           if (latestTelemetry.temperature) {
-            this.setCapabilityValue(
+            await this.setCapabilityValue(
               "measure_temperature",
               latestTelemetry.temperature
             );
@@ -169,7 +169,7 @@ class SolarEdgeDevice extends Inverter {
           }
 
           if (latestTelemetry.totalEnergy) {
-            this.setCapabilityValue(
+            await this.setCapabilityValue(
               "meter_power.total",
               latestTelemetry.totalEnergy / 1000
             );
@@ -184,15 +184,15 @@ class SolarEdgeDevice extends Inverter {
           this.homey.log("No new telemetry data");
         }
 
-        this.setAvailable();
+        await this.setAvailable();
       } catch (err) {
         const errorMessage = (err as Error).message;
 
         this.homey.log(`Unavailable: ${errorMessage}`);
-        this.setUnavailable(errorMessage);
+        await this.setUnavailable(errorMessage);
       }
     } else {
-      this.setUnavailable("SolarEdge API connection not initialized");
+      await this.setUnavailable("SolarEdge API connection not initialized");
     }
   }
 }

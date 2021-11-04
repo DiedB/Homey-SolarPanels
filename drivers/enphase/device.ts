@@ -67,21 +67,23 @@ class EnphaseDevice extends Inverter {
             systemStats.intervals[systemStats.intervals.length - 1].powr;
         }
 
-        this.setCapabilityValue("meter_power", currentEnergy);
-        this.setCapabilityValue("measure_power", currentPower);
+        await this.setCapabilityValue("meter_power", currentEnergy);
+        await this.setCapabilityValue("measure_power", currentPower);
 
         this.homey.log(`Current energy is ${currentEnergy}kWh`);
         this.homey.log(`Current power is ${currentPower}W`);
 
-        this.setAvailable();
+        await this.setAvailable();
       } catch (err) {
         const errorMessage = (err as Error).message;
 
         this.homey.log(`Unavailable: ${errorMessage}`);
-        this.setUnavailable(errorMessage);
+        await this.setUnavailable(errorMessage);
       }
     } else {
-      this.setUnavailable("Enphase Enlighten API connection not initialized");
+      await this.setUnavailable(
+        "Enphase Enlighten API connection not initialized"
+      );
     }
   }
 }

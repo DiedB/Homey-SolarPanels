@@ -174,15 +174,15 @@ class PvOutputDevice extends Inverter {
           }
         }
 
-        this.setAvailable();
+        await this.setAvailable();
       } catch (err) {
         const errorMessage = (err as Error).message;
 
         this.homey.log(`Unavailable: ${errorMessage}`);
-        this.setUnavailable(errorMessage);
+        await this.setUnavailable(errorMessage);
       }
     } else {
-      this.setUnavailable("PVOutput API connection not initialized");
+      await this.setUnavailable("PVOutput API connection not initialized");
     }
   }
 }
