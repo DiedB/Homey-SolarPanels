@@ -9,7 +9,8 @@ class APsystems extends Homey.Driver {
         socket.on('validate', (device, callback) => {
 
             const ecur = new apsystems.ECUR(device.settings.ip, 8899);
-            ecur.getECUdata(function(data) {
+            ecur.getECUdata(function(err, data) {
+                if (err !== null) callback(err);
                 callback(null, true);
             });
         });
