@@ -74,16 +74,38 @@
   "drivers": [
     {
       "name": {
-        "en": "Enphase Enlighten"
+        "en": "APsystems ECU-R",
+        "nl": "APsystems ECU-R"
+      },
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/apsystems/assets/images/large.jpg",
+        "small": "./drivers/apsystems/assets/images/small.jpg"
       },
       "class": "solarpanel",
       "capabilities": [
         "measure_power",
         "meter_power"
       ],
-      "images": {
-        "large": "/drivers/enphase/assets/images/large.jpg",
-        "small": "/drivers/enphase/assets/images/small.jpg"
+      "settings": [
+        {
+          "id": "ip",
+          "type": "text",
+          "label": {
+            "en": "APsystems ECU-R IP address"
+          }
+        }
+      ],
+      "id": "apsystems"
+    },
+    {
+      "name": {
+        "en": "Enphase Enlighten",
+        "nl": "Enphase Enlighten"
       },
       "connectivity": [
         "cloud"
