@@ -14,13 +14,6 @@ class APsystemsECUR extends Inverter {
 
         const self = this;
         const settings = this.getSettings();
-        const currentTime = Math.floor(Date.now()/1000);
-
-        // Expected below code to be handeld by `getCronString` config
-        if(this.last_check !== null){
-            const time_diff = currentTime - this.last_check;
-            if(time_diff < 60) return;  // Ensure only max 1 check pm
-        }
 
         const ecur = new apsystems.ECUR(settings.ip, 8899);
         ecur.getECUdata(function(err, result) {
@@ -30,8 +23,6 @@ class APsystemsECUR extends Inverter {
 
             self.log(`Current energy is ${result.today_energy}kWh`);
             self.log(`Current power is ${result.current_power}W`);
-
-            self.last_check = currentTime;
         });
     }
 }
