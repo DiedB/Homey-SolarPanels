@@ -3,19 +3,20 @@
     "en": "APsystems ECU-R",
     "nl": "APsystems ECU-R"
   },
-  "pair": [
-    {
-      "id": "pair"
-    }
-  ],
-  "images": {
-    "large": "./drivers/apsystems/assets/images/large.jpg",
-    "small": "./drivers/apsystems/assets/images/small.jpg"
-  },
   "class": "solarpanel",
   "capabilities": [
     "measure_power",
     "meter_power"
+  ],
+  "connectivity": ["lan"],
+  "images": {
+    "large": "{{driverAssetsPath}}/images/large.jpg",
+    "small": "{{driverAssetsPath}}/images/small.jpg"
+  },
+  "pair": [
+    {
+      "id": "pair"
+    }
   ],
   "settings": [
     {
