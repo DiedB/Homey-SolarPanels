@@ -1,15 +1,15 @@
-'use strict';
+import { Driver } from "homey";
+import PairSession from "homey/lib/PairSession";
 
-const Homey = require('homey');
-const fetch = require('node-fetch');
-const apsystems = require('apsystems');
+import { apsystems } from 'apsystems';
 
-class APsystems extends Homey.Driver {
-    onPair(socket) {
+class APsystems extends Driver {
+
+    async onPair(session: PairSession) {
         socket.on('validate', (device, callback) => {
 
             const ecur = new apsystems.ECUR(device.settings.ip, 8899);
-            ecur.getECUdata(function(err, data) {
+            ecur.getECUdata(async (err: Error, result: Object) => {
                 if (err !== null) return callback(new Error(Homey.__('ip_error')));
                 callback(null, true);
             });
