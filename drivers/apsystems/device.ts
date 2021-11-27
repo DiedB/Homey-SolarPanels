@@ -1,5 +1,6 @@
 import { Inverter } from "../../inverter";
 import { apsystems } from 'apsystems';
+import { DeviceSettings, EcurData } from "./types";
 
 class APsystemsECUR extends Inverter {
     interval = 2;
@@ -11,10 +12,10 @@ class APsystemsECUR extends Inverter {
         const settings: DeviceSettings = await this.getSettings();
 
         const ecur = new apsystems.ECUR(settings.ip, 8899);
-        ecur.getECUdata(async (err: Error, result: Object) => {
+        ecur.getECUdata(async (error: Error, result: EcurData) => {
 
             // Handle error
-            if (err ) {
+            if (error) {
                 self.homey.log(`Unavailable (${error})`);
                 await self.setUnavailable(`Error retrieving data (${error})`);
 

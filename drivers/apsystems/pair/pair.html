@@ -42,11 +42,8 @@
 				settings: { ip }
 			};
 
-			Homey.emit('validate', deviceDefinition, (error, result) => {
-				if (error) {
-					Homey.hideLoadingOverlay();
-					Homey.alert(error);
-				} else {
+            Homey.emit('validate', { ip })
+                .then(() => {
 					Homey.createDevice(deviceDefinition, (error, result) => {
 						if (error) {
 							Homey.hideLoadingOverlay();
@@ -55,7 +52,11 @@
 							Homey.done();
 						}
 					});
-				}
+                }
+                .catch((error) => {
+					Homey.hideLoadingOverlay();
+					Homey.alert(error);
+				});
 			});
 		});
 	});
