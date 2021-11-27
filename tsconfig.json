@@ -2,6 +2,12 @@
   "extends": "@tsconfig/node12/tsconfig.json",
   "compilerOptions": {
     "outDir": "build/",
-    "sourceMap": true
-  }
+    "sourceMap": true,
+    "lib": ["es2015"]
+  },
+  "typeRoots": [
+    "../node_modules/@types",
+    "../@types"
+  ]
+
 }

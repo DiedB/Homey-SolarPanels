@@ -1,0 +1,30 @@
+{
+  "name": {
+    "en": "APsystems ECU-R",
+    "nl": "APsystems ECU-R"
+  },
+  "class": "solarpanel",
+  "capabilities": [
+    "measure_power",
+    "meter_power"
+  ],
+  "connectivity": ["lan"],
+  "images": {
+    "large": "{{driverAssetsPath}}/images/large.jpg",
+    "small": "{{driverAssetsPath}}/images/small.jpg"
+  },
+  "pair": [
+    {
+      "id": "pair"
+    }
+  ],
+  "settings": [
+    {
+      "id": "ip",
+      "type": "text",
+      "label": {
+        "en": "APsystems ECU-R IP address"
+      }
+    }
+  ]
+}
