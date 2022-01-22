@@ -2,6 +2,8 @@
   "name": {
     "en": "GoodWe SEMS"
   },
+  "connectivity": ["cloud"],
+  "platforms": ["local"],
   "pair": [
     {
       "id": "login_credentials",

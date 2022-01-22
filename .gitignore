@@ -4,3 +4,7 @@ node_modules/
 # IntelliJ IDEA
 .idea
 *.iml
+
+
+# Added by Homey CLI
+/.homeybuild/

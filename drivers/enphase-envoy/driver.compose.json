@@ -3,6 +3,8 @@
     "en": "Enphase Envoy",
     "nl": "Enphase Envoy"
   },
+  "connectivity": ["lan"],
+  "platforms": ["local"],
   "discovery": "enphase-envoy",
   "pair": [
     {

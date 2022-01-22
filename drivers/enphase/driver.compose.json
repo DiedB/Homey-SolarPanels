@@ -3,6 +3,8 @@
     "en": "Enphase Enlighten",
     "nl": "Enphase Enlighten"
   },
+  "connectivity": ["cloud"],
+  "platforms": ["local"],
   "pair": [
     {
       "id": "pair"

@@ -2,6 +2,8 @@
     "name": {
         "en": "SAJ (LAN)"
     },
+    "connectivity": ["lan"],
+    "platforms": ["local"],  
     "pair": [
         {
             "id": "pair"

@@ -3,6 +3,8 @@
     "en": "PVOutput",
     "nl": "PVOutput"
   },
+  "connectivity": ["cloud"],
+  "platforms": ["local"],
   "pair": [
     {
       "id": "pair"

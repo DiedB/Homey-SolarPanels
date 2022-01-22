@@ -3,6 +3,8 @@
         "en": "SAJ (eSolar WiFi)",
         "nl": "SAJ (eSolar WiFi)"
     },
+    "connectivity": ["lan"],
+    "platforms": ["local"],  
     "pair": [
         {
             "id": "pair"

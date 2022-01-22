@@ -3,6 +3,8 @@
     "en": "Growatt",
     "nl": "Growatt"
   },
+  "connectivity": ["cloud"],
+  "platforms": ["local"],
   "pair": [
     {
       "id": "login_credentials",

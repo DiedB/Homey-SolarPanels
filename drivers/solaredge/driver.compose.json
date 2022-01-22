@@ -3,6 +3,8 @@
     "en": "SolarEdge",
     "nl": "SolarEdge"
   },
+  "connectivity": ["cloud"],
+  "platforms": ["local"],
   "pair": [
     {
       "id": "pair"

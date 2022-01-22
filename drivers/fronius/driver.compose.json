@@ -3,6 +3,9 @@
     "en": "Fronius",
     "nl": "Fronius"
   },
+  "connectivity": ["lan"],
+  "platforms": ["local"],
+  "deprecated": true,
   "pair": [
     {
       "id": "pair"

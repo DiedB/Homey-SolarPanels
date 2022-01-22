@@ -3,6 +3,8 @@
         "en": "Huawei",
         "nl": "Huawei"
     },
+    "connectivity": ["lan"],
+    "platforms": ["local"],
     "pair": [
         {
             "id": "pair"

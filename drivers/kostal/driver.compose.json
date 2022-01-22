@@ -2,6 +2,8 @@
   "name": {
     "en": "Kostal"
   },
+  "connectivity": ["lan"],
+  "platforms": ["local"],
   "pair": [
     {
       "id": "pair"

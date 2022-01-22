@@ -35,6 +35,17 @@ class Inverter extends Homey.Device {
 
                 this.setStoreValue('receivedEnphaseEnvoyNotification', true)
             }
+
+            // Deprecation notifications
+            const notificationId = "receivedFroniusDeprecationNotification"
+            if (this.getDriver().id === 'fronius' && !this.getStoreValue(notificationId)) {
+                const deprecationNotification = new Homey.Notification({ excerpt: 'Please use the dedicated Fronius app to integrate your inverter with Homey.' });
+                deprecationNotification.register()
+                    .catch(this.log)
+
+                this.setStoreValue(notificationId, true)
+            }
+
     
             if (this.getStoreValue('cronTask') === null) {
                 this.createCronTask();

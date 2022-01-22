@@ -2,6 +2,9 @@
   "name": {
     "en": "Trannergy"
   },
+  "connectivity": ["cloud"],
+  "platforms": ["local"],
+  "deprecated": true,
   "pair": [
     {
       "id": "pair"

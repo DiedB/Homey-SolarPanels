@@ -3,6 +3,8 @@
     "en": "Tigo",
     "nl": "Tigo"
   },
+  "connectivity": ["cloud"],
+  "platforms": ["local"],
   "pair": [
     {
       "id": "pair"

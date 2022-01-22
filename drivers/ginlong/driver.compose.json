@@ -3,6 +3,8 @@
     "en": "Ginlong",
     "nl": "Ginlong"
   },
+  "connectivity": ["cloud"],
+  "platforms": ["local"],
   "pair": [
     {
       "id": "pair"
