@@ -5,7 +5,7 @@
   "dependencies": {
     "md5": "^2.2.1",
     "modbus-serial": "^8.0.1",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.1.1",
     "uuid": "^3.4.0",
     "xml2js": "^0.4.23"
   },
