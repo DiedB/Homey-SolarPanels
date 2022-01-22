@@ -28,5 +28,31 @@
   "images": {
     "small": "{{driverAssetsPath}}/images/small.jpg",
     "large": "{{driverAssetsPath}}/images/large.jpg"
+  },
+  "capabilitiesOptions": {
+    "meter_power": {
+      "title": {
+        "en": "Energy yield (today)",
+        "nl": "Energieproductie (vandaag)"
+      }
+    },
+    "meter_power.consumption": {
+      "title": {
+        "en": "Energy usage (today)",
+        "nl": "Energieverbruik (vandaag)"
+      }
+    },
+    "measure_power": {
+      "title": {
+        "en": "Power (production)",
+        "nl": "Vermogen (productie)"
+      }
+    },
+    "measure_power.consumption": {
+      "title": {
+        "en": "Power (consumption)",
+        "nl": "Vermogen (gebruik)"
+      }
+    }
   }
 }

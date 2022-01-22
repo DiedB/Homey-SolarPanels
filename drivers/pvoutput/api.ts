@@ -13,10 +13,10 @@ export default class PvOutputApi {
     this.apiKey = apiKey;
   }
 
-  private async fetchApiEndpoint<T>(
+  private async fetchApiEndpoint(
     endpoint: string,
     params?: string
-  ): Promise<T> {
+  ): Promise<string> {
     const response = await fetch(
       `${this.baseUrl}/${endpoint}?key=${this.apiKey}&sid=${this.systemId}${
         params || ""
@@ -44,11 +44,11 @@ export default class PvOutputApi {
       }
     }
 
-    return response.text() as Promise<T>;
+    return response.text() as Promise<string>;
   }
 
   async getStatusData(extended?: boolean): Promise<StatusData> {
-    const systemInfo = await this.fetchApiEndpoint<string>(
+    const systemInfo = await this.fetchApiEndpoint(
       "getstatus.jsp",
       extended ? "&ext=1" : undefined
     );
@@ -67,7 +67,7 @@ export default class PvOutputApi {
   }
 
   async getSystemName(): Promise<string> {
-    const systemData = await this.fetchApiEndpoint<string>("getsystem.jsp");
+    const systemData = await this.fetchApiEndpoint("getsystem.jsp");
 
     return systemData.split(",")[0];
   }

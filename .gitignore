@@ -1,4 +1,4 @@
-env.json
-node_modules/
-build/
+/env.json
+/node_modules/
+/.homeybuild/
 .DS_Store
