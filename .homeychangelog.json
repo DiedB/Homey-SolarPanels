@@ -79,5 +79,8 @@
   },
   "4.6.2": {
     "en": "Add support for SAJ eSolar WiFi modules"
+  },
+  "4.6.3": {
+    "en": "Deprecate several drivers"
   }
 }

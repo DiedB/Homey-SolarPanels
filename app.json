@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "it.diederik.solar",
-  "version": "4.6.2",
+  "version": "4.6.3",
   "compatibility": ">=3",
   "sdk": 2,
   "brandColor": "#1f63d1",
@@ -13,6 +13,9 @@
     "en": "Connect your Solar Panels to Homey",
     "nl": "Verbind je zonnepanelen met Homey"
   },
+  "platforms": [
+    "local"
+  ],
   "category": "energy",
   "tags": {
     "en": [
@@ -71,6 +74,12 @@
         "en": "Enphase Enlighten",
         "nl": "Enphase Enlighten"
       },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
       "pair": [
         {
           "id": "pair"
@@ -119,6 +128,12 @@
         "en": "Enphase Envoy",
         "nl": "Enphase Envoy"
       },
+      "connectivity": [
+        "lan"
+      ],
+      "platforms": [
+        "local"
+      ],
       "discovery": "enphase-envoy",
       "pair": [
         {
@@ -151,6 +166,13 @@
         "en": "Fronius",
         "nl": "Fronius"
       },
+      "connectivity": [
+        "lan"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "deprecated": true,
       "pair": [
         {
           "id": "pair"
@@ -181,6 +203,12 @@
         "en": "Ginlong",
         "nl": "Ginlong"
       },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
       "pair": [
         {
           "id": "pair"
@@ -212,6 +240,12 @@
       "name": {
         "en": "GoodWe SEMS"
       },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
       "pair": [
         {
           "id": "login_credentials",
@@ -264,6 +298,12 @@
         "en": "Growatt",
         "nl": "Growatt"
       },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
       "pair": [
         {
           "id": "login_credentials",
@@ -327,6 +367,12 @@
         "en": "Huawei",
         "nl": "Huawei"
       },
+      "connectivity": [
+        "lan"
+      ],
+      "platforms": [
+        "local"
+      ],
       "pair": [
         {
           "id": "pair"
@@ -358,6 +404,12 @@
       "name": {
         "en": "Kostal"
       },
+      "connectivity": [
+        "lan"
+      ],
+      "platforms": [
+        "local"
+      ],
       "pair": [
         {
           "id": "pair"
@@ -394,6 +446,12 @@
       "name": {
         "en": "Omnik"
       },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
       "deprecated": true,
       "pair": [
         {
@@ -447,6 +505,12 @@
         "en": "Omnik",
         "nl": "Omnik"
       },
+      "connectivity": [
+        "lan"
+      ],
+      "platforms": [
+        "local"
+      ],
       "pair": [
         {
           "id": "pair"
@@ -479,6 +543,12 @@
         "en": "PVOutput",
         "nl": "PVOutput"
       },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
       "pair": [
         {
           "id": "pair"
@@ -508,6 +578,12 @@
       "name": {
         "en": "SAJ (LAN)"
       },
+      "connectivity": [
+        "lan"
+      ],
+      "platforms": [
+        "local"
+      ],
       "pair": [
         {
           "id": "pair"
@@ -538,6 +614,12 @@
         "en": "SAJ (eSolar WiFi)",
         "nl": "SAJ (eSolar WiFi)"
       },
+      "connectivity": [
+        "lan"
+      ],
+      "platforms": [
+        "local"
+      ],
       "pair": [
         {
           "id": "pair"
@@ -569,6 +651,12 @@
         "en": "SolarEdge",
         "nl": "SolarEdge"
       },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
       "pair": [
         {
           "id": "pair"
@@ -618,6 +706,13 @@
       "name": {
         "en": "SolarMAN"
       },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "deprecated": true,
       "pair": [
         {
           "id": "pair"
@@ -665,6 +760,12 @@
       "name": {
         "en": "Solax"
       },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
       "pair": [
         {
           "id": "pair"
@@ -695,6 +796,12 @@
         "en": "Tigo",
         "nl": "Tigo"
       },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
       "pair": [
         {
           "id": "pair"
@@ -731,6 +838,13 @@
       "name": {
         "en": "Trannergy"
       },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "deprecated": true,
       "pair": [
         {
           "id": "pair"
