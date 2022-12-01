@@ -64,7 +64,11 @@ class GrowattAPI {
     async request (method, url, body, error) {
         const response = await fetch(url, {
             method: method,
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded', Cookie: this.cookies },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'User-Agent': 'ShinePhone/7.1.0 (iPhone; iOS 16.1.1; Scale/3.00)',
+                Cookie: this.cookies
+            },
             body: body
         })
         if (response.ok) {
