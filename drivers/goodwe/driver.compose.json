@@ -1,52 +1,50 @@
 {
-  "name": {
-    "en": "GoodWe SEMS"
-  },
-  "connectivity": ["cloud"],
-  "platforms": ["local"],
-  "pair": [
-    {
-      "id": "login_credentials",
-      "template": "login_credentials",
-      "options": {
-        "logo": "pair.svg"
-      }
+    "name": {
+        "en": "GoodWe SEMS"
     },
-    {
-      "id": "list_devices",
-      "template": "list_devices",
-      "navigation": {
-        "next": "add_devices"
-      }
+    "deprecated": true,
+    "connectivity": ["cloud"],
+    "platforms": ["local"],
+    "pair": [
+        {
+            "id": "login_credentials",
+            "template": "login_credentials",
+            "options": {
+                "logo": "pair.svg"
+            }
+        },
+        {
+            "id": "list_devices",
+            "template": "list_devices",
+            "navigation": {
+                "next": "add_devices"
+            }
+        },
+        {
+            "id": "add_devices",
+            "template": "add_devices"
+        }
+    ],
+    "images": {
+        "large": "./drivers/goodwe/assets/images/large.jpg",
+        "small": "./drivers/goodwe/assets/images/small.jpg"
     },
-    {
-      "id": "add_devices",
-      "template": "add_devices"
-    }
-  ],
-  "images": {
-    "large": "./drivers/goodwe/assets/images/large.jpg",
-    "small": "./drivers/goodwe/assets/images/small.jpg"
-  },
-  "class": "solarpanel",
-  "capabilities": [
-    "measure_power",
-    "meter_power"
-  ],
-  "settings": [
-    {
-      "id": "username",
-      "type": "text",
-      "label": {
-        "en": "GoodWe SEMS username"
-      }
-    },
-    {
-      "id": "password",
-      "type": "password",
-      "label": {
-        "en": "GoodWe SEMS password"
-      }
-    }
-  ]
+    "class": "solarpanel",
+    "capabilities": ["measure_power", "meter_power"],
+    "settings": [
+        {
+            "id": "username",
+            "type": "text",
+            "label": {
+                "en": "GoodWe SEMS username"
+            }
+        },
+        {
+            "id": "password",
+            "type": "password",
+            "label": {
+                "en": "GoodWe SEMS password"
+            }
+        }
+    ]
 }

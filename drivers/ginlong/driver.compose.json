@@ -1,33 +1,31 @@
 {
-  "name": {
-    "en": "Ginlong",
-    "nl": "Ginlong"
-  },
-  "connectivity": ["cloud"],
-  "platforms": ["local"],
-  "pair": [
-    {
-      "id": "pair"
+    "name": {
+        "en": "Ginlong",
+        "nl": "Ginlong"
     },
-    {
-      "id": "list_devices",
-      "template": "list_devices",
-      "navigation": {
-        "next": "add_devices"
-      }
+    "deprecated": true,
+    "connectivity": ["cloud"],
+    "platforms": ["local"],
+    "pair": [
+        {
+            "id": "pair"
+        },
+        {
+            "id": "list_devices",
+            "template": "list_devices",
+            "navigation": {
+                "next": "add_devices"
+            }
+        },
+        {
+            "id": "add_devices",
+            "template": "add_devices"
+        }
+    ],
+    "images": {
+        "large": "./drivers/ginlong/assets/images/large.jpg",
+        "small": "./drivers/ginlong/assets/images/small.jpg"
     },
-    {
-      "id": "add_devices",
-      "template": "add_devices"
-    }
-  ],
-  "images": {
-    "large": "./drivers/ginlong/assets/images/large.jpg",
-    "small": "./drivers/ginlong/assets/images/small.jpg"
-  },
-  "class": "solarpanel",
-  "capabilities": [
-    "measure_power",
-    "meter_power"
-  ]
+    "class": "solarpanel",
+    "capabilities": ["measure_power", "meter_power"]
 }

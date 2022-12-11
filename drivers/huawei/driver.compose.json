@@ -3,6 +3,7 @@
         "en": "Huawei",
         "nl": "Huawei"
     },
+    "deprecated": true,
     "connectivity": ["lan"],
     "platforms": ["local"],
     "pair": [

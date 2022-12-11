@@ -1,37 +1,35 @@
 {
-  "name": {
-    "en": "Kostal"
-  },
-  "connectivity": ["lan"],
-  "platforms": ["local"],
-  "pair": [
-    {
-      "id": "pair"
-    }
-  ],
-  "images": {
-    "large": "./drivers/kostal/assets/images/large.jpg",
-    "small": "./drivers/kostal/assets/images/small.jpg"
-  },
-  "class": "solarpanel",
-  "capabilities": [
-    "measure_power",
-    "meter_power"
-  ],
-  "settings": [
-    {
-      "id": "ipAddress",
-      "type": "text",
-      "label": {
-        "en": "Inverter IP address"
-      }
+    "name": {
+        "en": "Kostal"
     },
-    {
-      "id": "password",
-      "type": "text",
-      "label": {
-        "en": "Inverter password"
-      }
-    }
-  ]
+    "deprecated": true,
+    "connectivity": ["lan"],
+    "platforms": ["local"],
+    "pair": [
+        {
+            "id": "pair"
+        }
+    ],
+    "images": {
+        "large": "./drivers/kostal/assets/images/large.jpg",
+        "small": "./drivers/kostal/assets/images/small.jpg"
+    },
+    "class": "solarpanel",
+    "capabilities": ["measure_power", "meter_power"],
+    "settings": [
+        {
+            "id": "ipAddress",
+            "type": "text",
+            "label": {
+                "en": "Inverter IP address"
+            }
+        },
+        {
+            "id": "password",
+            "type": "text",
+            "label": {
+                "en": "Inverter password"
+            }
+        }
+    ]
 }

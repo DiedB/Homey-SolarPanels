@@ -3,8 +3,9 @@
         "en": "Omnik",
         "nl": "Omnik"
     },
+    "deprecated": true,
     "connectivity": ["lan"],
-    "platforms": ["local"],  
+    "platforms": ["local"],
     "pair": [
         {
             "id": "pair"

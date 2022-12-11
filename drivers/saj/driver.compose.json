@@ -2,8 +2,9 @@
     "name": {
         "en": "SAJ (LAN)"
     },
+    "deprecated": true,
     "connectivity": ["lan"],
-    "platforms": ["local"],  
+    "platforms": ["local"],
     "pair": [
         {
             "id": "pair"
