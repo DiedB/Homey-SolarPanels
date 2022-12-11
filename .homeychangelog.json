@@ -82,5 +82,8 @@
   },
   "4.6.3": {
     "en": "Deprecate several drivers"
+  },
+  "4.7.0": {
+    "en": "Driver deprecation in preparation for SDK v3 release"
   }
 }

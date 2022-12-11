@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "it.diederik.solar",
-  "version": "4.6.3",
+  "version": "4.7.0",
   "compatibility": ">=3",
   "sdk": 2,
   "brandColor": "#1f63d1",
@@ -203,6 +203,7 @@
         "en": "Ginlong",
         "nl": "Ginlong"
       },
+      "deprecated": true,
       "connectivity": [
         "cloud"
       ],
@@ -240,6 +241,7 @@
       "name": {
         "en": "GoodWe SEMS"
       },
+      "deprecated": true,
       "connectivity": [
         "cloud"
       ],
@@ -367,6 +369,7 @@
         "en": "Huawei",
         "nl": "Huawei"
       },
+      "deprecated": true,
       "connectivity": [
         "lan"
       ],
@@ -404,6 +407,7 @@
       "name": {
         "en": "Kostal"
       },
+      "deprecated": true,
       "connectivity": [
         "lan"
       ],
@@ -505,6 +509,7 @@
         "en": "Omnik",
         "nl": "Omnik"
       },
+      "deprecated": true,
       "connectivity": [
         "lan"
       ],
@@ -578,6 +583,7 @@
       "name": {
         "en": "SAJ (LAN)"
       },
+      "deprecated": true,
       "connectivity": [
         "lan"
       ],
@@ -614,6 +620,7 @@
         "en": "SAJ (eSolar WiFi)",
         "nl": "SAJ (eSolar WiFi)"
       },
+      "deprecated": true,
       "connectivity": [
         "lan"
       ],
@@ -760,6 +767,7 @@
       "name": {
         "en": "Solax"
       },
+      "deprecated": true,
       "connectivity": [
         "cloud"
       ],
