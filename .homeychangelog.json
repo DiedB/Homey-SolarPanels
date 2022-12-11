@@ -82,5 +82,8 @@
   },
   "5.0.22": {
     "en": "Support Apps SDK v3 + Homey Cloud"
+  },
+  "5.0.23": {
+    "en": "Upgrade deps, fix Enphase HTTPS issue"
   }
 }
