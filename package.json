@@ -8,15 +8,15 @@
     "build": "tsc"
   },
   "dependencies": {
-    "node-fetch": "^2.6.5",
+    "node-fetch": "^3.3.0",
     "source-map-support": "^0.5.20"
   },
   "devDependencies": {
-    "@tsconfig/node12": "^1.0.9",
-    "@types/homey": "npm:homey-apps-sdk-v3-types@^0.2.2",
-    "@types/node": "^16.11.6",
+    "@tsconfig/node12": "^1.0.11",
+    "@types/homey": "npm:homey-apps-sdk-v3-types@^0.3.1",
+    "@types/node": "^18.11.13",
     "@types/source-map-support": "^0.5.4",
-    "homey": "^2.23.3",
-    "typescript": "^4.4.4"
+    "homey": "^2.30.7",
+    "typescript": "^4.9.4"
   }
 }
