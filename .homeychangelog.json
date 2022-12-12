@@ -88,5 +88,8 @@
   },
   "5.1.0": {
     "en": "Add Growatt support to SDK v3 version"
+  },
+  "5.1.1": {
+    "en": "Fix node-fetch dependency"
   }
 }
