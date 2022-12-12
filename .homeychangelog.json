@@ -85,5 +85,8 @@
   },
   "5.0.23": {
     "en": "Upgrade deps, fix Enphase HTTPS issue"
+  },
+  "5.1.0": {
+    "en": "Add Growatt support to SDK v3 version"
   }
 }
