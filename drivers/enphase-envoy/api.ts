@@ -14,7 +14,7 @@ export default class EnphaseEnvoyApi {
   private async fetchApiEndpoint<T>(url: string): Promise<T> {
     const response = await fetch(url, {
       // Allow self-signed SSL (newer Envoy firmware seems to use HTTPS)
-      agent: (parsedUrl) => {
+      agent: (parsedUrl: URL) => {
         if (parsedUrl.protocol == "http:") {
           return new http.Agent();
         } else {
