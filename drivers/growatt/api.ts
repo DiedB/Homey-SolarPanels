@@ -83,8 +83,8 @@ export default class GrowattApi {
     const error = `Could not get device list for plant ${plantId} from Growatt server`;
 
     const plantData = await this.fetchApiEndpoint<PlantData>(
-      "GET",
       `${this.plantUrl}?op=getAllDeviceList&plantId=${plantId}`,
+      "GET",
       undefined,
       error
     );
