@@ -91,5 +91,8 @@
   },
   "5.1.1": {
     "en": "Fix node-fetch dependency"
+  },
+  "5.1.2": {
+    "en": "Fix Growatt crash"
   }
 }
