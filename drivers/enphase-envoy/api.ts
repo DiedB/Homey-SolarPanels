@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+const fetch = require("node-fetch");
 import http from "node:http";
 import https from "node:https";
 
