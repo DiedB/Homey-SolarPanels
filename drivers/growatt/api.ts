@@ -1,7 +1,7 @@
 // Copyright 2019: Rob, https://github.com/pro-sumer
 // License: GNU GPLv3, https://www.gnu.org/licenses/gpl.txt
 
-import fetch, { RequestInit } from "node-fetch";
+const fetch = require("node-fetch");
 import crypto from "crypto";
 
 import { DeviceList, LoginData, PlantData, PlantParams } from "./types";
@@ -30,7 +30,7 @@ export default class GrowattApi {
 
   private async fetchApiEndpoint<T>(
     url: string,
-    method: RequestInit["method"] = "GET",
+    method: string = "GET",
     body: string | undefined,
     error: string
   ): Promise<T> {
@@ -54,7 +54,7 @@ export default class GrowattApi {
     // TODO: grab cookies
     this.cookies = response.headers
       .raw()
-      ["set-cookie"].map((d) => d.split(";")[0])
+      ["set-cookie"].map((d: string) => d.split(";")[0])
       .join(";");
 
     return response.json() as Promise<T>;
