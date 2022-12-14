@@ -9,8 +9,8 @@
     "nl": "Zonnepanelen"
   },
   "description": {
-    "en": "Connect your Solar Panels to Homey",
-    "nl": "Verbind je zonnepanelen met Homey"
+    "en": "Leverage your renewable energy production in a smarter way",
+    "nl": "Gebruik je groen opgewekte stroom op een slimme manier"
   },
   "category": "energy",
   "platforms": [
