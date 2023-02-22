@@ -10,8 +10,8 @@
     "nl": "Zonnepanelen"
   },
   "description": {
-    "en": "Connect your Solar Panels to Homey",
-    "nl": "Verbind je zonnepanelen met Homey"
+    "en": "Leverage your renewable energy production in a smarter way",
+    "nl": "Gebruik je groen opgewekte stroom op een slimme manier"
   },
   "category": "energy",
   "platforms": [
@@ -275,6 +275,66 @@
               "type": "password",
               "label": {
                 "en": "Password"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Omnik"
+      },
+      "platforms": [
+        "local"
+      ],
+      "pair": [
+        {
+          "id": "pair"
+        }
+      ],
+      "images": {
+        "large": "./drivers/omnik-local/assets/images/large.jpg",
+        "small": "./drivers/omnik-local/assets/images/small.jpg"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power",
+        "measure_voltage",
+        "measure_temperature"
+      ],
+      "id": "omnik-local",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Omnik inverter",
+            "nl": "Omnik omvormer",
+            "de": "Omnik-Wechselrichter",
+            "fr": "Onduleur Omnik",
+            "it": "Inverter Omnik",
+            "sv": "Omnik-omvandlare",
+            "no": "Omnik-inverter",
+            "es": "Inversor Omnik",
+            "da": "Omnik-inverter",
+            "pl": "Falownik Omnik"
+          },
+          "children": [
+            {
+              "id": "ip",
+              "type": "text",
+              "label": {
+                "en": "IP address",
+                "nl": "IP adres",
+                "de": "IP-Adresse",
+                "fr": "Adresse IP",
+                "it": "Indirizzo IP",
+                "sv": "IP-adress",
+                "no": "IP-adresse",
+                "es": "Dirección IP",
+                "da": "IP-adresse",
+                "pl": "Adres IP"
               }
             }
           ]

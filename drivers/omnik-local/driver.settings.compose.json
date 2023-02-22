@@ -1,0 +1,35 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "Omnik inverter",
+      "nl": "Omnik omvormer",
+      "de": "Omnik-Wechselrichter",
+      "fr": "Onduleur Omnik",
+      "it": "Inverter Omnik",
+      "sv": "Omnik-omvandlare",
+      "no": "Omnik-inverter",
+      "es": "Inversor Omnik",
+      "da": "Omnik-inverter",
+      "pl": "Falownik Omnik"
+    },
+    "children": [
+      {
+        "id": "ip",
+        "type": "text",
+        "label": {
+          "en": "IP address",
+          "nl": "IP adres",
+          "de": "IP-Adresse",
+          "fr": "Adresse IP",
+          "it": "Indirizzo IP",
+          "sv": "IP-adress",
+          "no": "IP-adresse",
+          "es": "Dirección IP",
+          "da": "IP-adresse",
+          "pl": "Adres IP"
+        }
+      }
+    ]
+  }
+]
