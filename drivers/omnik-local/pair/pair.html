@@ -1,3 +1,67 @@
+<base target="_parent" />
+
+<div class="form-wrapper">
+  <form class="homey-form">
+    <fieldset class="homey-form-fieldset">
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="ip_address" data-i18n="pair.omnik-local.ip_address">IP address</label>
+        <input class="homey-form-input"
+               id="ip_address"
+               oninput="ipAddressChanged(this.value)"
+               type="text"
+               minlength="7"
+               maxlength="15"
+               pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$"
+               placeholder="192.168.0.0"
+               value="" />
+      </div>
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="wifi_sn" data-i18n="pair.omnik-local.wifi_sn">WiFi S/N</label>
+        <input class="homey-form-input"
+               id="wifi_sn"
+               oninput="wifiSnChanged(this.value)"
+               type="text"
+               pattern="[0-9]{10}"
+               placeholder="000000000"
+               value="" />
+      </div>
+    </fieldset>
+  </form>
+
+  <div class="footer">
+    <p class="alert help">
+      <span data-i18n="pair.help.need_help_pairing">Need help pairing?</span>
+      <a href="https://diederik.gitbook.io/homey-solar-panels-app/inverters/omnik"
+         data-i18n="pair.help.click_here_documentation">Click here to view the documentation.</a>
+    </p>
+  </div>
+</div>
+
+<script type="application/javascript">
+  Homey.setTitle(Homey.__("pair.omnik-local.title"));
+  Homey.setSubtitle(Homey.__("pair.omnik-local.subtitle"));
+
+  Homey.on("alert", function(message) {
+    Homey.alert(message);
+  });
+
+  Homey.emit("getIpAddress").then(function(ipAddress) {
+    document.getElementById("ip_address").value = ipAddress;
+  });
+
+  Homey.emit("getWifiSn").then(function(wifiSn) {
+    document.getElementById("wifi_sn").value = wifiSn;
+  });
+
+  function ipAddressChanged (value) {
+    Homey.emit("setIpAddress", value);
+  }
+
+  function wifiSnChanged (value) {
+    Homey.emit("setWifiSn", Number(value));
+  }
+</script>
+
 <style type="text/css">
     .form-wrapper {
         width: 100%;
@@ -9,82 +73,22 @@
         align-items: center;
     }
 
-    .input-field {
-        margin-top: 10px;
-        width: 100%;
+    .footer {
+        margin-top: auto;
+        padding-top: 1.5rem;
     }
 
-    .submit-button {
-        margin-top: 20px;
-        background-color: #00c139 !important;
-        color: white !important;
-        width: 100%;
+    .alert {
+        position: relative;
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
     }
 
     .help {
-        margin-top: auto;
+        color: #383d41;
+        background-color: #f4f5f5;
+        border-color: #e4e5e7;
     }
 </style>
-
-<base target="_parent" />
-<div class="form-wrapper">
-    <p>Please enter your Omnik inverter IP address and WiFi S/N:</p>
-    <div class="input-field">
-        <label for="ip">IP address</label>
-        <input
-            type="text"
-            minlength="7"
-            maxlength="15"
-            pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$"
-            id="ip"
-            placeholder="IP address"
-            value=""
-        />
-    </div>
-    <div class="input-field">
-        <label for="sn">WiFi S/N</label>
-        <input
-            type="text"
-            pattern="[0-9]{10}"
-            id="sn"
-            placeholder="WiFi S/N"
-            value=""
-        />
-    </div>
-    <button class="submit-button" id="validate">Connect</button>
-    <p class="help">
-        ⚠️ Need help pairing? Click
-        <a
-            href="https://diederik.gitbook.io/homey-solar-panels-app/inverters/omnik"
-            >here</a
-        >
-        to view documentation.
-    </p>
-</div>
-
-<script type="text/javascript">
-    $(() => {
-        $("#validate").click(() => {
-            Homey.showLoadingOverlay();
-
-            var ip = $("#ip").val();
-            var sn = $("#sn").val();
-
-            Homey.emit("validate", { ip, sn }, (error, deviceDefinition) => {
-                if (error) {
-                    Homey.hideLoadingOverlay();
-                    Homey.alert(error);
-                } else {
-                    Homey.createDevice(deviceDefinition, (error, result) => {
-                        if (error) {
-                            Homey.hideLoadingOverlay();
-                            Homey.alert(error);
-                        } else {
-                            Homey.done();
-                        }
-                    });
-                }
-            });
-        });
-    });
-</script>

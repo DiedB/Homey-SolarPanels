@@ -2,13 +2,14 @@
 
 import { Inverter } from "../../inverter";
 import OmnikLocalApi from "./api";
-import { DeviceData, DeviceSettings } from "./types";
+import { DeviceData, DeviceSettings, SettingsInput } from "./types";
 
 class OmnikLocal extends Inverter {
-  interval = 15;
+  interval = 1;
   api?: OmnikLocalApi;
 
-  async onInit() {
+  async onInit(): Promise<void> {
+    this.log("Device has been initialized");
 
     const settings: DeviceSettings = this.getSettings();
     const data: DeviceData = this.getData();
@@ -19,15 +20,20 @@ class OmnikLocal extends Inverter {
 
     this.api = new OmnikLocalApi({ address: settings.ip, wifiSn: data.id });
 
-    await super.onInit();
+    return super.onInit();
   }
 
-  async onSettings({ newSettings }: { newSettings: object }) {
-    const typedNewSettings = newSettings as DeviceSettings;
-
+  async onSettings({ newSettings, changedKeys }: SettingsInput) {
     const data: DeviceData = this.getData();
 
-    this.api = new OmnikLocalApi({ address: typedNewSettings.ip, wifiSn: data.id });
+    if (changedKeys.includes("ip") && newSettings.ip) {
+      this.api = new OmnikLocalApi({ address: newSettings.ip, wifiSn: data.id });
+    }
+
+    if (changedKeys.includes("interval") && newSettings.interval) {
+      this.resetInterval(newSettings.interval);
+      this.homey.log(`Changed interval to ${newSettings.interval}`);
+    }
   }
 
   async checkProduction() {
@@ -49,17 +55,14 @@ class OmnikLocal extends Inverter {
       await this.setCapabilityValue("meter_power", dailyProduction);
       await this.setCapabilityValue("measure_voltage", currentVoltage);
       await this.setCapabilityValue("measure_power", currentPower);
-      await this.setCapabilityValue(
-        "measure_temperature",
-        currentTemperature
-      );
+      await this.setCapabilityValue("measure_temperature", currentTemperature);
 
       if (!this.getAvailable()) {
         await this.setAvailable();
       }
     } catch (error) {
       this.error(`Unavailable (${error})`);
-      this.setUnavailable(`Error retrieving data (${error})`);
+      await this.setUnavailable(`Error retrieving data (${error})`);
     }
   }
 }

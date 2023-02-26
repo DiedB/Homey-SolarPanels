@@ -1,0 +1,19 @@
+<script type="application/javascript">
+  Homey.setTitle(Homey.__("pair.omnik-local.add_device"));
+
+  Homey.emit("getDevice", null).then(function(device) {
+    Homey.createDevice(device)
+      .then(() => {
+        Homey.done();
+      })
+      .catch(async (error) => {
+        await Homey.showView("pair");
+
+        Homey.emit("error", JSON.stringify(error));
+        Homey.emit("add_device_error", Homey.__("pair.omnik-local.error.adding_device"));
+      });
+  }).catch(async (error) => {
+    Homey.emit("error", JSON.stringify(error));
+    Homey.emit("add_device_error", Homey.__("pair.omnik-local.error.adding_device"));
+  });
+</script>

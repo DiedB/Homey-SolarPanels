@@ -7,7 +7,17 @@
   ],
   "pair": [
     {
-      "id": "pair"
+      "id": "pair",
+      "navigation": {
+        "next": "validate"
+      }
+    },
+    {
+      "id": "validate",
+      "template": "loading"
+    },
+    {
+      "id": "add_device"
     }
   ],
   "images": {

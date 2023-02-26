@@ -2,7 +2,19 @@ import { InverterData } from "./types";
 
 const net = require("net");
 
-export default class OmnikLocalApi {
+export class TimeoutError extends Error {
+  constructor() {
+    super("The connection timed out");
+  }
+}
+
+export class UnexpectedResponseError extends Error {
+  constructor(response: string) {
+    super("Unexpected response from inverter: " + response);
+  }
+}
+
+export class OmnikLocalApi {
   private readonly address: string;
   private readonly wifiSn: number;
 
@@ -17,9 +29,9 @@ export default class OmnikLocalApi {
       client.connect(8899, this.address);
       client.setTimeout(10000);
 
-      client.on("data", (data: any) => {
+      client.on("data", (data: Buffer) => {
         if (Buffer.byteLength(data) > 70) {
-          const inverterName = data.slice(15, 31).toString();
+          const inverterName = data.subarray(15, 31).toString();
           const powerArray = [
             data.readInt16BE(59),
             data.readInt16BE(63),
@@ -53,18 +65,13 @@ export default class OmnikLocalApi {
 
           resolve(typedResponse);
         } else {
-          reject(
-            new Error(
-              "Unexpected response from inverter: " +
-              data.toString("hex")
-            )
-          );
+          reject(new UnexpectedResponseError(data.toString("hex")));
         }
       });
 
       client.on("timeout", () => {
         client.destroy();
-        reject(new Error("The connection timed out"));
+        reject(new TimeoutError());
       });
 
       client.on("error", (error: any) => {
@@ -92,3 +99,5 @@ export default class OmnikLocalApi {
     });
   }
 }
+
+export default OmnikLocalApi;
