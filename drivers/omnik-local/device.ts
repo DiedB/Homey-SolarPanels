@@ -5,7 +5,7 @@ import OmnikLocalApi from "./api";
 import { DeviceData, DeviceSettings, SettingsInput } from "./types";
 
 class OmnikLocal extends Inverter {
-  interval = 1;
+  interval = this.getSetting("interval");
   api?: OmnikLocalApi;
 
   async onInit(): Promise<void> {
