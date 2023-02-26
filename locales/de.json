@@ -1,0 +1,23 @@
+{
+  "pair": {
+    "omnik-local": {
+      "title": "Omnik-Wechselrichter",
+      "subtitle": "Geben Sie die IP-Adresse und die WiFi-Seriennummer Ihres Omnik-Wechselrichters ein.",
+      "ip_address": "IP-Adresse",
+      "wifi_sn": "WiFi-Seriennummer",
+      "add_device": "Gerät wird hinzugefügt",
+      "error": {
+        "missing_ip_address": "Geben Sie eine IP-Adresse an",
+        "missing_wifi_sn": "Geben Sie eine WiFi-Seriennummer an",
+        "host_unreachable": "Konnte den Omnik-Wechselrichter unter dieser IP-Adresse nicht erreichen. Stellen Sie sicher, dass die IP-Adresse korrekt und der Wechselrichter eingeschaltet ist.",
+        "connection_timed_out": "Es ist ein Timeout beim Verbinden mit Ihrem Omnik-Wechselrichter aufgetreten. Stellen Sie sicher, dass die WiFi-Seriennummer korrekt ist.",
+        "unexpected_response": "Es wurde eine unerwartete Antwort von Ihrem Omnik-Wechselrichter empfangen.",
+        "adding_device": "Beim Hinzufügen des Geräts ist ein Fehler aufgetreten.\n\nEs könnte sein, dass der Wechselrichter bereits als Gerät hinzugefügt wurde."
+      }
+    },
+    "help": {
+      "need_help_pairing": "Brauchen Sie Hilfe bei der Kopplung?",
+      "click_here_documentation": "Klicken Sie hier, um die Dokumentation anzuzeigen."
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "pair": {
+    "omnik-local": {
+      "title": "Onduleur Omnik",
+      "subtitle": "Entrez l'adresse IP de votre onduleur Omnik et son numéro de série WiFi.",
+      "ip_address": "Adresse IP",
+      "wifi_sn": "Numéro de série WiFi",
+      "add_device": "Ajout de l'appareil",
+      "error": {
+        "missing_ip_address": "Fournissez une adresse IP",
+        "missing_wifi_sn": "Fournissez un numéro de série WiFi",
+        "host_unreachable": "Impossible de contacter l'onduleur Omnik à cette adresse IP. Assurez-vous que l'adresse IP est correcte et que l'onduleur est allumé.",
+        "connection_timed_out": "Une temporisation s'est produite lors de la connexion à votre onduleur Omnik. Assurez-vous que le numéro de série WiFi est correct.",
+        "unexpected_response": "Une réponse inattendue a été reçue de votre onduleur Omnik.",
+        "adding_device": "Une erreur s'est produite lors de l'ajout de l'appareil.\n\nIl se peut que l'onduleur ait déjà été ajouté comme appareil."
+      }
+    },
+    "help": {
+      "need_help_pairing": "Besoin d'aide pour le couplage?",
+      "click_here_documentation": "Cliquez ici pour afficher la documentation."
+    }
+  }
+}

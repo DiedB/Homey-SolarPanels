@@ -1,0 +1,23 @@
+{
+  "pair": {
+    "omnik-local": {
+      "title": "Omnik växelriktare",
+      "subtitle": "Ange din Omnik växelriktarens IP-adress och WiFi S/N.",
+      "ip_address": "IP-adress",
+      "wifi_sn": "WiFi S/N",
+      "add_device": "Lägger till enhet",
+      "error": {
+        "missing_ip_address": "Ange en IP-adress",
+        "missing_wifi_sn": "Ange en WiFi S/N",
+        "host_unreachable": "Kunde inte nå Omnik växelriktaren på denna IP-adress. Se till att IP-adressen är korrekt och att växelriktaren är på.",
+        "connection_timed_out": "Ett timeout-fel uppstod när du anslöt till din Omnik växelriktare. Se till att WiFi S/N är korrekt.",
+        "unexpected_response": "Fick ett oväntat svar från din Omnik växelriktare.",
+        "adding_device": "Något gick fel när enheten skulle läggas till.\n\nDet kan vara så att växelriktaren redan har lagts till som en enhet."
+      }
+    },
+    "help": {
+      "need_help_pairing": "Behöver du hjälp att para ihop?",
+      "click_here_documentation": "Klicka här för att visa dokumentationen."
+    }
+  }
+}

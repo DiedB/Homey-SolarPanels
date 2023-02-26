@@ -1,0 +1,23 @@
+{
+  "pair": {
+    "omnik-local": {
+      "title": "Omnik inverter",
+      "subtitle": "Indtast din Omnik inverter IP-adresse og WiFi S/N.",
+      "ip_address": "IP-adresse",
+      "wifi_sn": "WiFi S/N",
+      "add_device": "Tilføjer enhed",
+      "error": {
+        "missing_ip_address": "Angiv en IP-adresse",
+        "missing_wifi_sn": "Angiv en WiFi S/N",
+        "host_unreachable": "Kunne ikke nå Omnik-inverteren på denne IP-adresse. Sørg for, at IP-adressen er korrekt, og inverteren er tændt.",
+        "connection_timed_out": "Der opstod en timeout, mens der blev oprettet forbindelse til din Omnik-inverter. Sørg for, at WiFi S/N er korrekt.",
+        "unexpected_response": "Modtog et uventet svar fra din Omnik-inverter.",
+        "adding_device": "Noget gik galt under tilføjelse af enheden.\n\nDet kan være, at inverteren allerede er tilføjet som en enhed."
+      }
+    },
+    "help": {
+      "need_help_pairing": "Har du brug for hjælp til paring?",
+      "click_here_documentation": "Klik her for at se dokumentationen."
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "pair": {
+    "omnik-local": {
+      "title": "Inversor Omnik",
+      "subtitle": "Ingrese la dirección IP y el número de serie WiFi de su inversor Omnik.",
+      "ip_address": "Dirección IP",
+      "wifi_sn": "Número de serie WiFi",
+      "add_device": "Agregando dispositivo",
+      "error": {
+        "missing_ip_address": "Proporcione una dirección IP",
+        "missing_wifi_sn": "Proporcione un número de serie WiFi",
+        "host_unreachable": "No se pudo comunicar con el inversor Omnik en esta dirección IP. Asegúrese de que la dirección IP sea correcta y el inversor esté encendido.",
+        "connection_timed_out": "Se produjo un tiempo de espera al conectar con su inversor Omnik. Asegúrese de que el número de serie WiFi sea correcto.",
+        "unexpected_response": "Se recibió una respuesta inesperada de su inversor Omnik.",
+        "adding_device": "Algo salió mal al agregar el dispositivo.\n\nPodría ser que el inversor ya se haya agregado como dispositivo."
+      }
+    },
+    "help": {
+      "need_help_pairing": "¿Necesita ayuda para emparejar?",
+      "click_here_documentation": "Haga clic aquí para ver la documentación."
+    }
+  }
+}

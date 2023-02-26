@@ -1,0 +1,23 @@
+{
+  "pair": {
+    "omnik-local": {
+      "title": "Omnik omvormer",
+      "subtitle": "Voer het IP-adres en WiFi S/N van uw Omnik omvormer in.",
+      "ip_address": "IP-adres",
+      "wifi_sn": "WiFi S/N",
+      "add_device": "Apparaat toevoegen",
+      "error": {
+        "missing_ip_address": "Geef een IP-adres op",
+        "missing_wifi_sn": "Geef een WiFi S/N op",
+        "host_unreachable": "Kon geen verbinding maken met de Omnik omvormer op dit IP-adres. Controleer of het IP-adres correct is en de omvormer is ingeschakeld.",
+        "connection_timed_out": "Er is een time-out opgetreden bij het verbinden met uw Omnik omvormer. Controleer of het WiFi S/N correct is.",
+        "unexpected_response": "Er is een onverwachte reactie ontvangen van uw Omnik omvormer.",
+        "adding_device": "Er is iets misgegaan bij het toevoegen van het apparaat.\n\nHet kan zijn dat de omvormer al als apparaat is toegevoegd."
+      }
+    },
+    "help": {
+      "need_help_pairing": "Hulp nodig bij het koppelen?",
+      "click_here_documentation": "Klik hier om de documentatie te bekijken."
+    }
+  }
+}

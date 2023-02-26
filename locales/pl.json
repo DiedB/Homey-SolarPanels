@@ -1,0 +1,23 @@
+{
+  "pair": {
+    "omnik-local": {
+      "title": "Inwerter Omnik",
+      "subtitle": "Wprowadź adres IP i numer WiFi S/N swojego inwertera Omnik.",
+      "ip_address": "Adres IP",
+      "wifi_sn": "Numer WiFi S/N",
+      "add_device": "Dodawanie urządzenia",
+      "error": {
+        "missing_ip_address": "Podaj adres IP",
+        "missing_wifi_sn": "Podaj numer WiFi S/N",
+        "host_unreachable": "Nie można połączyć się z inwerterem Omnik pod tym adresem IP. Upewnij się, że adres IP jest poprawny i inwerter jest włączony.",
+        "connection_timed_out": "Podczas próby połączenia z inwerterem Omnik wystąpił limit czasu. Upewnij się, że numer WiFi S/N jest poprawny.",
+        "unexpected_response": "Otrzymano nieoczekiwana odpowiedź od inwertera Omnik.",
+        "adding_device": "Coś poszło nie tak podczas dodawania urządzenia.\n\nMoże to oznaczać, że inwerter został już dodany jako urządzenie."
+      }
+    },
+    "help": {
+      "need_help_pairing": "Potrzebujesz pomocy przy parowaniu?",
+      "click_here_documentation": "Kliknij tutaj, aby przejrzeć dokumentację."
+    }
+  }
+}
