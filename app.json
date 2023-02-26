@@ -290,7 +290,17 @@
       ],
       "pair": [
         {
-          "id": "pair"
+          "id": "pair",
+          "navigation": {
+            "next": "validate"
+          }
+        },
+        {
+          "id": "validate",
+          "template": "loading"
+        },
+        {
+          "id": "add_device"
         }
       ],
       "images": {
@@ -335,6 +345,48 @@
                 "es": "Dirección IP",
                 "da": "IP-adresse",
                 "pl": "Adres IP"
+              }
+            },
+            {
+              "id": "interval",
+              "type": "number",
+              "label": {
+                "en": "Check interval",
+                "nl": "Controle-interval",
+                "de": "Überprüfungsintervall",
+                "fr": "Intervalle de vérification",
+                "it": "Intervallo di controllo",
+                "sv": "Kontrollintervall",
+                "no": "Sjekkintervall",
+                "es": "Intervalo de comprobación",
+                "da": "Tjekinterval",
+                "pl": "Interwał sprawdzania"
+              },
+              "hint": {
+                "en": "Decrease this interval if you want to monitor your inverter in more detail.",
+                "nl": "Verlaag deze interval als je gedetailleerder je omvormer wil monitoren.",
+                "de": "Verringern Sie dieses Intervall, wenn Sie Ihren Wechselrichter genauer überwachen möchten.",
+                "fr": "Diminuez cet intervalle si vous voulez surveiller votre onduleur de manière plus détaillée.",
+                "it": "Diminuire questo intervallo se si desidera monitorare l'inverter in modo più dettagliato.",
+                "sv": "Minska detta intervall om du vill övervaka din inverter mer detaljerat.",
+                "no": "Reduser dette intervallet hvis du vil overvåke omformeren din mer detaljert.",
+                "es": "Disminuye este intervalo si deseas monitorear tu inversor con mayor detalle.",
+                "da": "Formindsk dette interval, hvis du vil overvåge din inverter mere detaljeret.",
+                "pl": "Zmniejsz ten interwał, jeśli chcesz monitorować swój falownik bardziej szczegółowo."
+              },
+              "value": 5,
+              "min": 1,
+              "units": {
+                "en": "minutes",
+                "nl": "minuten",
+                "de": "Minuten",
+                "fr": "minutes",
+                "it": "minuti",
+                "sv": "minuter",
+                "no": "minutter",
+                "es": "minutos",
+                "da": "minutter",
+                "pl": "minuty"
               }
             }
           ]
