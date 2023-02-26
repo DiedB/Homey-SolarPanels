@@ -33,4 +33,8 @@ export class Inverter extends Device {
   checkProduction() {
     throw new Error("Expected override");
   }
+
+  onDeleted () {
+    this.homey.clearInterval(this.currentInterval);
+  }
 }
