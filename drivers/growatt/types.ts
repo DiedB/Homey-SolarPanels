@@ -79,6 +79,7 @@ export interface DeviceList {
   deviceType: string;
   storageType: string;
   eToday: string;
+  eTotal: string,
   power: string;
   eChargeToday: string;
   apparentPower: number;

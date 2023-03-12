@@ -118,6 +118,7 @@ export default class GrowattApi {
         return {
           currentPower: Number(device.power),
           energyToday: Number(device.eToday),
+          energyTotal: Number(device.eTotal)
         };
       }
     }
