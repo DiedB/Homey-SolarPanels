@@ -39,13 +39,17 @@ class GrowattDevice extends Inverter {
       if (production !== null) {
         const currentEnergy = production.energyToday;
         const currentPower = production.currentPower;
+        const lifetimeEnergyProduced = production.energyTotal;
 
         this.setCapabilityValue("meter_power", currentEnergy);
 
         this.setCapabilityValue("measure_power", currentPower);
 
+        this.setCapabilityValue("lifetime_energy_produced", lifetimeEnergyProduced);
+
         this.homey.log(`Current energy is ${currentEnergy}kWh`);
         this.homey.log(`Current power is ${currentPower}W`);
+        this.homey.log(`Lifetime energy produced is ${lifetimeEnergyProduced}kWh`);
 
         await this.setAvailable();
       } else {
