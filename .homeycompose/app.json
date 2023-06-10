@@ -9,25 +9,14 @@
     "nl": "Zonnepanelen"
   },
   "description": {
-    "en": "Leverage your renewable energy production in a smarter way",
-    "nl": "Gebruik je groen opgewekte stroom op een slimme manier"
+    "en": "Let the sun power your home",
+    "nl": "Laat de zon je huis van stroom voorzien"
   },
   "category": "energy",
-  "platforms": [
-    "local",
-    "cloud"
-  ],
+  "platforms": ["local", "cloud"],
   "tags": {
-    "en": [
-      "solar",
-      "panels",
-      "pv"
-    ],
-    "nl": [
-      "zonnepanelen",
-      "solar",
-      "pv"
-    ]
+    "en": ["solar", "panels", "pv"],
+    "nl": ["zonnepanelen", "solar", "pv"]
   },
   "images": {
     "xlarge": "./assets/images/xlarge.png",

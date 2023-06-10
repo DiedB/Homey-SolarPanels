@@ -1,49 +1,48 @@
 <style type="text/css">
-  .form-wrapper {
-    width: 100%;
-    height: 100%;
-
+  .homey-solarpanels-form {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    height: 100%;
   }
 
-  .input-field {
-    margin-top: 10px;
-    width: 100%;
-  }
-
-  .submit-button {
-    margin-top: 20px;
-    background-color: #00c139 !important;
-    color: white !important;
-    width: 100%;
-  }
-
-  .help {
+  .homey-solarpanels-submit-button {
     margin-top: auto;
+  }
+
+  .homey-solarpanels-help {
+    display: flex;
+    align-items: center;
+
+    color: var(--homey-color-text-light);
+  }
+
+  .homey-solarpanels-help > svg {
+    width: 1.25em;
+    height: 1.25em;
+
+    fill: var(--homey-color-text-light);
+
+    margin-right: 0.5em;
   }
 </style>
 
-<base target="_parent" />
-<div class="form-wrapper">
-  <p>Please enter your Enphase user ID and API key:</p>
+<form class="homey-form homey-solarpanels-form" onsubmit="onConnect(event)">
+  <h1 class="homey-title">Please enter your API details</h1>
 
-  <div class="input-field">
-    <label for="sn">User ID</label>
+  <div class="homey-form-group">
+    <label class="homey-form-label" for="userId">Enphase user ID</label>
     <input
+      class="homey-form-input"
       type="text"
       pattern="[0-9a-f]{10}"
       id="userId"
       placeholder="4d6a51330a"
       value=""
     />
-  </div>
 
-  <div class="input-field">
-    <label for="sn">API key</label>
+    <label class="homey-form-label" for="apiKey">Enphase API key</label>
     <input
+      class="homey-form-input"
       type="text"
       pattern="[0-9a-z]{32}"
       id="apiKey"
@@ -52,33 +51,30 @@
     />
   </div>
 
-  <button class="submit-button" id="validate">Connect</button>
-  <p class="help">
-    ⚠️ Need help pairing? Click
-    <a
-      href="https://diederik.gitbook.io/homey-solar-panels-app/inverters/enphase-enlighten"
-      >here</a
-    >
-    to view documentation.
-  </p>
-</div>
+  <button
+    class="homey-button-primary-full homey-solarpanels-submit-button"
+    type="submit"
+  >
+    Connect
+  </button>
+</form>
 
 <script type="application/javascript">
-  $(() => {
-    $("#validate").click(() => {
-      Homey.showLoadingOverlay();
+  const onConnect = async (event) => {
+    event.preventDefault(); // Prevent the form from submitting and refreshing the page
 
-      var userId = $("#userId").val();
-      var apiKey = $("#apiKey").val();
+    Homey.showLoadingOverlay();
 
-      Homey.emit("validate", { userId, apiKey })
-        .then(() => {
-          Homey.showView("list_devices");
-        })
-        .catch((error) => {
-          Homey.hideLoadingOverlay();
-          Homey.alert(error.message);
-        });
-    });
-  });
+    const apiKey = document.getElementById("apiKey").value;
+    const userId = document.getElementById("userId").value;
+
+    Homey.emit("validate", { userId, apiKey })
+      .then(() => {
+        Homey.showView("list_devices");
+      })
+      .catch((error) => {
+        Homey.hideLoadingOverlay();
+        Homey.alert(error.message);
+      });
+  };
 </script>

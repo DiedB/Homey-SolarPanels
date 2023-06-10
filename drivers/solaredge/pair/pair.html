@@ -1,38 +1,38 @@
 <style type="text/css">
-  .form-wrapper {
-    width: 100%;
-    height: 100%;
-
+  .homey-solarpanels-form {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    height: 100%;
   }
 
-  .input-field {
-    margin-top: 10px;
-    width: 100%;
-  }
-
-  .submit-button {
-    margin-top: 20px;
-    background-color: #00c139 !important;
-    color: white !important;
-    width: 100%;
-  }
-
-  .help {
+  .homey-solarpanels-submit-button {
     margin-top: auto;
+  }
+
+  .homey-solarpanels-help {
+    display: flex;
+    align-items: center;
+
+    color: var(--homey-color-text-light);
+  }
+
+  .homey-solarpanels-help > svg {
+    width: 1.25em;
+    height: 1.25em;
+
+    fill: var(--homey-color-text-light);
+
+    margin-right: 0.5em;
   }
 </style>
 
-<base target="_parent" />
-<div class="form-wrapper">
-  <p>Please enter your SolarEdge API key:</p>
+<form class="homey-form homey-solarpanels-form" onsubmit="onConnect(event)">
+  <h1 class="homey-title">Please enter your API key</h1>
 
-  <div class="input-field">
-    <label for="sn">API key</label>
+  <div class="homey-form-group">
+    <label class="homey-form-label" for="apiKey">SolarEdge API key</label>
     <input
+      class="homey-form-input"
       type="text"
       pattern="[0-9a-zA-Z]{32}"
       id="apiKey"
@@ -41,32 +41,46 @@
     />
   </div>
 
-  <button class="submit-button" id="validate">Connect</button>
-  <p class="help">
-    ⚠️ Need help pairing? Click
+  <!-- <p class="homey-solarpanels-help">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path
+        fill-rule="evenodd"
+        d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+        clip-rule="evenodd"
+      />
+    </svg>
+
+    Need help pairing? Click&nbsp;
     <a
       href="https://diederik.gitbook.io/homey-solar-panels-app/inverters/solaredge"
       >here</a
-    >
-    to view documentation.
-  </p>
-</div>
+    >&nbsp; to view documentation.
+  </p> -->
+
+  <button
+    class="homey-button-primary-full homey-solarpanels-submit-button"
+    type="submit"
+  >
+    Connect
+  </button>
+</form>
 
 <script type="application/javascript">
-  $(() => {
-    $("#validate").click(() => {
-      Homey.showLoadingOverlay();
+  const onConnect = async (event) => {
+    event.preventDefault(); // Prevent the form from submitting and refreshing the page
 
-      var apiKey = $("#apiKey").val();
+    Homey.showLoadingOverlay();
 
-      Homey.emit("validate", { apiKey })
-        .then(() => {
-          Homey.showView("list_devices");
-        })
-        .catch((error) => {
-          Homey.hideLoadingOverlay();
-          Homey.alert(error.message);
-        });
-    });
-  });
+    const apiKeyInput = document.getElementById("apiKey");
+    const apiKey = apiKeyInput.value;
+
+    Homey.emit("validate", { apiKey })
+      .then(() => {
+        Homey.showView("list_devices");
+      })
+      .catch((error) => {
+        Homey.hideLoadingOverlay();
+        Homey.alert(error.message);
+      });
+  };
 </script>
