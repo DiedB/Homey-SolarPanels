@@ -94,5 +94,8 @@
   },
   "5.1.2": {
     "en": "Fix Growatt crash"
+  },
+  "5.1.3": {
+    "en": "Improve custom pairing views"
   }
 }

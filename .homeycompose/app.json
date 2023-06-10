@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "5.1.2",
+  "version": "5.1.3",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#0c1845",
@@ -13,10 +13,21 @@
     "nl": "Laat de zon je huis van stroom voorzien"
   },
   "category": "energy",
-  "platforms": ["local", "cloud"],
+  "platforms": [
+    "local",
+    "cloud"
+  ],
   "tags": {
-    "en": ["solar", "panels", "pv"],
-    "nl": ["zonnepanelen", "solar", "pv"]
+    "en": [
+      "solar",
+      "panels",
+      "pv"
+    ],
+    "nl": [
+      "zonnepanelen",
+      "solar",
+      "pv"
+    ]
   },
   "images": {
     "xlarge": "./assets/images/xlarge.png",
