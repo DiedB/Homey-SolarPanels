@@ -97,5 +97,8 @@
   },
   "5.1.3": {
     "en": "Improve custom pairing views"
+  },
+  "5.2.0": {
+    "en": "Improve Growatt implementation, support multi-plant multi-device"
   }
 }
