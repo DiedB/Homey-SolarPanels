@@ -1,6 +1,7 @@
 import { Device } from "homey";
 
 export class Inverter extends Device {
+  /** The refresh interval in minutes */
   interval?: number;
   currentInterval?: NodeJS.Timeout;
 

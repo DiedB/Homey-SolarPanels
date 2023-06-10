@@ -108,6 +108,7 @@ export interface PlantData {
 
 export interface DeviceData {
   id: string;
+  plantId: string;
 }
 
 export interface DeviceSettings {
