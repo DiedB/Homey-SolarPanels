@@ -88,7 +88,9 @@ export default class EnphaseEnvoyApi {
     );
 
     if (!authResponse.ok) {
-      throw new Error("Failed to authenticate to Enphase Enlighten");
+      throw new Error(
+        "Failed to authenticate to Enphase - are your username and password correct?"
+      );
     }
 
     const parsedAuthResponse = await authResponse.json();
