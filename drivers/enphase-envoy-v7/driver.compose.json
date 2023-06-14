@@ -1,0 +1,65 @@
+{
+  "name": {
+    "en": "Enphase Envoy (v7)"
+  },
+  "class": "solarpanel",
+  "capabilities": [
+    "measure_power",
+    "meter_power",
+    "measure_power.consumption",
+    "meter_power.consumption"
+  ],
+  "connectivity": ["lan"],
+  "platforms": ["local"],
+  "discovery": "enphase-envoy",
+  "pair": [
+    {
+      "id": "login_credentials",
+      "template": "login_credentials",
+      "options": {
+        "logo": "pair.svg"
+      }
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.jpg",
+    "large": "{{driverAssetsPath}}/images/large.jpg"
+  },
+  "capabilitiesOptions": {
+    "meter_power": {
+      "title": {
+        "en": "Energy yield (today)",
+        "nl": "Energieproductie (vandaag)"
+      }
+    },
+    "meter_power.consumption": {
+      "title": {
+        "en": "Energy usage (today)",
+        "nl": "Energieverbruik (vandaag)"
+      }
+    },
+    "measure_power": {
+      "title": {
+        "en": "Power (production)",
+        "nl": "Vermogen (productie)"
+      }
+    },
+    "measure_power.consumption": {
+      "title": {
+        "en": "Power (consumption)",
+        "nl": "Vermogen (gebruik)"
+      }
+    }
+  }
+}

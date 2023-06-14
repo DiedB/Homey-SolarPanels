@@ -154,13 +154,13 @@
     },
     {
       "name": {
-        "en": "Enphase Envoy"
+        "en": "Enphase Envoy (v7)"
       },
       "class": "solarpanel",
       "capabilities": [
         "measure_power",
-        "measure_power.consumption",
         "meter_power",
+        "measure_power.consumption",
         "meter_power.consumption"
       ],
       "connectivity": [
@@ -171,6 +171,13 @@
       ],
       "discovery": "enphase-envoy",
       "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "pair.svg"
+          }
+        },
         {
           "id": "list_devices",
           "template": "list_devices",
@@ -184,8 +191,8 @@
         }
       ],
       "images": {
-        "small": "/drivers/enphase-envoy/assets/images/small.jpg",
-        "large": "/drivers/enphase-envoy/assets/images/large.jpg"
+        "small": "/drivers/enphase-envoy-v7/assets/images/small.jpg",
+        "large": "/drivers/enphase-envoy-v7/assets/images/large.jpg"
       },
       "capabilitiesOptions": {
         "meter_power": {
@@ -213,7 +220,31 @@
           }
         }
       },
-      "id": "enphase-envoy"
+      "id": "enphase-envoy-v7",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Enphase credentials"
+          },
+          "children": [
+            {
+              "id": "username",
+              "type": "text",
+              "label": {
+                "en": "Username"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "label": {
+                "en": "Password"
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {

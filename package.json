@@ -17,6 +17,7 @@
     "@tsconfig/node16": "^1.0.4",
     "@types/homey": "npm:homey-apps-sdk-v3-types@^0.3.4",
     "@types/node": "^16.18.35",
+    "@types/node-fetch": "2",
     "homey": "^2.30.7",
     "typescript": "^5.1.3"
   }
