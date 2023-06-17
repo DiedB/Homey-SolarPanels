@@ -40,7 +40,7 @@ export default class EnphaseEnvoyApi {
       );
     }
 
-    const url = `https://${this.address}/${path}`;
+    const url = `http://${this.address}/${path}`;
 
     const requestHeaders =
       this.accessToken !== null
