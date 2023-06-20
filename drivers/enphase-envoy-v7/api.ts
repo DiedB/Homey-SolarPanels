@@ -13,6 +13,8 @@ export default class EnphaseEnvoyApi {
 
   private accessToken: string | null = null;
 
+  private cookies: string | null = null;
+
   constructor(
     address: string,
     deviceSn: string,
@@ -40,11 +42,12 @@ export default class EnphaseEnvoyApi {
       );
     }
 
-    const url = `http://${this.address}/${path}`;
+    const url = `https://${this.address}/${path}`;
 
     const requestHeaders =
-      this.accessToken !== null
-        ? { Authorization: `Bearer ${this.accessToken}` }
+      this.accessToken !== null && this.cookies !== null
+        ? { Authorization: `Bearer ${this.accessToken}`,
+          Cookie: this.cookies }
         : undefined;
 
     const response = await fetch(url, {
@@ -119,9 +122,41 @@ export default class EnphaseEnvoyApi {
 
     if (tokenResponse.ok) {
       this.accessToken = await tokenResponse.text();
+      await this.getCookies();
     } else {
       throw new Error("An error occurred while retrieving an access token");
     }
+  }
+
+  private async getCookies() {
+    const requestHeaders =
+      this.accessToken !== null
+        ? {
+          Authorization: `Bearer ${this.accessToken}`
+        }
+        : undefined;
+    const url = `https://${this.address}/auth/check_jwt`;
+
+    const response = await fetch(url, {
+      headers: requestHeaders,
+      // Allow self-signed SSL (Envoy v7 uses self-signed certificate on HTTPS)
+      // Keep backwards compatibility to warn users that v5 is not supported anymore
+      agent: (parsedUrl: URL) => {
+        if (parsedUrl.protocol == "http:") {
+          return new http.Agent();
+        } else {
+          return new https.Agent({
+            rejectUnauthorized: false,
+          });
+        }
+      }
+    });
+    if (response.headers.get('set-cookie') !== null) {
+      this.cookies = response.headers.get('set-cookie');
+    } else {
+      throw new Error("An error occurred while retrieving cookies");
+    }
+
   }
 
   async getProductionData(): Promise<ProductionData> {

@@ -18,7 +18,7 @@ class EnphaseEnvoy extends Inverter {
     const { username, password } = this.getSettings() as DeviceSettings;
 
     this.enphaseApi = new EnphaseEnvoyApi(
-      `${discoveryResult.address}:${discoveryResult.port}`,
+      `${discoveryResult.address}`,
       this.getData().id,
       username,
       password
@@ -32,7 +32,7 @@ class EnphaseEnvoy extends Inverter {
     const { username, password } = this.getSettings() as DeviceSettings;
 
     this.enphaseApi = new EnphaseEnvoyApi(
-      `${discoveryResult.address}:${discoveryResult.port}`,
+      `${discoveryResult.address}`,
       this.getData().id,
       username,
       password
