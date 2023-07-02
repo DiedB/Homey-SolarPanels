@@ -124,9 +124,9 @@ export default class EnphaseEnvoyApi {
     }
   }
 
-  async getProductionData(): Promise<ProductionData[]> {
+  async getProductionData(): Promise<ProductionData> {
     return (
-      await this.fetchApiEndpoint("api/v1/production/inverters")
-    ).json() as Promise<ProductionData[]>;
+      await this.fetchApiEndpoint("api/v1/production")
+    ).json() as Promise<ProductionData>;
   }
 }

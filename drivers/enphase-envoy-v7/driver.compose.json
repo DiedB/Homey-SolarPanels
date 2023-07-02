@@ -3,7 +3,7 @@
     "en": "Enphase Envoy (v7)"
   },
   "class": "solarpanel",
-  "capabilities": ["measure_power"],
+  "capabilities": ["measure_power", "meter_power"],
   "connectivity": ["lan"],
   "platforms": ["local"],
   "discovery": "enphase-envoy",
@@ -32,6 +32,12 @@
     "large": "{{driverAssetsPath}}/images/large.jpg"
   },
   "capabilitiesOptions": {
+    "meter_power": {
+      "title": {
+        "en": "Energy yield (today)",
+        "nl": "Energieproductie (vandaag)"
+      }
+    },
     "measure_power": {
       "title": {
         "en": "Power (production)",

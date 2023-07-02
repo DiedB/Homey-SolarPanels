@@ -1,11 +1,9 @@
 export interface ProductionData {
-  serialNumber: string;
-  lastReportDate: number;
-  devType: number;
-  lastReportWatts: number;
-  maxReportWatts: number;
+  wattHoursToday: number;
+  wattHoursSevenDays: number;
+  wattHoursLifetime: number;
+  wattsNow: number;
 }
-[];
 
 export interface DeviceData {
   id: string;
