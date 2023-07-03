@@ -100,5 +100,8 @@
   },
   "5.2.0": {
     "en": "Improve Growatt implementation, support multi-plant multi-device"
+  },
+  "5.2.1": {
+    "en": "Add Enphase Envoy v7 support"
   }
 }
