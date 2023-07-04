@@ -103,5 +103,8 @@
   },
   "5.2.1": {
     "en": "Add Enphase Envoy v7 support"
+  },
+  "5.2.2": {
+    "en": "Minor fixes to Enphase implementation"
   }
 }
