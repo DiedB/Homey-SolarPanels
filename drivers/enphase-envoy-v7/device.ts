@@ -69,7 +69,7 @@ class EnphaseEnvoy extends Inverter {
         const productionData = await this.enphaseApi.getProductionData();
 
         const currentPower = productionData.wattsNow;
-        const currentEnergy = productionData.wattHoursLifetime / 1000;
+        const currentEnergy = productionData.wattHoursToday / 1000;
 
         await this.setCapabilityValue("measure_power", currentPower);
         this.log(`Current production power is ${currentPower}W`);
