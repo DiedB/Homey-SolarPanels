@@ -1,6 +1,6 @@
 import { Inverter } from "../../inverter";
 import EnphaseEnlightenApi from "./api";
-import { EnphaseApiSystems, DeviceData, DeviceSettings } from "./types";
+import { DeviceData, DeviceSettings } from "./types";
 
 class EnphaseDevice extends Inverter {
   interval = this.getSetting("interval");

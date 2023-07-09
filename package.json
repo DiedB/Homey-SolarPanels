@@ -11,6 +11,7 @@
     "build": "tsc"
   },
   "dependencies": {
+    "homey-oauth2app": "^3.5.3",
     "node-fetch": "^2.6.6"
   },
   "devDependencies": {

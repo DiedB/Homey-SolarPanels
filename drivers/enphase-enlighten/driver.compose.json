@@ -2,7 +2,6 @@
   "name": {
     "en": "Enphase Enlighten"
   },
-  "deprecated": true,
   "class": "solarpanel",
   "capabilities": ["measure_power", "meter_power"],
   "images": {
@@ -13,7 +12,8 @@
   "platforms": ["local", "cloud"],
   "pair": [
     {
-      "id": "pair"
+      "id": "login_oauth2",
+      "template": "login_oauth2"
     },
     {
       "id": "list_devices",
@@ -25,6 +25,12 @@
     {
       "id": "add_devices",
       "template": "add_devices"
+    }
+  ],
+  "repair": [
+    {
+      "id": "login_oauth2",
+      "template": "login_oauth2"
     }
   ]
 }

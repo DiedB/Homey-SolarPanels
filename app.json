@@ -76,6 +76,7 @@
       "name": {
         "en": "Enphase Enlighten"
       },
+      "deprecated": true,
       "class": "solarpanel",
       "capabilities": [
         "measure_power",
@@ -151,6 +152,51 @@
           }
         }
       ]
+    },
+    {
+      "name": {
+        "en": "Enphase Enlighten"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
+      "images": {
+        "large": "/drivers/enphase-enlighten/assets/images/large.jpg",
+        "small": "/drivers/enphase-enlighten/assets/images/small.jpg"
+      },
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "pair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "id": "enphase-enlighten"
     },
     {
       "name": {
