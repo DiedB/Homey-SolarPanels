@@ -4,9 +4,25 @@ import { Inverter } from "../../inverter";
 import EnphaseEnvoyApi from "./api";
 import { DeviceSettings } from "./types";
 
+const NET_CONSUMPTION_METER = "net-consumption";
+const PRODUCTION_METER = "production";
+
 class EnphaseEnvoy extends Inverter {
   interval = 1;
   enphaseApi?: EnphaseEnvoyApi;
+
+  async onInit() {
+    // Add capabilities if missing
+    if (
+      !this.hasCapability("measure_power.consumption") ||
+      !this.hasCapability("measure_power.grid")
+    ) {
+      this.addCapability("measure_power.consumption");
+      this.addCapability("measure_power.grid");
+    }
+
+    super.onInit();
+  }
 
   onDiscoveryResult(discoveryResult: DiscoveryResultMDNSSD) {
     // Return a truthy value here if the discovery result matches your device.
@@ -66,6 +82,7 @@ class EnphaseEnvoy extends Inverter {
 
     if (this.enphaseApi) {
       try {
+        // Production
         const productionData = await this.enphaseApi.getProductionData();
 
         const currentPower = productionData.wattsNow;
@@ -76,6 +93,58 @@ class EnphaseEnvoy extends Inverter {
 
         await this.setCapabilityValue("meter_power", currentEnergy);
         this.log(`Current production energy is ${currentEnergy}kWh`);
+
+        // Consumption
+        const meterData = await this.enphaseApi.getMeters();
+
+        if (
+          meterData.length &&
+          meterData
+            .map((meter) => meter.measurementType)
+            .every((measurementType) =>
+              [NET_CONSUMPTION_METER, PRODUCTION_METER].includes(
+                measurementType
+              )
+            )
+        ) {
+          // Envoy is metered and consumption-enabled, get values
+          const meterReadingsData = await this.enphaseApi.getMeterReadings();
+
+          const productionPower =
+            meterReadingsData.find(
+              (meter) =>
+                meter.eid ===
+                meterData.find(
+                  (meter) => meter.measurementType === PRODUCTION_METER
+                )?.eid
+            )?.activePower || null;
+
+          const gridConsumptionPower =
+            meterReadingsData.find(
+              (meter) =>
+                meter.eid ===
+                meterData.find(
+                  (meter) => meter.measurementType === NET_CONSUMPTION_METER
+                )?.eid
+            )?.activePower || null;
+
+          if (productionPower !== null && gridConsumptionPower !== null) {
+            const selfConsumption = productionPower + gridConsumptionPower;
+
+            await this.setCapabilityValue(
+              "measure_power.consumption",
+              selfConsumption
+            );
+            await this.setCapabilityValue(
+              "measure_power.grid",
+              gridConsumptionPower
+            );
+          } else {
+            this.log(
+              "Envoy is metered but could not fetch either net-consumption or production values from meters"
+            );
+          }
+        }
 
         await this.setAvailable();
       } catch (err) {

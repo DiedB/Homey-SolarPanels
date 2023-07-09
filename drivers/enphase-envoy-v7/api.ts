@@ -2,7 +2,7 @@ import fetch, { Response } from "node-fetch";
 import http from "node:http";
 import https from "node:https";
 
-import { ProductionData } from "./types";
+import { ApiProduction, ApiMeters, ApiMeterReadings } from "./types";
 import { URLSearchParams } from "node:url";
 
 export default class EnphaseEnvoyApi {
@@ -124,9 +124,21 @@ export default class EnphaseEnvoyApi {
     }
   }
 
-  async getProductionData(): Promise<ProductionData> {
+  async getProductionData(): Promise<ApiProduction> {
     return (
       await this.fetchApiEndpoint("api/v1/production")
-    ).json() as Promise<ProductionData>;
+    ).json() as Promise<ApiProduction>;
+  }
+
+  async getMeters(): Promise<ApiMeters> {
+    return (
+      await this.fetchApiEndpoint("ivp/meters")
+    ).json() as Promise<ApiMeters>;
+  }
+
+  async getMeterReadings(): Promise<ApiMeterReadings> {
+    return (
+      await this.fetchApiEndpoint("ivp/meters/readings")
+    ).json() as Promise<ApiMeterReadings>;
   }
 }

@@ -223,6 +223,8 @@
       "class": "solarpanel",
       "capabilities": [
         "measure_power",
+        "measure_power.consumption",
+        "measure_power.grid",
         "meter_power"
       ],
       "connectivity": [
@@ -259,14 +261,26 @@
       "capabilitiesOptions": {
         "meter_power": {
           "title": {
-            "en": "Energy yield (today)",
-            "nl": "Energieproductie (vandaag)"
+            "en": "Daily energy yield",
+            "nl": "Energie-opwek vandaag"
           }
         },
         "measure_power": {
           "title": {
             "en": "Power (production)",
             "nl": "Vermogen (productie)"
+          }
+        },
+        "measure_power.consumption": {
+          "title": {
+            "en": "Power (self-consumption)",
+            "nl": "Vermogen (eigengebruik)"
+          }
+        },
+        "measure_power.grid": {
+          "title": {
+            "en": "Power (grid)",
+            "nl": "Vermogen (net-afname)"
           }
         }
       },
