@@ -106,5 +106,8 @@
   },
   "5.2.2": {
     "en": "Minor fixes to Enphase implementation"
+  },
+  "5.2.3": {
+    "en": "Notify Enphase Envoy users of software upgrade, deprecate old Envoy"
   }
 }
