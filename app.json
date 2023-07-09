@@ -163,6 +163,7 @@
         "meter_power",
         "meter_power.consumption"
       ],
+      "deprecated": true,
       "connectivity": [
         "lan"
       ],
@@ -217,7 +218,7 @@
     },
     {
       "name": {
-        "en": "Enphase Envoy (v7)"
+        "en": "Enphase IQ Gateway"
       },
       "class": "solarpanel",
       "capabilities": [
@@ -274,7 +275,7 @@
         {
           "type": "group",
           "label": {
-            "en": "Enphase credentials"
+            "en": "Enphase Enlighten credentials"
           },
           "children": [
             {
