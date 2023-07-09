@@ -4,7 +4,7 @@ const { OAuth2Device } = require("homey-oauth2app");
 
 class EnphaseEnlightenDevice extends OAuth2Device {
   /** The refresh interval in minutes */
-  interval: number = 10;
+  interval: number = 60;
   oAuth2Client?: EnphaseOAuth2Client;
   currentInterval?: NodeJS.Timeout;
 
@@ -23,7 +23,13 @@ class EnphaseEnlightenDevice extends OAuth2Device {
   async onInit(): Promise<void> {
     this.setInterval(this.interval);
 
-    // Force immediate production check
+    super.onInit();
+  }
+
+  async onOAuth2Init() {
+    super.onOAuth2Init();
+
+    // Force immediate production check after initialization
     this.checkProduction();
   }
 
@@ -31,7 +37,9 @@ class EnphaseEnlightenDevice extends OAuth2Device {
     this.log("Checking production");
 
     const productionData = await this.oAuth2Client?.getSystemSummary(
-      this.getData().id
+      (
+        await this.getData()
+      ).id
     );
 
     if (productionData) {
@@ -43,6 +51,10 @@ class EnphaseEnlightenDevice extends OAuth2Device {
 
       this.homey.log(`Current energy is ${currentEnergy}kWh`);
       this.homey.log(`Current power is ${currentPower}W`);
+    } else {
+      this.setUnavailable(
+        "Unknown error occurred while fetching production data"
+      );
     }
   }
 }
