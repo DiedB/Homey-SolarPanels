@@ -109,5 +109,8 @@
   },
   "5.2.3": {
     "en": "Notify Enphase Envoy users of software upgrade, deprecate old Envoy"
+  },
+  "5.2.4": {
+    "en": "Add Enphase IQ Gateway consumption metrics"
   }
 }
