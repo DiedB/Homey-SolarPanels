@@ -2,7 +2,7 @@ import { DiscoveryResultMDNSSD } from "homey";
 import { Inverter } from "../../inverter";
 
 import EnphaseEnvoyApi from "./api";
-import { DeviceData, DeviceSettings } from "./types";
+import { DeviceSettings } from "./types";
 
 class EnphaseEnvoy extends Inverter {
   interval = 1;

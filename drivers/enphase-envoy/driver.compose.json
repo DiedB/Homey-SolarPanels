@@ -9,6 +9,7 @@
     "meter_power",
     "meter_power.consumption"
   ],
+  "deprecated": true,
   "connectivity": ["lan"],
   "platforms": ["local"],
   "discovery": "enphase-envoy",

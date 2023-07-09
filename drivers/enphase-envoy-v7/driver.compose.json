@@ -1,6 +1,6 @@
 {
   "name": {
-    "en": "Enphase Envoy (v7)"
+    "en": "Enphase IQ Gateway"
   },
   "class": "solarpanel",
   "capabilities": ["measure_power", "meter_power"],

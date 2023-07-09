@@ -21,9 +21,6 @@ class EnphaseEnvoyDriver extends Driver {
       const discoveryStrategy = this.getDiscoveryStrategy();
       const discoveryResults = discoveryStrategy.getDiscoveryResults();
 
-      this.log("[DEBUG] Listing devices");
-      this.log(discoveryResults);
-
       const devices = Object.values(discoveryResults).map((discoveryResult) => {
         const typedDiscoveryResult = discoveryResult as DiscoveryResultMDNSSD;
 
