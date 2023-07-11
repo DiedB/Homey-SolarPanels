@@ -82,22 +82,10 @@ class EnphaseEnvoy extends Inverter {
 
     if (this.enphaseApi) {
       try {
-        // Production
-        const productionData = await this.enphaseApi.getProductionData();
-
-        const currentPower = productionData.wattsNow;
-        const currentEnergy = productionData.wattHoursToday / 1000;
-
-        await this.setCapabilityValue("measure_power", currentPower);
-        this.log(`Current production power is ${currentPower}W`);
-
-        await this.setCapabilityValue("meter_power", currentEnergy);
-        this.log(`Current production energy is ${currentEnergy}kWh`);
-
-        // Consumption
+        // Determine whether Envoy is metered
+        // If it is, use meter data, otherwise get production data from inverter reports
         const meterData = await this.enphaseApi.getMeters();
-
-        if (
+        const isMetered =
           meterData.length &&
           meterData
             .map((meter) => meter.measurementType)
@@ -105,9 +93,24 @@ class EnphaseEnvoy extends Inverter {
               [NET_CONSUMPTION_METER, PRODUCTION_METER].includes(
                 measurementType
               )
-            )
-        ) {
-          // Envoy is metered and consumption-enabled, get values
+            );
+
+        // Get production data from inverter reports
+        const productionData = await this.enphaseApi.getProductionData();
+        const currentEnergy = productionData.wattHoursToday / 1000;
+
+        await this.setCapabilityValue("meter_power", currentEnergy);
+        this.log(`Current production energy is ${currentEnergy}kWh`);
+
+        if (!isMetered) {
+          const currentPower = productionData.wattsNow;
+
+          await this.setCapabilityValue("measure_power", currentPower);
+          this.log(`Current production power is ${currentPower}W`);
+        }
+
+        if (isMetered) {
+          // Get production, consumption and net import data from meters
           const meterReadingsData = await this.enphaseApi.getMeterReadings();
 
           const productionPower =
@@ -130,6 +133,9 @@ class EnphaseEnvoy extends Inverter {
 
           if (productionPower !== null && gridConsumptionPower !== null) {
             const selfConsumption = productionPower + gridConsumptionPower;
+
+            await this.setCapabilityValue("measure_power", productionPower);
+            this.log(`Current production power is ${productionPower}W`);
 
             await this.setCapabilityValue(
               "measure_power.consumption",
