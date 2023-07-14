@@ -73,7 +73,7 @@ export default class SolarEdgeApi {
         );
       } else {
         throw new Error(
-          "An unknown error occurred while fetching inverter data."
+          `An unknown error occurred (status ${response.status}) while fetching inverter data.`
         );
       }
     }
