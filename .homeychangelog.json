@@ -115,5 +115,8 @@
   },
   "5.2.5": {
     "en": "Get live production data for metered IQ Gateway"
+  },
+  "5.2.6": {
+    "en": "Improve SolarEdge error reporting"
   }
 }
