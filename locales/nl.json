@@ -5,6 +5,7 @@
       "subtitle": "Voer het IP-adres en WiFi S/N van uw Omnik omvormer in.",
       "ip_address": "IP-adres",
       "wifi_sn": "WiFi S/N",
+      "unverified_sn_message": "Let op: Het is mogelijk dat deze app niet werkt met uw Omnik omvormer.\n\nDeze app is alleen gevalideerd voor apparaten met een serienummer dat begint met 160, 161 en 604.",
       "add_device": "Apparaat toevoegen",
       "error": {
         "missing_ip_address": "Geef een IP-adres op",

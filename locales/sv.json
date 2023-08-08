@@ -5,6 +5,7 @@
       "subtitle": "Ange din Omnik växelriktarens IP-adress och WiFi S/N.",
       "ip_address": "IP-adress",
       "wifi_sn": "WiFi S/N",
+      "unverified_sn_message": "Observera: Denna app kanske inte fungerar med din Omnik-omvandlare.\n\nDenna app har endast validerats för enheter med ett serienummer som börjar med 160, 161 och 604.",
       "add_device": "Lägger till enhet",
       "error": {
         "missing_ip_address": "Ange en IP-adress",

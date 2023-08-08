@@ -5,6 +5,7 @@
       "subtitle": "Entrez l'adresse IP de votre onduleur Omnik et son numéro de série WiFi.",
       "ip_address": "Adresse IP",
       "wifi_sn": "Numéro de série WiFi",
+      "unverified_sn_message": "Attention : Cette application pourrait ne pas fonctionner avec votre onduleur Omnik.\n\nCette application a été validée uniquement pour les appareils dont le numéro de série commence par 160, 161 et 604.",
       "add_device": "Ajout de l'appareil",
       "error": {
         "missing_ip_address": "Fournissez une adresse IP",

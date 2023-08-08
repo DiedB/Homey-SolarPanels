@@ -5,6 +5,7 @@
       "subtitle": "Geben Sie die IP-Adresse und die WiFi-Seriennummer Ihres Omnik-Wechselrichters ein.",
       "ip_address": "IP-Adresse",
       "wifi_sn": "WiFi-Seriennummer",
+      "unverified_sn_message": "Achtung: Diese App funktioniert möglicherweise nicht mit Ihrem Omnik-Wechselrichter.\n\nDiese App wurde nur für Geräte mit einer Seriennummer, die mit 160, 161 und 604 beginnt, validiert.",
       "add_device": "Gerät wird hinzugefügt",
       "error": {
         "missing_ip_address": "Geben Sie eine IP-Adresse an",

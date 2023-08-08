@@ -5,6 +5,7 @@
       "subtitle": "Ingrese la dirección IP y el número de serie WiFi de su inversor Omnik.",
       "ip_address": "Dirección IP",
       "wifi_sn": "Número de serie WiFi",
+      "unverified_sn_message": "Atención: Esta aplicación podría no funcionar con su inversor Omnik.\n\nEsta aplicación solo ha sido validada para dispositivos con un número de serie que comienza con 160, 161 y 604.",
       "add_device": "Agregando dispositivo",
       "error": {
         "missing_ip_address": "Proporcione una dirección IP",

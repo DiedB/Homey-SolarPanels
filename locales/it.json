@@ -5,6 +5,7 @@
       "subtitle": "Inserisci l'indirizzo IP e il S/N WiFi dell'inverter Omnik.",
       "ip_address": "Indirizzo IP",
       "wifi_sn": "S/N WiFi",
+      "unverified_sn_message": "Attenzione: Questa app potrebbe non funzionare con il tuo inverter Omnik.\n\nQuesta app è stata validata solo per dispositivi con un numero di serie che inizia con 160, 161 e 604.",
       "add_device": "Aggiungi dispositivo",
       "error": {
         "missing_ip_address": "Fornisci un indirizzo IP",

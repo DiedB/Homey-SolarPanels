@@ -25,6 +25,7 @@
                placeholder="000000000"
                value="" />
       </div>
+      <p id="wifi_sn_hint" class="alert hint hidden"></p>
     </fieldset>
   </form>
 
@@ -59,6 +60,22 @@
 
   function wifiSnChanged (value) {
     Homey.emit("setWifiSn", Number(value));
+
+    const hintElement = document.getElementById("wifi_sn_hint");
+
+    if (value !== undefined && value.length >= 3 && !isVerifiedSn(value)) {
+      hintElement.classList.remove('hidden')
+      document.getElementById("wifi_sn_hint").innerText = Homey.__("pair.omnik-local.unverified_sn_message")
+    } else {
+      hintElement.classList.add('hidden')
+      document.getElementById("wifi_sn_hint").innerText = ''
+    }
+  }
+
+  function isVerifiedSn(value) {
+    let verifiedSerialNumbers = ['160', '161', '604'];
+
+    return verifiedSerialNumbers.find((verifiedValue) => value.startsWith(verifiedValue)) !== undefined
   }
 </script>
 
@@ -86,9 +103,19 @@
         border-radius: 0.25rem;
     }
 
+    .hint {
+        color: #004085;
+        background-color: #cce5ff;
+        border-color: #b8daff;
+    }
+
     .help {
         color: #383d41;
         background-color: #f4f5f5;
         border-color: #e4e5e7;
+    }
+
+    .hidden {
+        display: none;
     }
 </style>

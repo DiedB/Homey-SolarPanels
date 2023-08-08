@@ -5,6 +5,7 @@
       "subtitle": "Wprowadź adres IP i numer WiFi S/N swojego inwertera Omnik.",
       "ip_address": "Adres IP",
       "wifi_sn": "Numer WiFi S/N",
+      "unverified_sn_message": "Uwaga: Ta aplikacja może nie działać z twoim falownikiem Omnik.\n\nTa aplikacja została zweryfikowana tylko dla urządzeń o numerze seryjnym rozpoczynającym się od 160, 161 i 604.",
       "add_device": "Dodawanie urządzenia",
       "error": {
         "missing_ip_address": "Podaj adres IP",
