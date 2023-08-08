@@ -1,6 +1,6 @@
 {
   "id": "it.diederik.solar",
-  "version": "5.1.2",
+  "version": "5.2.6",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#0c1845",
@@ -9,8 +9,8 @@
     "nl": "Zonnepanelen"
   },
   "description": {
-    "en": "Leverage your renewable energy production in a smarter way",
-    "nl": "Gebruik je groen opgewekte stroom op een slimme manier"
+    "en": "Let the sun power your home",
+    "nl": "Laat de zon je huis van stroom voorzien"
   },
   "category": "energy",
   "platforms": [

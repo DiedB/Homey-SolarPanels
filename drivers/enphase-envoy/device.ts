@@ -6,6 +6,7 @@ import EnphaseEnvoyApi from "./api";
 class EnphaseEnvoy extends Inverter {
   interval = 1 / 10;
   enphaseApi?: EnphaseEnvoyApi;
+  hasUpdatedPastSupport: boolean = false;
 
   async onInit() {
     // SDK v3 migration
@@ -50,7 +51,28 @@ class EnphaseEnvoy extends Inverter {
   async checkProduction() {
     this.log("Checking production");
 
-    if (this.enphaseApi) {
+    if (this.enphaseApi && !this.hasUpdatedPastSupport) {
+      try {
+        // Check whether the device has upgraded to v7
+        const softwareVersion = await this.enphaseApi.getEnvoySoftwareVersion();
+        if (softwareVersion !== null && softwareVersion.startsWith("D7")) {
+          // Enphase Envoy has updated to v7, user needs to migrate
+          this.hasUpdatedPastSupport = true;
+
+          this.log(
+            "Enphase Envoy has updated to firmware D7x - suggesting user to upgrade to new driver"
+          );
+
+          this.setUnavailable(
+            "Your Enphase Envoy has received a software update that requires re-pairing the device to Homey. Please remove your Envoy device from Homey and re-add it."
+          );
+
+          return;
+        }
+      } catch (err) {
+        this.log("Failed checking for Envoy software version");
+      }
+
       try {
         const productionData = await this.enphaseApi.getProductionData();
 
@@ -134,7 +156,7 @@ class EnphaseEnvoy extends Inverter {
         this.homey.log(`Unavailable: ${errorMessage}`);
         await this.setUnavailable(errorMessage);
       }
-    } else {
+    } else if (!this.enphaseApi) {
       await this.setUnavailable(
         "Enphase Envoy could not be discovered on your network"
       );

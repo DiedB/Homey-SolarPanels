@@ -1,0 +1,22 @@
+[
+  {
+    "type": "group",
+    "label": { "en": "Enphase Enlighten credentials" },
+    "children": [
+      {
+        "id": "username",
+        "type": "text",
+        "label": {
+          "en": "Username"
+        }
+      },
+      {
+        "id": "password",
+        "type": "password",
+        "label": {
+          "en": "Password"
+        }
+      }
+    ]
+  }
+]

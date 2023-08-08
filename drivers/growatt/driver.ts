@@ -21,12 +21,13 @@ class GrowattDriver extends Driver {
 
     session.setHandler("list_devices", async () => {
       const api = new GrowattApi(username, password);
+      await api.login();
 
-      const serialNumbers = await api.getInverterSerialNumbers();
+      const deviceData = await api.getDeviceData();
 
-      const devices = serialNumbers.map((serialNumber) => ({
-        name: serialNumber,
-        data: { id: serialNumber },
+      const devices = deviceData.map(({ id, plantId }) => ({
+        name: id,
+        data: { id, plantId },
         settings: { username, password },
       }));
 

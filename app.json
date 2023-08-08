@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "it.diederik.solar",
-  "version": "5.1.2",
+  "version": "5.2.6",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#0c1845",
@@ -10,8 +10,8 @@
     "nl": "Zonnepanelen"
   },
   "description": {
-    "en": "Leverage your renewable energy production in a smarter way",
-    "nl": "Gebruik je groen opgewekte stroom op een slimme manier"
+    "en": "Let the sun power your home",
+    "nl": "Laat de zon je huis van stroom voorzien"
   },
   "category": "energy",
   "platforms": [
@@ -173,6 +173,7 @@
         "meter_power",
         "meter_power.consumption"
       ],
+      "deprecated": true,
       "connectivity": [
         "lan"
       ],
@@ -224,6 +225,100 @@
         }
       },
       "id": "enphase-envoy"
+    },
+    {
+      "name": {
+        "en": "Enphase IQ Gateway"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "measure_power.consumption",
+        "measure_power.grid",
+        "meter_power"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "discovery": "enphase-envoy",
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "pair.svg"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "small": "/drivers/enphase-envoy-v7/assets/images/small.jpg",
+        "large": "/drivers/enphase-envoy-v7/assets/images/large.jpg"
+      },
+      "capabilitiesOptions": {
+        "meter_power": {
+          "title": {
+            "en": "Daily energy yield",
+            "nl": "Energie-opwek vandaag"
+          }
+        },
+        "measure_power": {
+          "title": {
+            "en": "Power (production)",
+            "nl": "Vermogen (productie)"
+          }
+        },
+        "measure_power.consumption": {
+          "title": {
+            "en": "Power (self-consumption)",
+            "nl": "Vermogen (eigengebruik)"
+          }
+        },
+        "measure_power.grid": {
+          "title": {
+            "en": "Power (grid)",
+            "nl": "Vermogen (net-afname)"
+          }
+        }
+      },
+      "id": "enphase-envoy-v7",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Enphase Enlighten credentials"
+          },
+          "children": [
+            {
+              "id": "username",
+              "type": "text",
+              "label": {
+                "en": "Username"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "label": {
+                "en": "Password"
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {

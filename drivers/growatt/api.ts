@@ -4,7 +4,13 @@
 const fetch = require("node-fetch");
 import crypto from "crypto";
 
-import { DeviceList, LoginData, PlantData, PlantParams } from "./types";
+import {
+  DeviceData,
+  DeviceList,
+  LoginData,
+  PlantData,
+  PlantParams,
+} from "./types";
 
 export default class GrowattApi {
   private username: string;
@@ -47,7 +53,11 @@ export default class GrowattApi {
     });
 
     // TODO: handle additional errors
-    if (!response.ok) {
+    if (
+      !response.ok ||
+      // If session is expired, request is redirected
+      response.url.includes("errorMess=errorNoLogin")
+    ) {
       throw new Error(error);
     }
 
@@ -79,7 +89,7 @@ export default class GrowattApi {
     }
   }
 
-  async getDeviceList(plantId: string): Promise<DeviceList[]> {
+  async getPlantDevices(plantId: string): Promise<DeviceList[]> {
     const error = `Could not get device list for plant ${plantId} from Growatt server`;
 
     const plantData = await this.fetchApiEndpoint<PlantData>(
@@ -92,35 +102,45 @@ export default class GrowattApi {
     return plantData.deviceList;
   }
 
-  async getInverterSerialNumbers(): Promise<string[]> {
-    await this.login();
+  // Returns a prepared list with devices under an account (for usage in pairing flow)
+  async getDeviceData(): Promise<DeviceData[]> {
+    let devices = [];
 
-    let serialNumbers = [];
-    for (let plant of this.plants) {
-      const deviceList = await this.getDeviceList(plant.plantId);
+    for (let plant of [...this.plants]) {
+      await this.login();
+
+      const deviceList = await this.getPlantDevices(plant.plantId);
+
       const inverters = deviceList.filter((device) =>
         ["inverter", "tlx"].includes(device.deviceType)
       );
-      serialNumbers.push(...inverters.map((device) => device.deviceSn));
+
+      devices.push(
+        ...inverters.map((device) => ({
+          id: device.deviceSn,
+          plantId: plant.plantId,
+        }))
+      );
     }
 
-    return serialNumbers;
+    return devices;
   }
 
-  async getInverterProductionData(serialNumber: string) {
+  async getInverterProductionData(deviceData: DeviceData) {
     await this.login();
-    for (let plant of this.plants) {
-      const deviceList = await this.getDeviceList(plant.plantId);
-      const device = deviceList.find(
-        (device) => device.deviceSn === serialNumber
-      );
-      if (device) {
-        return {
-          currentPower: Number(device.power),
-          energyToday: Number(device.eToday),
-        };
-      }
+
+    const deviceList = await this.getPlantDevices(deviceData.plantId);
+    const device = deviceList.find(
+      (device) => device.deviceSn === deviceData.id
+    );
+
+    if (device) {
+      return {
+        currentPower: Number(device.power),
+        energyToday: Number(device.eToday),
+      };
     }
+
     return null;
   }
 }
