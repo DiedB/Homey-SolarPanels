@@ -121,5 +121,8 @@
   },
   "5.2.7": {
     "en": "Update Growatt UA"
+  },
+  "5.2.8": {
+    "en": "Add voltage telemetry to SolarEdge"
   }
 }
