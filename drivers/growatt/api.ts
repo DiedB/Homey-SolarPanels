@@ -37,13 +37,13 @@ export default class GrowattApi {
   private async fetchApiEndpoint<T>(
     url: string,
     method: string = "GET",
-    body: string | undefined,
+    body: URLSearchParams | undefined,
     error: string
   ): Promise<T> {
     const response = await fetch(url, {
       method,
       headers: {
-        "User-Agent": "ShinePhone/7.1.0 (iPhone; iOS 16.1.1; Scale/3.00)",
+        "User-Agent": "ShinePhone/8.0.2 (iPhone; iOS 16.6; Scale/3.00)",
         ...(body !== undefined
           ? { "Content-Type": "application/x-www-form-urlencoded" }
           : {}),
@@ -78,7 +78,10 @@ export default class GrowattApi {
     const loginData = await this.fetchApiEndpoint<LoginData>(
       this.loginUrl,
       "POST",
-      `userName=${this.username}&password=${this.password}`,
+      new URLSearchParams({
+        password: this.password,
+        userName: this.username,
+      }),
       error
     );
 
