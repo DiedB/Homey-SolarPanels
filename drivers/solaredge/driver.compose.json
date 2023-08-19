@@ -63,6 +63,18 @@
         "nl": "Vermogen (productie)"
       }
     },
+    "measure_voltage.ac": {
+      "title": {
+        "en": "Voltage (AC side)",
+        "nl": "Spanning (AC-zijde)"
+      }
+    },
+    "measure_voltage.dc": {
+      "title": {
+        "en": "Voltage (DC side)",
+        "nl": "Spanning (DC-zijde)"
+      }
+    },
     "measure_power.consumption": {
       "title": {
         "en": "Power (consumption)",

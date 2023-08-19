@@ -61,6 +61,8 @@ export interface Telemetry {
   inverterMode: string;
   operationMode: number;
   L1Data: PhaseData;
+  L2Data?: PhaseData;
+  L3Data?: PhaseData;
 }
 
 export interface Data {

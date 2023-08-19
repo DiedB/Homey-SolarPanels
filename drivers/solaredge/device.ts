@@ -168,6 +168,45 @@ class SolarEdgeDevice extends Inverter {
             );
           }
 
+          if (latestTelemetry.dcVoltage) {
+            if (!this.hasCapability("measure_voltage.dc")) {
+              this.addCapability("measure_voltage.dc");
+            }
+
+            await this.setCapabilityValue(
+              "measure_voltage.dc",
+              latestTelemetry.dcVoltage
+            );
+
+            this.homey.log(
+              `Current DC voltage is ${latestTelemetry.dcVoltage}V`
+            );
+          }
+
+          if (latestTelemetry.L1Data) {
+            if (!this.hasCapability("measure_voltage.ac")) {
+              this.addCapability("measure_voltage.ac");
+            }
+
+            let acVoltage = 0;
+
+            // If three-phase, take average voltage
+            if (latestTelemetry.L2Data && latestTelemetry.L3Data) {
+              acVoltage =
+                [
+                  latestTelemetry.L1Data.acVoltage,
+                  latestTelemetry.L2Data.acVoltage,
+                  latestTelemetry.L3Data.acVoltage,
+                ].reduce((a, b) => a + b, 0) / 3;
+            } else {
+              acVoltage = latestTelemetry.L1Data.acVoltage;
+            }
+
+            await this.setCapabilityValue("measure_voltage.ac", acVoltage);
+
+            this.homey.log(`Current AC voltage is ${acVoltage}V`);
+          }
+
           if (latestTelemetry.totalEnergy) {
             await this.setCapabilityValue(
               "meter_power.total",
