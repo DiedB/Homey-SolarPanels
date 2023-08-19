@@ -118,5 +118,8 @@
   },
   "5.2.6": {
     "en": "Improve SolarEdge error reporting"
+  },
+  "5.2.7": {
+    "en": "Update Growatt UA"
   }
 }
