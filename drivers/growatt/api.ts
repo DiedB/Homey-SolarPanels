@@ -19,7 +19,7 @@ export default class GrowattApi {
   private plants: PlantParams[] = [];
   private cookies: string | null = null;
 
-  private baseUrl = "https://server-api.growatt.com";
+  private baseUrl = "https://server.growatt.com";
   private loginUrl = `${this.baseUrl}/newTwoLoginAPI.do`;
   private plantUrl = `${this.baseUrl}/newTwoPlantAPI.do`;
 
