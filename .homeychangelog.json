@@ -124,5 +124,8 @@
   },
   "5.2.8": {
     "en": "Add voltage telemetry to SolarEdge"
+  },
+  "5.2.9": {
+    "en": "Fix Growatt connectivity"
   }
 }
