@@ -127,5 +127,8 @@
   },
   "5.2.9": {
     "en": "Fix Growatt connectivity"
+  },
+  "5.2.10": {
+    "en": "Fix SolarEdge issues, upgrade libs, fix logging"
   }
 }
