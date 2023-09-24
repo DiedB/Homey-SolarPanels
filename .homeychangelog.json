@@ -130,5 +130,8 @@
   },
   "5.2.10": {
     "en": "Fix SolarEdge issues, upgrade libs, fix logging"
+  },
+  "5.3.0": {
+    "en": "Improve SolarEdge error handling"
   }
 }
