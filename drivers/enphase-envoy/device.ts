@@ -49,7 +49,7 @@ class EnphaseEnvoy extends Inverter {
   }
 
   async checkProduction() {
-    this.log("Checking production");
+    this.homey.log("Checking production");
 
     if (this.enphaseApi && !this.hasUpdatedPastSupport) {
       try {
@@ -59,7 +59,7 @@ class EnphaseEnvoy extends Inverter {
           // Enphase Envoy has updated to v7, user needs to migrate
           this.hasUpdatedPastSupport = true;
 
-          this.log(
+          this.homey.log(
             "Enphase Envoy has updated to firmware D7x - suggesting user to upgrade to new driver"
           );
 
@@ -70,7 +70,7 @@ class EnphaseEnvoy extends Inverter {
           return;
         }
       } catch (err) {
-        this.log("Failed checking for Envoy software version");
+        this.homey.log("Failed checking for Envoy software version");
       }
 
       try {
@@ -121,13 +121,15 @@ class EnphaseEnvoy extends Inverter {
 
         if (currentProductionEnergy !== null) {
           await this.setCapabilityValue("meter_power", currentProductionEnergy);
-          this.log(
+          this.homey.log(
             `Current production energy is ${currentProductionEnergy}kWh`
           );
         }
 
         await this.setCapabilityValue("measure_power", currentProductionPower);
-        this.log(`Current production power is ${currentProductionPower}W`);
+        this.homey.log(
+          `Current production power is ${currentProductionPower}W`
+        );
 
         if (hasConsumption) {
           const currentConsumptionPower = productionData.consumption[0].wNow;
@@ -143,8 +145,10 @@ class EnphaseEnvoy extends Inverter {
             currentConsumptionEnergy
           );
 
-          this.log(`Current consumption power is ${currentConsumptionPower}W`);
-          this.log(
+          this.homey.log(
+            `Current consumption power is ${currentConsumptionPower}W`
+          );
+          this.homey.log(
             `Current consumption energy is ${currentConsumptionEnergy}W`
           );
         }

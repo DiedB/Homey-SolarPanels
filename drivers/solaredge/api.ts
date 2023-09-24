@@ -1,5 +1,11 @@
-const fetch = require("node-fetch");
+const _importDynamic = new Function("modulePath", "return import(modulePath)");
 
+async function fetch(...args: any) {
+  const { default: fetch } = await _importDynamic("node-fetch");
+  return fetch(...args);
+}
+
+import { SimpleClass } from "homey";
 import {
   PowerResponse,
   EnergyResponse,
@@ -13,6 +19,7 @@ export default class SolarEdgeApi {
   private siteId?: number;
   private serialNumber?: string;
   private timeZone?: string;
+  log?: SimpleClass["log"];
 
   private baseUrl = "https://monitoringapi.solaredge.com";
 
@@ -59,7 +66,7 @@ export default class SolarEdgeApi {
   }
 
   private async fetchApiEndpoint<T>(url: string): Promise<T> {
-    const response = await fetch(url);
+    const response = await fetch(new URL(url));
 
     // Handle possible errors
     if (!response.ok) {

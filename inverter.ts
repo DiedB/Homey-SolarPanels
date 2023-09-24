@@ -7,7 +7,7 @@ export class Inverter extends Device {
 
   private setInterval(interval: number) {
     this.currentInterval = this.homey.setInterval(
-      this.checkProduction.bind(this),
+      this.checkProduction,
       interval * 60000
     );
   }
@@ -21,6 +21,8 @@ export class Inverter extends Device {
     if (!this.interval) {
       throw new Error("Expected interval to be set");
     }
+
+    this.homey.log("Initializing device");
 
     this.setInterval(this.interval);
 
