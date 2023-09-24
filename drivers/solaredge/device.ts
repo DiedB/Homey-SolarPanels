@@ -21,6 +21,14 @@ class SolarEdgeDevice extends Inverter {
       await this.addCapability("meter_power.total");
     }
 
+    if (!data.sid || !data.serial_number) {
+      this.homey.error("Missing data properties");
+
+      this.setUnavailable(
+        "Missing data properties - please remove and re-add your SolarEdge device in Homey"
+      );
+    }
+
     this.api = new SolarEdgeApi(
       settings.key,
       data.sid,

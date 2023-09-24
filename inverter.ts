@@ -7,7 +7,7 @@ export class Inverter extends Device {
 
   private setInterval(interval: number) {
     this.currentInterval = this.homey.setInterval(
-      this.checkProduction,
+      this.checkProduction.bind(this),
       interval * 60000
     );
   }
@@ -30,7 +30,7 @@ export class Inverter extends Device {
     this.removeAllListeners();
 
     // Force immediate production check
-    this.checkProduction();
+    this.checkProduction.bind(this)();
   }
 
   checkProduction() {
