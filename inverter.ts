@@ -22,13 +22,15 @@ export class Inverter extends Device {
       throw new Error("Expected interval to be set");
     }
 
+    this.homey.log("Initializing device");
+
     this.setInterval(this.interval);
 
     // SDK v3 migration, remove cron listeners
     this.removeAllListeners();
 
     // Force immediate production check
-    this.checkProduction();
+    this.checkProduction.bind(this)();
   }
 
   checkProduction() {

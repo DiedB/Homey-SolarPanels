@@ -1,7 +1,13 @@
 // Copyright 2019: Rob, https://github.com/pro-sumer
 // License: GNU GPLv3, https://www.gnu.org/licenses/gpl.txt
 
-const fetch = require("node-fetch");
+const _importDynamic = new Function("modulePath", "return import(modulePath)");
+
+async function fetch(...args: any) {
+  const { default: fetch } = await _importDynamic("node-fetch");
+  return fetch(...args);
+}
+
 import crypto from "crypto";
 
 import {
@@ -19,7 +25,7 @@ export default class GrowattApi {
   private plants: PlantParams[] = [];
   private cookies: string | null = null;
 
-  private baseUrl = "https://server-api.growatt.com";
+  private baseUrl = "https://server.growatt.com";
   private loginUrl = `${this.baseUrl}/newTwoLoginAPI.do`;
   private plantUrl = `${this.baseUrl}/newTwoPlantAPI.do`;
 

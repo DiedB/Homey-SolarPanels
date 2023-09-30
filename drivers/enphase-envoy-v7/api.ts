@@ -1,4 +1,10 @@
-import fetch, { Response } from "node-fetch";
+const _importDynamic = new Function("modulePath", "return import(modulePath)");
+
+async function fetch(...args: any) {
+  const { default: fetch } = await _importDynamic("node-fetch");
+  return fetch(...args);
+}
+
 import http from "node:http";
 import https from "node:https";
 
@@ -30,10 +36,7 @@ export default class EnphaseEnvoyApi {
     this.password = password;
   }
 
-  private async fetchApiEndpoint(
-    path: string,
-    isRetry = false
-  ): Promise<Response> {
+  private async fetchApiEndpoint(path: string, isRetry = false): Promise<any> {
     if (this.address === null) {
       throw new Error(
         "Attempted to fetch data for an uninitialised Enphase device"

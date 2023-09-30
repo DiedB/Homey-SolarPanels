@@ -18,7 +18,15 @@ class SolarEdgeDevice extends Inverter {
       this.removeCapability("daily_consumption");
     }
     if (!this.hasCapability("meter_power.total")) {
-      this.addCapability("meter_power.total");
+      await this.addCapability("meter_power.total");
+    }
+
+    if (!data.sid || !data.serial_number) {
+      this.homey.error("Missing data properties");
+
+      this.setUnavailable(
+        "Missing data properties - please remove and re-add your SolarEdge device in Homey"
+      );
     }
 
     this.api = new SolarEdgeApi(
@@ -67,7 +75,7 @@ class SolarEdgeDevice extends Inverter {
   async checkProduction(): Promise<void> {
     this.homey.log("Checking production");
 
-    if (this.api) {
+    if (this.api !== undefined) {
       try {
         // Power values
         const powerResponse: PowerResponse = await this.api.getPowerData();
@@ -131,7 +139,7 @@ class SolarEdgeDevice extends Inverter {
               capabilityId === "meter_power.consumption" &&
               !this.hasCapability(capabilityId)
             ) {
-              this.addCapability(capabilityId);
+              await this.addCapability(capabilityId);
             }
 
             await this.setCapabilityValue(capabilityId, currentValue);
@@ -170,7 +178,7 @@ class SolarEdgeDevice extends Inverter {
 
           if (latestTelemetry.dcVoltage) {
             if (!this.hasCapability("measure_voltage.dc")) {
-              this.addCapability("measure_voltage.dc");
+              await this.addCapability("measure_voltage.dc");
             }
 
             await this.setCapabilityValue(
@@ -185,7 +193,7 @@ class SolarEdgeDevice extends Inverter {
 
           if (latestTelemetry.L1Data) {
             if (!this.hasCapability("measure_voltage.ac")) {
-              this.addCapability("measure_voltage.ac");
+              await this.addCapability("measure_voltage.ac");
             }
 
             let acVoltage = 0;
@@ -225,12 +233,16 @@ class SolarEdgeDevice extends Inverter {
 
         await this.setAvailable();
       } catch (err) {
-        const errorMessage = (err as Error).message;
+        this.homey.error(err);
 
-        this.homey.log(`Unavailable: ${errorMessage}`);
+        const errorMessage =
+          (err as Error).message || (err as Error).toString();
+
+        this.homey.error(`Unavailable: ${errorMessage || err}`);
         await this.setUnavailable(errorMessage);
       }
     } else {
+      this.homey.error("SolarEdge API connection not initialized");
       await this.setUnavailable("SolarEdge API connection not initialized");
     }
   }
