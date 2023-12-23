@@ -136,5 +136,8 @@
   },
   "5.3.1": {
     "en": "Deprecate Enphase Enlighten"
+  },
+  "5.3.2": {
+    "en": "Add warning to SolarEdge pairing screen"
   }
 }
