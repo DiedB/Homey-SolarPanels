@@ -12,17 +12,20 @@
   .homey-solarpanels-help {
     display: flex;
     align-items: center;
+    gap: .5em;
 
-    color: var(--homey-color-text-light);
+    padding: .5em;
+    border-radius: var(--homey-border-radius-small);
+
+    background-color: #e79500;
+    color: #ffffff;
   }
 
   .homey-solarpanels-help > svg {
-    width: 1.25em;
-    height: 1.25em;
-
-    fill: var(--homey-color-text-light);
-
-    margin-right: 0.5em;
+    width: 1.5em;
+    height: 1.5em;
+    fill: #ffffff;
+    flex: 1 0 auto;
   }
 </style>
 
@@ -41,7 +44,7 @@
     />
   </div>
 
-  <!-- <p class="homey-solarpanels-help">
+  <p class="homey-solarpanels-help">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <path
         fill-rule="evenodd"
@@ -50,12 +53,8 @@
       />
     </svg>
 
-    Need help pairing? Click&nbsp;
-    <a
-      href="https://diederik.gitbook.io/homey-solar-panels-app/inverters/solaredge"
-      >here</a
-    >&nbsp; to view documentation.
-  </p> -->
+    If you request an API key from your installer, make sure to tell them to press 'save' after generating the API key!
+  </p>
 
   <button
     class="homey-button-primary-full homey-solarpanels-submit-button"
