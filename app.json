@@ -85,6 +85,7 @@
         "large": "/drivers/enphase/assets/images/large.jpg",
         "small": "/drivers/enphase/assets/images/small.jpg"
       },
+      "deprecated": true,
       "connectivity": [
         "cloud"
       ],

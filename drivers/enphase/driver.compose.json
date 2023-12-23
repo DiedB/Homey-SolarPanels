@@ -8,6 +8,7 @@
     "large": "{{driverAssetsPath}}/images/large.jpg",
     "small": "{{driverAssetsPath}}/images/small.jpg"
   },
+  "deprecated": true,
   "connectivity": ["cloud"],
   "platforms": ["local", "cloud"],
   "pair": [
