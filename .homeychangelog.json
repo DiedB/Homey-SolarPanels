@@ -133,5 +133,8 @@
   },
   "5.3.0": {
     "en": "Improve SolarEdge error handling"
+  },
+  "5.3.1": {
+    "en": "Deprecate Enphase Enlighten"
   }
 }
